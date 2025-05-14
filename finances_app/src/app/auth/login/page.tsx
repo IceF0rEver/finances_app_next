@@ -79,6 +79,12 @@ export default function SignIn() {
 								onResponse: (ctx) => {
 									setLoading(false);
 								},
+								onError: (ctx) => {
+									toast.error(ctx.error.message);
+									},
+								onSuccess: async () => {
+									router.push("/dashboard");
+								},
 								},
 								);
 							}}
