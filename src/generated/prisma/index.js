@@ -172,7 +172,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\Programmation\\Projet\\finances_app_next\\finances_app\\src\\generated\\prisma",
+      "value": "D:\\Programmation\\Projet\\finances_app_next\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -190,7 +190,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\Programmation\\Projet\\finances_app_next\\finances_app\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\Programmation\\Projet\\finances_app_next\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
