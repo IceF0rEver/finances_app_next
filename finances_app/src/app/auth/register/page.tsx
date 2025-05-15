@@ -18,6 +18,7 @@ import { signUp } from "@/src/lib/auth-client";
 import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { z } from "zod";
 
 export default function SignUp() {
 	const [firstName, setFirstName] = useState("");
@@ -29,6 +30,18 @@ export default function SignUp() {
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
+
+	const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
+	const signUpSchema = z.object({
+		email: z.string().email("Please enter a valid email address"),
+		password: z.string().min(6, "Password must be at least 6 characters"),
+		passwordConfirmation: z.string(),
+		name: z.string(),
+		image: z.string(),
+	}).refine(data => data.password === data.passwordConfirmation, {
+		message: "Passwords do not match",
+		path : ["passwordsMatch"],
+	});
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -53,7 +66,8 @@ export default function SignUp() {
 			</CardHeader>
 			<CardContent>
 				<div className="grid gap-4">
-					<div className="grid grid-cols-2 gap-4">
+					{errorMessage.prismaError && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.prismaError}</p>}
+					<div className="grid grid-cols-2 gap-x-4 gap-y-2">
 						<div className="grid gap-2">
 							<Label htmlFor="first-name">First name</Label>
 							<Input
@@ -78,6 +92,7 @@ export default function SignUp() {
 								value={lastName}
 							/>
 						</div>
+						{errorMessage.name && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.name}</p>}
 					</div>
 					<div className="grid gap-2">
 						<Label htmlFor="email">Email</Label>
@@ -91,6 +106,7 @@ export default function SignUp() {
 							}}
 							value={email}
 						/>
+						{errorMessage.email && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.email}</p>}
 					</div>
 					<div className="grid gap-2">
 						<Label htmlFor="password">Password</Label>
@@ -102,6 +118,7 @@ export default function SignUp() {
 							autoComplete="new-password"
 							placeholder="Password"
 						/>
+						{errorMessage.password && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.password}</p>}
 					</div>
 					<div className="grid gap-2">
 						<Label htmlFor="password">Confirm Password</Label>
@@ -113,6 +130,7 @@ export default function SignUp() {
 							autoComplete="new-password"
 							placeholder="Confirm Password"
 						/>
+						{errorMessage.passwordsMatch && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.passwordsMatch}</p>}
 					</div>
 					<div className="grid gap-2">
 						<Label htmlFor="image">Profile Image (optional)</Label>
@@ -152,13 +170,17 @@ export default function SignUp() {
 						className="w-full"
 						disabled={loading}
 						onClick={async () => {
-							await signUp.email({
-								email,
-								password,
-								name: `${firstName} ${lastName}`,
-								image: image ? await convertImageToBase64(image) : "",
-								callbackURL: "/dashboard",
-								fetchOptions: {
+							try {
+								setErrorMessage({});
+								const validatedData = signUpSchema.parse({
+									email,
+									password,
+									passwordConfirmation,
+									name: `${firstName} ${lastName}`,
+									image: image ? await convertImageToBase64(image) : "",
+								});
+
+								await signUp.email(validatedData, {
 									onResponse: () => {
 										setLoading(false);
 									},
@@ -166,13 +188,28 @@ export default function SignUp() {
 										setLoading(true);
 									},
 									onError: (ctx) => {
-										toast.error(ctx.error.message);
+										setErrorMessage({prismaError: ctx.error.message})
 									},
 									onSuccess: async () => {
 										router.push("/dashboard");
 									},
-								},
-							});
+								});
+							} catch (error) {
+								if (error instanceof z.ZodError) {
+									const messages: Record<string, string> = {};
+
+									error.errors.forEach((err) => {
+										const key = err.path.join(".");
+										messages[key] = err.message;
+										toast.error(err.message);
+									});
+									
+									setErrorMessage(messages);
+								} else {
+									toast.error("An unexpected error occurred")
+								}
+								setLoading(false)
+							}
 						}}
 					>
 						{loading ? (
