@@ -12,12 +12,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/src/lib/utils";
 import { toast } from "sonner";
+import { z } from "zod";
 
 export default function SignIn() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
+	
 	const router = useRouter();
+	
+	const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
+	const signInSchema = z.object({
+		email: z.string().email("Please enter a valid email address"),
+		password: z.string().min(6, "Password must be at least 6 characters"),
+	});
 	
 	return (
 		<section className="flex h-screen justify-center items-center">
@@ -30,6 +38,7 @@ export default function SignIn() {
 				</CardHeader>
 				<CardContent>
 					<div className="grid gap-4">
+						{errorMessage.prismaError && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.prismaError}</p>}
 						<div className="grid gap-2">
 							<Label htmlFor="email">Email</Label>
 							<Input
@@ -42,6 +51,8 @@ export default function SignIn() {
 								}}
 								value={email}
 							/>
+							{errorMessage.email && <p className="text-sm text-red-500"  aria-live="polite" aria-atomic="true">{errorMessage.email}</p>}
+
 						</div>
 						<div className="grid gap-2">
 							<div className="flex items-center">
@@ -61,32 +72,50 @@ export default function SignIn() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
+							{errorMessage.password && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.password}</p>}
 						</div>
 						<Button
 							type="submit"
 							className="w-full"
 							disabled={loading}
 							onClick={async () => {
-								await signIn.email(
-								{
-									email,
-									password
-								},
-								{
-								onRequest: (ctx) => {
-									setLoading(true);
-								},
-								onResponse: (ctx) => {
-									setLoading(false);
-								},
-								onError: (ctx) => {
-									toast.error(ctx.error.message);
-									},
-								onSuccess: async () => {
-									router.push("/dashboard");
-								},
-								},
-								);
+								try {
+									setErrorMessage({});
+									const validatedData = signInSchema.parse({
+										email,
+										password,
+									});
+
+									await signIn.email(validatedData, {
+										onRequest: (ctx) => {
+											setLoading(true)
+										},
+										onResponse: (ctx) => {
+											setLoading(false)
+										},
+										onError: (ctx) => {
+											setErrorMessage({prismaError: ctx.error.message})
+										},
+										onSuccess: async () => {
+											router.push("/dashboard")
+										},
+									});
+								} catch (error) {
+									if (error instanceof z.ZodError) {
+										const messages: Record<string, string> = {};
+
+										error.errors.forEach((err) => {
+											const key = err.path.join(".");
+											messages[key] = err.message;
+											toast.error(err.message);
+										});
+
+										setErrorMessage(messages);
+									} else {
+										toast.error("An unexpected error occurred")
+									}
+									setLoading(false)
+								}
 							}}
 						>
 							{loading ? (
