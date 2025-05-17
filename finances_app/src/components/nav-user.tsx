@@ -29,6 +29,7 @@ import {
 import { useRouter } from "next/navigation"
 import { authClient } from "../lib/auth-client"
 import Link from "next/link"
+import { useI18n } from "../locales/client"
 
 export function NavUser({
   user,
@@ -39,13 +40,14 @@ export function NavUser({
     avatar: string
   }
 }) {
+    const t = useI18n()
     const { isMobile } = useSidebar()
 
     const router = useRouter();
   
     const handleSignOut = async () => {
-          await authClient.signOut();
-          router.push('/auth/login');
+        await authClient.signOut();
+        router.push('/auth/login');
     };
 
   return (
@@ -91,14 +93,14 @@ export function NavUser({
                     <Link href={"/dashboard/settings"}>
                         <DropdownMenuItem>
                             <Settings2 />
-                            Settings
+                            {t('components.navUser.setting')}
                         </DropdownMenuItem>
                     </Link>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem  onClick={handleSignOut}>
                     <LogOut />
-                    Log out
+                    {t('components.navUser.logOut')}
                 </DropdownMenuItem>
             </DropdownMenuContent>
             </DropdownMenu>

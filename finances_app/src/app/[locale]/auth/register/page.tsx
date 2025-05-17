@@ -15,10 +15,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { Loader2, X } from "lucide-react";
 import { signUp } from "@/src/lib/auth-client";
-import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { z } from "zod";
+import { string, z } from "zod";
+import { useI18n } from "@/src/locales/client";
 
 export default function SignUp() {
 	const [firstName, setFirstName] = useState("");
@@ -29,17 +29,18 @@ export default function SignUp() {
 	const [image, setImage] = useState<File | null>(null);
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 	const router = useRouter();
+	const t = useI18n();
 	const [loading, setLoading] = useState(false);
 
 	const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
 	const signUpSchema = z.object({
-		email: z.string().email("Please enter a valid email address"),
-		password: z.string().min(6, "Password must be at least 6 characters"),
+		email: z.string().email(t('app.auth.register.page.error.email')),
+		password: z.string().min(6, t('app.auth.register.page.error.password')),
 		passwordConfirmation: z.string(),
 		name: z.string(),
 		image: z.string(),
 	}).refine(data => data.password === data.passwordConfirmation, {
-		message: "Passwords do not match",
+		message: t('app.auth.register.page.error.passwordMatch'),
 		path : ["passwordsMatch"],
 	});
 
@@ -59,20 +60,20 @@ export default function SignUp() {
 		<section className="flex h-screen justify-center items-center">
 		<Card className="max-w-md w-full">
 			<CardHeader>
-				<CardTitle className="text-lg md:text-xl">Sign Up</CardTitle>
+				<CardTitle className="text-lg md:text-xl">{t('app.auth.register.page.title')}</CardTitle>
 				<CardDescription className="text-xs md:text-sm">
-					Enter your information to create an account
+					{t('app.auth.register.page.description')}
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<div className="grid gap-4">
-					{errorMessage.prismaError && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.prismaError}</p>}
+					{errorMessage.betterError && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.betterError}</p>}
 					<div className="grid grid-cols-2 gap-x-4 gap-y-2">
 						<div className="grid gap-2">
-							<Label htmlFor="first-name">First name</Label>
+							<Label htmlFor="first-name">{t('app.auth.register.page.form.firstName.label')}</Label>
 							<Input
 								id="first-name"
-								placeholder="Max"
+								placeholder={t('app.auth.register.page.form.firstName.placeholder')}
 								required
 								onChange={(e) => {
 									setFirstName(e.target.value);
@@ -81,10 +82,10 @@ export default function SignUp() {
 							/>
 						</div>
 						<div className="grid gap-2">
-							<Label htmlFor="last-name">Last name</Label>
+							<Label htmlFor="last-name">{t('app.auth.register.page.form.lastName.label')}</Label>
 							<Input
 								id="last-name"
-								placeholder="Robinson"
+								placeholder={t('app.auth.register.page.form.lastName.placeholder')}
 								required
 								onChange={(e) => {
 									setLastName(e.target.value);
@@ -95,11 +96,11 @@ export default function SignUp() {
 						{errorMessage.name && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.name}</p>}
 					</div>
 					<div className="grid gap-2">
-						<Label htmlFor="email">Email</Label>
+						<Label htmlFor="email">{t('app.auth.register.page.form.email.label')}</Label>
 						<Input
 							id="email"
 							type="email"
-							placeholder="m@example.com"
+							placeholder={t('app.auth.register.page.form.email.placeholder')}
 							required
 							onChange={(e) => {
 								setEmail(e.target.value);
@@ -109,31 +110,31 @@ export default function SignUp() {
 						{errorMessage.email && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.email}</p>}
 					</div>
 					<div className="grid gap-2">
-						<Label htmlFor="password">Password</Label>
+						<Label htmlFor="password">{t('app.auth.register.page.form.password.label')}</Label>
 						<Input
 							id="password"
 							type="password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							autoComplete="new-password"
-							placeholder="Password"
+							placeholder={t('app.auth.register.page.form.password.placeholder')}
 						/>
 						{errorMessage.password && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.password}</p>}
 					</div>
 					<div className="grid gap-2">
-						<Label htmlFor="password">Confirm Password</Label>
+						<Label htmlFor="password">{t('app.auth.register.page.form.confirmPassword.label')}</Label>
 						<Input
 							id="password_confirmation"
 							type="password"
 							value={passwordConfirmation}
 							onChange={(e) => setPasswordConfirmation(e.target.value)}
 							autoComplete="new-password"
-							placeholder="Confirm Password"
+							placeholder={t('app.auth.register.page.form.confirmPassword.placeholder')}
 						/>
 						{errorMessage.passwordsMatch && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.passwordsMatch}</p>}
 					</div>
 					<div className="grid gap-2">
-						<Label htmlFor="image">Profile Image (optional)</Label>
+						<Label htmlFor="image">{t('app.auth.register.page.form.image.label')}</Label>
 						<div className="flex items-end gap-4">
 							{imagePreview && (
 								<div className="relative w-16 h-16 rounded-sm overflow-hidden">
@@ -188,7 +189,7 @@ export default function SignUp() {
 										setLoading(true);
 									},
 									onError: (ctx) => {
-										setErrorMessage({prismaError: ctx.error.message})
+										setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
 									},
 									onSuccess: async () => {
 										router.push("/dashboard");
@@ -201,12 +202,9 @@ export default function SignUp() {
 									error.errors.forEach((err) => {
 										const key = err.path.join(".");
 										messages[key] = err.message;
-										toast.error(err.message);
 									});
 									
 									setErrorMessage(messages);
-								} else {
-									toast.error("An unexpected error occurred")
 								}
 								setLoading(false)
 							}
@@ -215,7 +213,7 @@ export default function SignUp() {
 						{loading ? (
 							<Loader2 size={16} className="animate-spin" />
 						) : (
-							"Create an account"
+							t('app.auth.register.page.button.submit')
 						)}
 					</Button>
 				</div>
@@ -227,7 +225,7 @@ export default function SignUp() {
 						href="/auth/login"
 						className="underline"
 					>
-						<span>Sign In</span>
+						<span>{t('app.auth.register.page.link.login')}</span>
 					</Link>
 					</p>
 				</div>
