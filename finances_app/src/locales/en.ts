@@ -1,0 +1,130 @@
+
+export default {
+	app: {
+		auth: {
+			login: {
+				page:{
+					title: "Sign In",
+					description: "Enter your email below to login to your account",
+					error: {
+						email: "Please enter a valid email address",
+						password: "Password must be at least 6 characters",
+					},
+					form: {
+						email: {
+							label: "Email",
+							placeholder: "m@example.com",
+						},
+						password: {
+							label: "Password",
+							placeholder: "password",
+						},
+					},
+					link: {
+						forgotPassword: "Forgot your password?",
+						register: "Sign Up",
+					},
+					button: {
+						submit: "Login",
+						google: "Sign in with Google",
+						github: "Sign in with Github",
+					},
+				},
+			},
+			register: {
+				page: {
+					title: "Sign Up",
+					description: "Enter your information to create an account",
+					error: {
+						email: "Please enter a valid email address",
+						password: "Password must be at least 6 characters",
+						passwordMatch: "Passwords do not match",
+					},
+					form: {
+						firstName: {
+							label: "First name",
+							placeholder: "Max",
+						},
+						lastName: {
+							label: "Last name",
+							placeholder: "Robinson",
+						},
+						email: {
+							label: "Email",
+							placeholder: "m@example.com"
+						},
+						password: {
+							label: "Password",
+							placeholder: "Password",
+						},
+						confirmPassword: {
+							label: "Confirm Password",
+							placeholder: "Confirm Password",
+						},
+						image: {
+							label: "Profile Image (optional)",
+						},
+					},
+					button: {
+						submit: "Create an account",
+					},
+					link: {
+						login: "Sign In",
+					},
+				},
+			},
+		},
+		dashboard: {
+			page: {
+				title: "Welcome to your dashboard!",
+			},
+			settings: {
+				page: {
+					items: {
+						account: {
+							title: "Account",
+						},
+						appearance: {
+							title: "Appearance",
+						},
+					},
+				},
+				layout: {
+					title: "Settings",
+					description: "Manage your account settings and preferences.",
+				},
+			},
+		},
+	},
+	components: {
+		navUser: {
+			setting: "Settings",
+			logOut: "Logout",
+		},
+	},
+	BASE_ERROR_CODES: {
+		USER_NOT_FOUND: "User not found.",
+		FAILED_TO_CREATE_USER: "Failed to create user.",
+		FAILED_TO_CREATE_SESSION: "Failed to create session.",
+		FAILED_TO_UPDATE_USER: "Failed to update user.",
+		FAILED_TO_GET_SESSION: "Failed to retrieve session.",
+		INVALID_PASSWORD: "Invalid password.",
+		INVALID_EMAIL: "Invalid email address.",
+		INVALID_EMAIL_OR_PASSWORD: "Incorrect email or password.",
+		SOCIAL_ACCOUNT_ALREADY_LINKED: "This social account is already linked to a user.",
+		PROVIDER_NOT_FOUND: "Provider not found.",
+		INVALID_TOKEN: "Invalid token.",
+		ID_TOKEN_NOT_SUPPORTED: "ID token not supported.",
+		FAILED_TO_GET_USER_INFO: "Failed to retrieve user information.",
+		USER_EMAIL_NOT_FOUND: "User email address not found.",
+		EMAIL_NOT_VERIFIED: "Email address not verified.",
+		PASSWORD_TOO_SHORT: "Password is too short.",
+		PASSWORD_TOO_LONG: "Password is too long.",
+		USER_ALREADY_EXISTS: "User already exists.",
+		EMAIL_CAN_NOT_BE_UPDATED: "Email address cannot be updated.",
+		CREDENTIAL_ACCOUNT_NOT_FOUND: "Credential account not found.",
+		SESSION_EXPIRED: "Session expired. Please log in again.",
+		FAILED_TO_UNLINK_LAST_ACCOUNT: "Cannot unlink the last connected account.",
+		ACCOUNT_NOT_FOUND: "Account not found.",
+	},
+} as const
