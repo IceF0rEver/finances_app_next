@@ -14,7 +14,7 @@ export default function DarkMode() {
         <Label
           htmlFor="light"
           className={`flex h-6 w-6 items-center justify-center rounded-full cursor-pointer  ${
-            theme === "light" ? "bg-primary/70" : "hover:bg-primary/50"
+            theme === "light" ? "bg-primary" : "hover:bg-primary/50"
           }`}
         >
           <Sun className="h-4 w-4" />
@@ -25,7 +25,7 @@ export default function DarkMode() {
         <Label
           htmlFor="dark"
           className={`flex h-6 w-6 items-center justify-center rounded-full cursor-pointer  ${
-            theme === "dark" ? "bg-primary/70" : "hover:bg-primary/50"
+            theme === "dark" ? "bg-primary" : "hover:bg-primary/50"
           }`}
         >
           <Moon className="h-4 w-4" />
@@ -36,7 +36,7 @@ export default function DarkMode() {
         <Label
           htmlFor="system"
           className={`flex h-6 w-6 items-center justify-center rounded-full cursor-pointer ${
-            theme === "system" ? "bg-primary/70" : "hover:bg-primary/50"
+            theme === "system" ? "bg-primary" : "hover:bg-primary/50"
           }`}
         >
           <MonitorCog className="h-4 w-4" />
