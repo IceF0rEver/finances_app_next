@@ -78,7 +78,31 @@ export default {
 			page: {
 				title: "Bienvenu sur votre dashboard !"
 			},
-			settings : {
+			settings: {
+				components: {
+					appearance: {
+						title: "Apparence",
+						description: "Choisissez votre langue, couleur et thème préférés.",
+						form: {
+							language: {
+								label: "Langue",
+								description: "Choisissez la langue que vous souhaitez utiliser dans le tableau de bord.",
+							},
+							darkMode: {
+								label: "Thème",
+								description: "Choisissez le thème que vous souhaitez utiliser dans le tableau de bord.",
+							},
+							themeColor: {
+								label: "Couleur",
+								description: "Choisissez la couleur que vous souhaitez utiliser dans le tableau de bord.",
+							},
+						}
+					},
+					account: {
+						title: "Compte",
+						description: "Mettez à jour les paramètres de votre compte.",
+					},
+				},
 				page: {
 					items: {
 						account: {
@@ -100,6 +124,26 @@ export default {
 		navUser: {
 			setting: "Paramètres",
 			logOut: "Déconnexion"
+		},
+		utils: {
+			selectLang: {
+				select: "Choisir une langue",
+				fr: "Français",
+				en: "Anglais",
+			},
+			themeColor: {
+				placeholder: "Choisissez une couleur",
+				color:{
+					default: "Défaut",
+					red: "Rouge",
+					rose: "Rose",
+					orange: "Orange",
+					green: "Vert",
+					blue: "Bleu",
+					yellow: "Jaune",
+					violet: "Violet",
+				},
+			},
 		},
 	},
 	BASE_ERROR_CODES: {

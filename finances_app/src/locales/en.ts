@@ -79,6 +79,30 @@ export default {
 				title: "Welcome to your dashboard!",
 			},
 			settings: {
+				components: {
+					appearance: {
+						title: "Appearance",
+						description: "Choose your preferred language, color, and theme.",
+						form: {
+							language: {
+								label: "Language",
+								description: "Choose the language you want to use in the dashboard.",
+							},
+							darkMode: {
+								label: "Theme",
+								description: "Choose the theme you want to use in the dashboard.",
+							},
+							themeColor: {
+								label: "Color",
+								description: "Choose the color you want to use in the dashboard.",
+							},
+						}
+					},
+					account: {
+						title: "Account",
+						description: "Update your account settings.",
+					},
+				},
 				page: {
 					items: {
 						account: {
@@ -100,6 +124,26 @@ export default {
 		navUser: {
 			setting: "Settings",
 			logOut: "Logout",
+		},
+		utils: {
+			selectLang: {
+				select: "Select a language",
+				fr: "French",
+				en: "English",
+			},
+			themeColor: {
+				placeholder: "Choose the color",
+				color:{
+					default: "Default",
+					red: "Red",
+					rose: "Rose",
+					orange: "Orange",
+					green: "Green",
+					blue: "Blue",
+					yellow: "Yellow",
+					violet: "Violet",
+				},
+			},
 		},
 	},
 	BASE_ERROR_CODES: {
