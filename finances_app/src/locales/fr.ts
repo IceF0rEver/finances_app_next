@@ -2,7 +2,7 @@
 export default {
 	app: {
 		auth: {
-			fortgetPassword: {
+			forgetPassword: {
 				page: {
 					title: "Mot de passe oublié",
 					description: "Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
