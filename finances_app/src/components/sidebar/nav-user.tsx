@@ -10,7 +10,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/src/components/ui/avatar"
+} from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,13 +19,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/src/components/ui/sidebar"
+} from "@/components/ui/sidebar"
 import { useRouter } from "next/navigation"
 import { authClient } from "../../lib/auth-client"
 import Link from "next/link"
@@ -47,7 +47,7 @@ export function NavUser({
   
     const handleSignOut = async () => {
         await authClient.signOut();
-        router.push('/auth/login');
+        router.push(`/auth/login`);
     };
 
   return (
