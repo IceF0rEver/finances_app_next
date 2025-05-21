@@ -22,24 +22,24 @@ export default function Page() {
 	
 	const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
 	const forgotPasswordSchema = z.object({
-		email: z.string().email(t('app.auth.forgotPassword.page.error.email')),
+		email: z.string().email(t('app.auth.fortgetPassword.page.error.email')),
 	});
 
 	return (
 		<section className="flex h-screen justify-center items-center">
 			<Card className="w-full max-w-md">
 				<CardHeader>
-					<CardTitle>{t('app.auth.forgotPassword.page.title')}</CardTitle>
-					<CardDescription>{t('app.auth.forgotPassword.page.description')}</CardDescription>
+					<CardTitle>{t('app.auth.fortgetPassword.page.title')}</CardTitle>
+					<CardDescription>{t('app.auth.fortgetPassword.page.description')}</CardDescription>
 				</CardHeader>
 				<CardContent className="grid gap-4">
 					{errorMessage.betterError && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.betterError}</p>}
 					<div className="grid gap-2">
-						<Label htmlFor="email">{t('app.auth.forgotPassword.page.form.email.label')}</Label>
+						<Label htmlFor="email">{t('app.auth.fortgetPassword.page.form.email.label')}</Label>
 						<Input
 							id="email"
 							type="email"
-							placeholder={t('app.auth.forgotPassword.page.form.email.placeholder')}
+							placeholder={t('app.auth.fortgetPassword.page.form.email.placeholder')}
 							required
 							onChange={(e) => {
 							setEmail(e.target.value);
@@ -70,7 +70,7 @@ export default function Page() {
 										setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
 									},
 									onSuccess: async () => {
-										toast.success(t('app.auth.forgotPassword.page.toast.success'))
+										toast.success(t('app.auth.fortgetPassword.page.toast.success'))
 										router.push("/auth/login")
 									},
 								});
@@ -92,7 +92,7 @@ export default function Page() {
 						{loading ? (
 							<Loader2 size={16} className="animate-spin" />
 						) : (
-							<p> {t('app.auth.forgotPassword.page.button.submit')} </p>
+							<p> {t('app.auth.fortgetPassword.page.button.submit')} </p>
 						)}
 					</Button>
 				</CardContent>
@@ -103,7 +103,7 @@ export default function Page() {
 							href="/auth/login"
 							className="underline"
 						>
-							<span>{t('app.auth.forgotPassword.page.link.login')}</span>
+							<span>{t('app.auth.fortgetPassword.page.link.login')}</span>
 						</Link>
 						</p>
 					</div>

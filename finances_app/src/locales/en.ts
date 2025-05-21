@@ -2,7 +2,7 @@
 export default {
 	app: {
 		auth: {
-			forgotPassword: {
+			fortgetPassword: {
 				page: {
 					title: "Forgot Password",
 					description: "Enter your email address and we'll send you a link to reset your password.",
@@ -19,7 +19,7 @@ export default {
 						login: "Login",
 					},
 					button: {
-						submit: "Send email",
+						submit: "Send the link",
 					},
 					toast: {
 						success : "Link sent successfully!"
