@@ -2,6 +2,56 @@
 export default {
 	app: {
 		auth: {
+			fortgotPassword: {
+				page: {
+					title: "Mot de passe oublié",
+					description: "Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+					error: {
+						email: "Veuillez entrer une adresse e-mail valide",
+					},
+					form: {
+						email:{
+							label: "E-mail",
+							placeholder: "m@exemple.com",
+						},
+					},
+					link: {
+						login: "Connexion",
+					},
+					button: {
+						submit: "Envoyer l'email",
+					},
+					toast: {
+						success : "Lien envoyer avec succès !"
+					},
+				},
+			},
+			resetPassword: {
+				page: {
+					title: "Modifier votre mot de passe",
+					description: "Entrez vos informations pour modifier votre mot de passe.",
+					error: {
+						password: "Le mot de passe doit contenir au moins 6 caractères",
+						passwordMatch: "Les mots de passe ne correspondent pas",
+					},
+					form: {
+						password: {
+							label: "Nouveau mot de passe",
+							placeholder: "Nouveau mot de passe",
+						},
+						confirmPassword: {
+							label: "Confirmer le nouveau mot de passe",
+							placeholder: "Nouveau mot de passe",
+						},
+					},
+					button: {
+						submit: "Modifier",
+					},
+					toast: {
+						success : "Mot de passe modifier avec succès !"
+					},
+				},
+			},
 			login: {
 				page: {
 					title: "Connexion",
@@ -121,6 +171,19 @@ export default {
 		},
 	},
 	components: {
+		appSideBar: {
+			navMain: {
+				title: "Mon budget",
+				items: {
+					budget: {
+						name: "Répartition",
+					},
+					subscription: {
+						name: "Abonnement",
+					},
+				},
+			},
+		},
 		navUser: {
 			setting: "Paramètres",
 			logOut: "Déconnexion"
@@ -147,6 +210,7 @@ export default {
 		},
 	},
 	BASE_ERROR_CODES: {
+		VALIDATION_ERROR: "Erreur de validation.",
 		USER_NOT_FOUND: "Utilisateur introuvable.",
 		FAILED_TO_CREATE_USER: "Échec de la création de l'utilisateur.",
 		FAILED_TO_CREATE_SESSION: "Échec de la création de la session.",
@@ -170,5 +234,6 @@ export default {
 		SESSION_EXPIRED: "Session expirée. Veuillez vous reconnecter.",
 		FAILED_TO_UNLINK_LAST_ACCOUNT: "Impossible de dissocier le dernier compte lié.",
 		ACCOUNT_NOT_FOUND: "Compte introuvable.",
+		undefined: "Une erreur inattendue est survenue !",
 	},	
 } as const

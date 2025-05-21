@@ -2,6 +2,56 @@
 export default {
 	app: {
 		auth: {
+			forgotPassword: {
+				page: {
+					title: "Forgot Password",
+					description: "Enter your email address and we'll send you a link to reset your password.",
+					error: {
+						email: "Please enter a valid email address",
+					},
+					form: {
+						email: {
+							label: "Email",
+							placeholder: "m@example.com",
+						},
+					},
+					link: {
+						login: "Login",
+					},
+					button: {
+						submit: "Send email",
+					},
+					toast: {
+						success : "Link sent successfully!"
+					},
+				},
+			},
+			resetPassword: {
+				page: {
+					title: "Change your password",
+					description: "Enter your information to change your password.",
+					error: {
+						password: "The password must be at least 6 characters long",
+						passwordMatch: "Passwords do not match",
+					},
+					form: {
+						password: {
+							label: "New password",
+							placeholder: "New password",
+						},
+						confirmPassword: {
+							label: "Confirm new password",
+							placeholder: "New password",
+						},
+					},
+					button: {
+						submit: "Change",
+					},
+					toast: {
+						success: "Password successfully changed!",
+					},
+				},
+			},
 			login: {
 				page:{
 					title: "Sign In",
@@ -121,6 +171,19 @@ export default {
 		},
 	},
 	components: {
+		appSideBar: {
+			navMain: {
+				title: "My budget",
+				items: {
+					budget: {
+						name: "Distribution",
+					},
+					subscription: {
+						name: "Subscription",
+					},
+				},
+			},
+		},
 		navUser: {
 			setting: "Settings",
 			logOut: "Logout",
@@ -147,6 +210,7 @@ export default {
 		},
 	},
 	BASE_ERROR_CODES: {
+		VALIDATION_ERROR: "Validation error.",
 		USER_NOT_FOUND: "User not found.",
 		FAILED_TO_CREATE_USER: "Failed to create user.",
 		FAILED_TO_CREATE_SESSION: "Failed to create session.",
@@ -170,5 +234,6 @@ export default {
 		SESSION_EXPIRED: "Session expired. Please log in again.",
 		FAILED_TO_UNLINK_LAST_ACCOUNT: "Cannot unlink the last connected account.",
 		ACCOUNT_NOT_FOUND: "Account not found.",
+		undefined: "An unexpected error has occurred!",
 	},
 } as const
