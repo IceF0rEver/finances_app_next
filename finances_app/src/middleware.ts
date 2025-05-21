@@ -8,19 +8,22 @@ const I18nMiddleware = createI18nMiddleware({
 });
 
 export async function middleware(request: NextRequest) {
+  
+  const sessionCookie = getSessionCookie(request);
+  const {pathname} = request.nextUrl;
+  
+  const locale = pathname.split('/')[1];
+  
+  if (sessionCookie && pathname.startsWith(`/${locale}/auth`)) {
+    return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url));
+  }
+  
+  if (!sessionCookie && pathname.startsWith(`/${locale}/dashboard`)) {
+    return NextResponse.redirect(new URL(`/${locale}`, request.url));
+  }
+  
   const i18nResponse = I18nMiddleware(request);
   if (i18nResponse) return i18nResponse;
-
-  const sessionCookie = getSessionCookie(request);
-  const { pathname } = request.nextUrl;
-
-  if (sessionCookie && pathname.startsWith("/auth")) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
-  if (!sessionCookie && pathname.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
 
   return NextResponse.next();
 }
@@ -28,7 +31,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)",
-    "/auth/:path*",
-    "/dashboard/:path*",
+    "/(fr|en)/auth/:path*",
+    "/(fr|en)/dashboard/:path*",
   ],
 };
