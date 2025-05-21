@@ -1,8 +1,8 @@
 "use client";
-import setGlobalColorTheme from "@/src/lib/theme-colors";
+import setGlobalColorTheme from "@/lib/theme-colors";
 import { useTheme } from "next-themes";
 import { ThemeProviderProps } from "next-themes";
-import { ThemeColorsStateParams, ThemeColors } from "@/src/types/theme-types";
+import { ThemeColorsStateParams, ThemeColors } from "@/types/theme-types";
 import React, {
   createContext,
   useContext,

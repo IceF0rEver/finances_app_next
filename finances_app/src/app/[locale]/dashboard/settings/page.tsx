@@ -5,11 +5,11 @@ import { SidebarContent,
     SidebarMenu, 
     SidebarMenuItem,
     SidebarMenuButton } 
-from "@/src/components/ui/sidebar"
+from "@/components/ui/sidebar"
 import { useState } from "react"
-import { useI18n } from "@/src/locales/client";
-import Appearance from "@/src/components/settings/appearance";
-import Account from "@/src/components/settings/account";
+import { useI18n } from "@/locales/client";
+import Appearance from "@/components/settings/appearance";
+import Account from "@/components/settings/account";
 
 export default function Page() {
     const t = useI18n();

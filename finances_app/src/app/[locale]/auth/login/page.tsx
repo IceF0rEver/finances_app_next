@@ -1,24 +1,24 @@
 "use client"
 
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import { Checkbox } from "@/src/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { Loader2, Key } from "lucide-react";
-import { signIn } from "@/src/lib/auth-client";
+import { signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { cn } from "@/src/lib/utils";
+import { cn } from "@/lib/utils";
 import { string, z } from "zod";
-import { useI18n } from "@/src/locales/client";
+import { useI18n } from "@/locales/client";
 
 export default function SignIn() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
-	
+
 	const router = useRouter();
 	const t = useI18n();
 	
@@ -59,7 +59,7 @@ export default function SignIn() {
 							<div className="flex items-center">
 								<Label htmlFor="password">{t('app.auth.login.page.form.password.label')}</Label>
 								<Link
-									href="#"
+									href="/auth/forgot-password"
 									className="ml-auto inline-block text-sm underline"
 								>
 									{t('app.auth.login.page.link.forgotPassword')}
@@ -76,6 +76,7 @@ export default function SignIn() {
 							{errorMessage.password && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.password}</p>}
 						</div>
 						<Button
+							variant={"default"}
 							type="submit"
 							className="w-full"
 							disabled={loading}
@@ -98,7 +99,7 @@ export default function SignIn() {
 											setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
 										},
 										onSuccess: async () => {
-											router.push("/dashboard")
+											router.push(`/dashboard`)
 										},
 									});
 								} catch (error) {
@@ -119,7 +120,7 @@ export default function SignIn() {
 							{loading ? (
 								<Loader2 size={16} className="animate-spin" />
 							) : (
-								<p> {t('app.auth.login.page.button.submit')} </p>
+								<p > {t('app.auth.login.page.button.submit')} </p>
 							)}
 						</Button>
 
@@ -154,7 +155,7 @@ export default function SignIn() {
 										setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
 									},
 									onSuccess: async () => {
-										router.push("/dashboard");
+										router.push(`/dashboard`)
 									},
 									},
 									);
@@ -191,7 +192,7 @@ export default function SignIn() {
 										setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
 									},
 									onSuccess: async () => {
-										router.push("/dashboard");
+										router.push(`/dashboard`)
 									},
 									},
 									);

@@ -8,12 +8,12 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/src/components/ui/select";
-import { useThemeContext } from "@/src/components/providers/theme-color-provider";
+} from "@/components/ui/select";
+import { useThemeContext } from "@/components/providers/theme-color-provider";
 import { useTheme } from "next-themes";
-import { cn } from "@/src/lib/utils";
-import { ThemeColors } from "@/src/types/theme-types";
-import { useI18n } from "@/src/locales/client";
+import { cn } from "@/lib/utils";
+import { ThemeColors } from "@/types/theme-types";
+import { useI18n } from "@/locales/client";
 
 export default function ThemeColor() {
     const { themeColor, setThemeColor } = useThemeContext();

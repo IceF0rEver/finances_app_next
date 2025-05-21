@@ -1,7 +1,7 @@
 "use client"
 
-import { Label } from "@/src/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/src/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Sun, Moon, MonitorCog } from "lucide-react"
 import { useTheme } from "next-themes"
 

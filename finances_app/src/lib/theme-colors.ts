@@ -1,4 +1,4 @@
-import { ThemeColors } from "@/src/types/theme-types";
+import { ThemeColors } from "@/types/theme-types";
 
 const themes = {
     Default: {

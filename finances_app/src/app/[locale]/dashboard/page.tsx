@@ -1,5 +1,5 @@
-import { getUser } from "@/src/lib/server";
-import { getI18n } from "@/src/locales/server";
+import { getUser } from "@/lib/server";
+import { getI18n } from "@/locales/server";
 
 export default async function Page() {
 

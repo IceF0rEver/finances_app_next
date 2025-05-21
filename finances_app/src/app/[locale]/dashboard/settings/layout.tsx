@@ -1,5 +1,5 @@
-import { Separator } from "@/src/components/ui/separator"
-import { getI18n } from "@/src/locales/server";
+import { Separator } from "@/components/ui/separator"
+import { getI18n } from "@/locales/server";
 export default async function Layout({ children }: { children: React.ReactNode }) {
     const t = await getI18n();
     return (

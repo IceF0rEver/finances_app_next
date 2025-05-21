@@ -1,8 +1,8 @@
 "use client"
 
-import { Separator } from "@/src/components/ui/separator"
+import { Separator } from "@/components/ui/separator"
 import { Label } from "@radix-ui/react-label"
-import { useI18n } from "@/src/locales/client"
+import { useI18n } from "@/locales/client"
 import DarkMode from "../utils/dark-mode"
 import SelectLang from "../utils/select-lang"
 import ThemeColor from "../utils/theme-color"

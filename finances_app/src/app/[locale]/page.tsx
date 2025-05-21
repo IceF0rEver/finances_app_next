@@ -1,7 +1,7 @@
 "use client"
 import { useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import { useCurrentLocale } from '@/src/locales/client';
+import { useCurrentLocale } from '@/locales/client';
 
 export default function Home() {
 	const router = useRouter();
@@ -9,7 +9,7 @@ export default function Home() {
 	const locale  = useCurrentLocale();
 	useEffect(() => {
 		if (pathname === `/${locale}`){
-			router.push(`/${locale}/auth/login`)
+			router.push(`/auth/login`)
 		}
 	}, [])
 }
