@@ -11,7 +11,7 @@ export default {
 					},
 					form: {
 						email: {
-							label: "Email",
+							label: "Email Address",
 							placeholder: "m@example.com",
 						},
 					},
@@ -62,7 +62,7 @@ export default {
 					},
 					form: {
 						email: {
-							label: "Email",
+							label: "Email Address",
 							placeholder: "m@example.com",
 						},
 						password: {
@@ -100,7 +100,7 @@ export default {
 							placeholder: "Robinson",
 						},
 						email: {
-							label: "Email",
+							label: "Email Address",
 							placeholder: "m@example.com"
 						},
 						password: {
@@ -151,6 +151,37 @@ export default {
 					account: {
 						title: "Account",
 						description: "Update your account settings.",
+						form: {
+							changePassword: {
+								label: "Change my password",
+								description: "An email will be sent to you. Click the link in the email to set a new password.",
+								confirmTitle: "Confirm sending the password reset email",
+								confirmDescription: "A reset link will be sent to your email address. This action is irreversible. Do you want to proceed?",
+							},
+							name: {
+								label: "Name",
+								placeholder: "Max Robinson",
+							},
+							email: {
+								label: "Email Address",
+								placeholder: "m@exemple.com",
+							},
+						},
+						error: {
+							email: "Please enter a valid email address",
+						},
+						button: {
+							update: "Update",
+							cancel: "Cancel",
+							continue: "Continue",
+						},
+						link: {
+							changePassword: "Send password reset email",
+						},
+						toast: {
+							emailSuccess: "Email address updated successfully!",
+  							nameOrImageSuccess: "Name and/or image updated successfully!",
+						},
 					},
 				},
 				page: {
@@ -234,6 +265,7 @@ export default {
 		SESSION_EXPIRED: "Session expired. Please log in again.",
 		FAILED_TO_UNLINK_LAST_ACCOUNT: "Cannot unlink the last connected account.",
 		ACCOUNT_NOT_FOUND: "Account not found.",
+		EMAIL_IS_THE_SAME: "Same Email address.",
 		undefined: "An unexpected error has occurred!",
 	},
 } as const

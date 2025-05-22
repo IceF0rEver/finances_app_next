@@ -11,7 +11,7 @@ export default {
 					},
 					form: {
 						email:{
-							label: "E-mail",
+							label: "Adresse e-mail",
 							placeholder: "m@exemple.com",
 						},
 					},
@@ -62,7 +62,7 @@ export default {
 					},
 					form: {
 						email: {
-							label: "E-mail",
+							label: "Adresse e-mail",
 							placeholder: "m@exemple.com",
 						},
 						password: {
@@ -100,7 +100,7 @@ export default {
 							placeholder: "Robinson",
 						},
 						email: {
-							label: "E-mail",
+							label: "Adresse e-mail",
 							placeholder: "m@exemple.com",
 						},
 						password: {
@@ -151,6 +151,37 @@ export default {
 					account: {
 						title: "Compte",
 						description: "Mettez à jour les paramètres de votre compte.",
+						form: {
+							changePassword: {
+								label: "Changer mon mot de passe",
+  								description: "Un e-mail vous sera envoyé. Cliquez sur ce lien pour définir un nouveau mot de passe.",
+								confirmTitle: "Confirmer l'envoi de l'e-mail de réinitialisation",
+								confirmDescription: "Un lien de réinitialisation sera envoyé à votre adresse e-mail. Cette action est irréversible. Voulez-vous continuer ?",
+							},
+							name: {
+								label: "Prénom Nom",
+								placeholder: "Max Robinson",
+							},
+							email: {
+								label: "Adresse e-mail",
+								placeholder: "m@exemple.com",
+							},
+						},
+						error: {
+							email: "Veuillez entrer une adresse e-mail valide",
+						},
+						button: {
+							update: "Modifier",
+							cancel: "Annuler",
+							continue: "Continuer",
+						},
+						link: {
+							changePassword: "Envoyer l'email de changement",
+						},
+						toast: {
+							emailSuccess: "Adresse e-mail modifier avec succès !",
+							nameOrImageSuccess: "Prénom Nom et/ou image modifier avec succès !",
+						},
 					},
 				},
 				page: {
@@ -234,6 +265,7 @@ export default {
 		SESSION_EXPIRED: "Session expirée. Veuillez vous reconnecter.",
 		FAILED_TO_UNLINK_LAST_ACCOUNT: "Impossible de dissocier le dernier compte lié.",
 		ACCOUNT_NOT_FOUND: "Compte introuvable.",
+		EMAIL_IS_THE_SAME: "Adresse e-mail identique.",
 		undefined: "Une erreur inattendue est survenue !",
 	},	
 } as const

@@ -22,6 +22,11 @@ export const auth = betterAuth({
 			});
         },
     },
+    user: {
+        changeEmail: {
+            enabled: true,
+        }
+    },
     // socialProviders: {
     //     google: {
     //         clientId: process.env.GOOGLE_CLIENT_ID!,

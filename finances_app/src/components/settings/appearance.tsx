@@ -20,21 +20,21 @@ export default function Appearance() {
             <section className="flex flex-col w-full gap-9">
                 <article className="flex flex-col gap-2">
                     <div className="flex flex-row gap-2">
-                        <Label className="my-auto">{t('app.dashboard.settings.components.appearance.form.language.label')} :</Label>
+                        <p className="my-auto">{t('app.dashboard.settings.components.appearance.form.language.label')} :</p>
                         <SelectLang />
                     </div>
                     <p className="text-sm opacity-60">{t('app.dashboard.settings.components.appearance.form.language.description')}</p>
                 </article>
                 <article className="flex flex-col gap-2">
                     <div className="flex flex-row gap-2">
-                        <Label className="my-auto">{t('app.dashboard.settings.components.appearance.form.darkMode.label')} :</Label>
+                        <p className="my-auto">{t('app.dashboard.settings.components.appearance.form.darkMode.label')} :</p>
                         <DarkMode />
                     </div>
                     <p className="text-sm opacity-60">{t('app.dashboard.settings.components.appearance.form.darkMode.description')}</p>
                 </article>
                 <article className="flex flex-col gap-2">
                     <div className="flex flex-row gap-2">
-                        <Label className="my-auto">{t('app.dashboard.settings.components.appearance.form.themeColor.label')} :</Label>
+                        <p className="my-auto">{t('app.dashboard.settings.components.appearance.form.themeColor.label')} :</p>
                         <ThemeColor />
                     </div>
                     <p className="text-sm opacity-60">{t('app.dashboard.settings.components.appearance.form.themeColor.description')}</p>

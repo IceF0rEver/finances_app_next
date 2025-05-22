@@ -47,7 +47,7 @@ export function AppSidebar() {
 	const dataUser = {
 		name : session?.user.name || "",
 		email : session?.user.email || "",
-		avatar : session?.user.image || ""
+		avatar : session?.user.image || "/image/userDefault.webp"
 	};
 	
   	return (
