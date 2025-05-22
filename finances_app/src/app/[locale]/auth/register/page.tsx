@@ -56,6 +56,46 @@ export default function SignUp() {
 		}
 	};
 
+	const handleSubmit = async () => {
+		try {
+			setErrorMessage({});
+			const validatedData = signUpSchema.parse({
+				email,
+				password,
+				passwordConfirmation,
+				name: `${firstName} ${lastName}`,
+				image: image ? await convertImageToBase64(image) : "",
+			});
+
+			await signUp.email(validatedData, {
+				onResponse: () => {
+					setLoading(false);
+				},
+				onRequest: () => {
+					setLoading(true);
+				},
+				onError: (ctx) => {
+					setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
+				},
+				onSuccess: async () => {
+					router.push("/dashboard");
+				},
+			});
+		} catch (error) {
+			if (error instanceof z.ZodError) {
+				const messages: Record<string, string> = {};
+
+				error.errors.forEach((err) => {
+					const key = err.path.join(".");
+					messages[key] = err.message;
+				});
+									
+				setErrorMessage(messages);
+			}
+			setLoading(false)
+		}
+	};
+
 	return (
 		<section className="flex h-screen justify-center items-center">
 		<Card className="max-w-md w-full">
@@ -170,45 +210,7 @@ export default function SignUp() {
 						type="submit"
 						className="w-full"
 						disabled={loading}
-						onClick={async () => {
-							try {
-								setErrorMessage({});
-								const validatedData = signUpSchema.parse({
-									email,
-									password,
-									passwordConfirmation,
-									name: `${firstName} ${lastName}`,
-									image: image ? await convertImageToBase64(image) : "",
-								});
-
-								await signUp.email(validatedData, {
-									onResponse: () => {
-										setLoading(false);
-									},
-									onRequest: () => {
-										setLoading(true);
-									},
-									onError: (ctx) => {
-										setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
-									},
-									onSuccess: async () => {
-										router.push("/dashboard");
-									},
-								});
-							} catch (error) {
-								if (error instanceof z.ZodError) {
-									const messages: Record<string, string> = {};
-
-									error.errors.forEach((err) => {
-										const key = err.path.join(".");
-										messages[key] = err.message;
-									});
-									
-									setErrorMessage(messages);
-								}
-								setLoading(false)
-							}
-						}}
+						onClick={handleSubmit}
 					>
 						{loading ? (
 							<Loader2 size={16} className="animate-spin" />

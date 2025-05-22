@@ -28,6 +28,84 @@ export default function SignIn() {
 		password: z.string().min(6, t('app.auth.login.page.error.password')),
 	});
 	
+	const handleSubmitUser = async () => {
+		try {
+			setErrorMessage({});
+			const validatedData = signInSchema.parse({
+				email,
+				password,
+			});
+
+			await signIn.email(validatedData, {
+				onRequest: (ctx) => {
+					setLoading(true)
+				},
+				onResponse: (ctx) => {
+					setLoading(false)
+				},
+				onError: (ctx) => {
+					setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
+				},
+				onSuccess: async () => {
+					router.push(`/dashboard`)
+				},
+			});
+		} catch (error) {
+			if (error instanceof z.ZodError) {
+				const messages: Record<string, string> = {};
+
+				error.errors.forEach((err) => {
+					const key = err.path.join(".");
+					messages[key] = err.message;
+				});
+
+				setErrorMessage(messages);
+			}
+			setLoading(false)
+		}
+	};
+
+	const handleSubmitGoogle = async () => {
+		await signIn.social({
+			provider: "google",
+			callbackURL: "/dashboard"
+		},
+		{
+			onRequest: (ctx) => {
+				setLoading(true);
+			},
+			onResponse: (ctx) => {
+				setLoading(false);
+			},
+			onError: (ctx) => {
+				setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
+			},
+			onSuccess: async () => {
+				router.push(`/dashboard`)
+			},
+		});
+	};
+
+	const handleSubmitGithub = async () => {
+		await signIn.social({
+			provider: "github",
+			callbackURL: "/dashboard"
+		},
+		{
+			onRequest: (ctx) => {
+				setLoading(true);
+			},
+			onResponse: (ctx) => {
+				setLoading(false);
+			},
+			onError: (ctx) => {
+				setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
+			},
+			onSuccess: async () => {
+				router.push(`/dashboard`)
+			},
+		});
+	};
 	return (
 		<section className="flex h-screen justify-center items-center">
 			<Card className="max-w-md w-full">
@@ -80,42 +158,7 @@ export default function SignIn() {
 							type="submit"
 							className="w-full"
 							disabled={loading}
-							onClick={async () => {
-								try {
-									setErrorMessage({});
-									const validatedData = signInSchema.parse({
-										email,
-										password,
-									});
-
-									await signIn.email(validatedData, {
-										onRequest: (ctx) => {
-											setLoading(true)
-										},
-										onResponse: (ctx) => {
-											setLoading(false)
-										},
-										onError: (ctx) => {
-											setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
-										},
-										onSuccess: async () => {
-											router.push(`/dashboard`)
-										},
-									});
-								} catch (error) {
-									if (error instanceof z.ZodError) {
-										const messages: Record<string, string> = {};
-
-										error.errors.forEach((err) => {
-											const key = err.path.join(".");
-											messages[key] = err.message;
-										});
-
-										setErrorMessage(messages);
-									}
-									setLoading(false)
-								}
-							}}
+							onClick={handleSubmitUser}
 						>
 							{loading ? (
 								<Loader2 size={16} className="animate-spin" />
@@ -137,29 +180,7 @@ export default function SignIn() {
 									"w-full gap-2"
 								)}
 								disabled={loading}
-								onClick={async () => {
-									await signIn.social(
-									{
-									provider: "google",
-									callbackURL: "/dashboard"
-									},
-									{
-									onRequest: (ctx) => {
-										setLoading(true);
-									},
-									onResponse: (ctx) => {
-										setLoading(false);
-									},
-									onError: (ctx) => {
-										console.log(ctx.error)
-										setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
-									},
-									onSuccess: async () => {
-										router.push(`/dashboard`)
-									},
-									},
-									);
-								}}
+								onClick={handleSubmitGoogle}
 							>
 								<svg xmlns="http://www.w3.org/2000/svg" width="0.98em" height="1em" viewBox="0 0 256 262">
 									<path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
@@ -175,28 +196,7 @@ export default function SignIn() {
 									"w-full gap-2"
 								)}
 								disabled={loading}
-								onClick={async () => {
-									await signIn.social(
-									{
-									provider: "github",
-									callbackURL: "/dashboard"
-									},
-									{
-									onRequest: (ctx) => {
-										setLoading(true);
-									},
-									onResponse: (ctx) => {
-										setLoading(false);
-									},
-									onError: (ctx) => {
-										setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
-									},
-									onSuccess: async () => {
-										router.push(`/dashboard`)
-									},
-									},
-									);
-								}}
+								onClick={handleSubmitGithub}
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"

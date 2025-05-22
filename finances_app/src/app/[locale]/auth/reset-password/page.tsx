@@ -34,6 +34,42 @@ export default function Page() {
         path : ["passwordsMatch"],
     });
 
+	const handleSubmit = async () => {
+		try {
+			setErrorMessage({});
+			const validatedData = resetPasswordSchema.parse({
+				password,
+				passwordConfirmation,
+			});
+			await authClient.resetPassword({newPassword: validatedData.password, token: token as string}, {
+				onRequest: (ctx) => {
+					setLoading(true)
+				},
+				onResponse: (ctx) => {
+					setLoading(false)
+				},
+				onError: (ctx) => {
+					setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
+				},
+				onSuccess: async () => {
+					toast.success(t('app.auth.resetPassword.page.toast.success'))
+					router.push("/auth/login")
+				},
+			});
+		} catch (error) {
+			if (error instanceof z.ZodError) {
+				const messages: Record<string, string> = {};
+						
+				error.errors.forEach((err) => {
+					const key = err.path.join(".");
+					messages[key] = err.message;
+				});
+						
+				setErrorMessage(messages);
+			}
+			setLoading(false)
+		}
+	};
 	return (
 		<section className="flex h-screen justify-center items-center">
 			<Card className="w-full max-w-md">
@@ -72,42 +108,7 @@ export default function Page() {
 						className="w-full"
 						variant={"default"}
 						disabled={loading}
-						onClick={async () => {
-							try {
-								setErrorMessage({});
-								const validatedData = resetPasswordSchema.parse({
-									password,
-									passwordConfirmation,
-								});
-								await authClient.resetPassword({newPassword: validatedData.password, token: token as string}, {
-									onRequest: (ctx) => {
-										setLoading(true)
-									},
-									onResponse: (ctx) => {
-										setLoading(false)
-									},
-									onError: (ctx) => {
-										setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
-									},
-									onSuccess: async () => {
-										toast.success(t('app.auth.resetPassword.page.toast.success'))
-										router.push("/auth/login")
-									},
-								});
-							} catch (error) {
-								if (error instanceof z.ZodError) {
-									const messages: Record<string, string> = {};
-						
-									error.errors.forEach((err) => {
-										const key = err.path.join(".");
-										messages[key] = err.message;
-									});
-						
-									setErrorMessage(messages);
-								}
-								setLoading(false)
-							}
-						}} 
+						onClick={handleSubmit} 
 					>
                         {loading ? (
                             <Loader2 size={16} className="animate-spin" />
