@@ -26,7 +26,7 @@ export default function ChangePassword() {
             <p className="my-auto text-nowrap">{t("app.dashboard.settings.components.account.form.changePassword.label")} :</p>
             <AlertDialog open={open} onOpenChange={setOpen}>
                 <AlertDialogTrigger asChild>
-                    <Button type="button" variant={"default"} className="min-w-1/3">
+                    <Button type="button" variant={"default"} className="min-w-1/4">
                         <p>{t("app.dashboard.settings.components.account.link.changePassword")}</p>
                     </Button>
                 </AlertDialogTrigger>

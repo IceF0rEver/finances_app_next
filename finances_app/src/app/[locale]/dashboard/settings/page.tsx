@@ -21,7 +21,7 @@ export default function Page() {
     ];
 
     return (
-        <section className="md:grid md:grid-cols-5 p-6">
+        <section className="md:grid md:grid-cols-5 md:p-6">
             <aside className="md:col-span-1">
                 <SidebarContent>
                     <SidebarGroup>

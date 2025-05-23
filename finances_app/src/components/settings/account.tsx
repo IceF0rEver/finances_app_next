@@ -184,7 +184,7 @@ export default function Account() {
                 </form>
             </section>
             <Button 
-                className="mt-4 min-w-1/3" 
+                className="mt-4 min-w-1/4" 
                 onClick={handleSubmit}
             >
                 {loading ? (
