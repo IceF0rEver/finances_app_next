@@ -166,6 +166,9 @@ export default {
 								label: "Adresse e-mail",
 								placeholder: "m@exemple.com",
 							},
+							image: {
+								label: "Image de profil",
+							}
 						},
 						error: {
 							email: "Veuillez entrer une adresse e-mail valide",

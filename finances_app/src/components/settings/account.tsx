@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator"
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSession } from "@/lib/auth-client";
 import ChangePassword from "./change-password";
 import Image from "next/image";
@@ -23,9 +23,12 @@ export default function Account() {
     const [email, setEmail] = useState<string | null>(session?.user.email || null);
     const [imagePreview, setImagePreview] = useState<string | null>(session?.user.image || null);
     const [image, setImage] = useState<File | null>(null);
+    const [isImageChanged, setIsImageChanged] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
 
     const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
-    const updateuserSchema = z.object({
+    const updateUserSchema = z.object({
         email: z.string().email(t('app.dashboard.settings.components.account.error.email')),
         name: z.string(),
         image: z.string(),
@@ -35,6 +38,7 @@ export default function Account() {
 		const file = e.target.files?.[0];
 		if (file) {
 			setImage(file);
+            setIsImageChanged(true)
 			const reader = new FileReader();
 			reader.onloadend = () => {
 				setImagePreview(reader.result as string);
@@ -43,18 +47,27 @@ export default function Account() {
 		}
 	};
 
+    const handleRemoveImage = () => {
+        setImage(null);
+        setImagePreview(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+        setIsImageChanged(true);
+    }
+
     const handleSubmit = async () => {
         try {
             setErrorMessage({});
-            const validatedData = updateuserSchema.parse({
+            const validatedData = updateUserSchema.parse({
                 email,
                 name,
                 image: image ? await convertImageToBase64(image) : "",
             });
-            if (name != session?.user.name || image != session?.user.image) {
+            if (name != session?.user.name || isImageChanged) {
                 await authClient.updateUser({
                     ...(validatedData.name != session?.user.name && { name: validatedData.name }),
-                    ...(validatedData.image != session?.user.image && { image: validatedData.image })
+                    ...(isImageChanged && { image: validatedData.image })
                     }, {
                     onResponse: () => {
                         setLoading(false);
@@ -66,6 +79,7 @@ export default function Account() {
                         setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
                     },
                     onSuccess: async () => {
+                        setIsImageChanged(false)
                         toast.success(t('app.dashboard.settings.components.account.toast.nameOrImageSuccess'))
                     },
                 });
@@ -138,7 +152,7 @@ export default function Account() {
                         {errorMessage.email && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.email}</p>}
                     </div>
                     <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="image">{t('app.auth.register.page.form.image.label')}</Label>
+                        <Label htmlFor="image">{t('app.dashboard.settings.components.account.form.image.label')}</Label>
                         <div className="flex items-end gap-4 md:max-w-2/3">
                             {imagePreview && (
                                 <div className="relative w-16 h-16 rounded-sm overflow-hidden">
@@ -155,16 +169,13 @@ export default function Account() {
                                     id="image"
                                     type="file"
                                     accept="image/*"
-                                    // value={imagePreview}
                                     onChange={handleImageChange}
+                                    ref={fileInputRef}
                                 />
                                 {imagePreview && (
                                     <X
                                         className="cursor-pointer"
-                                        onClick={() => {
-                                            setImage(null);
-                                            setImagePreview(null);
-                                        }}
+                                        onClick={handleRemoveImage}
                                     />
                                 )}
                             </div>
