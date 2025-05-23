@@ -30,26 +30,6 @@ export default {
 				page: {
 					title: "Change your password",
 					description: "Enter your information to change your password.",
-					error: {
-						password: "The password must be at least 6 characters long",
-						passwordMatch: "Passwords do not match",
-					},
-					form: {
-						password: {
-							label: "New password",
-							placeholder: "New password",
-						},
-						confirmPassword: {
-							label: "Confirm new password",
-							placeholder: "New password",
-						},
-					},
-					button: {
-						submit: "Change",
-					},
-					toast: {
-						success: "Password successfully changed!",
-					},
 				},
 			},
 			login: {
@@ -223,6 +203,32 @@ export default {
 			logOut: "Logout",
 		},
 		utils: {
+			managePassword: {
+				error: {
+					password: "The password must be at least 6 characters long",
+					passwordMatch: "Passwords do not match",
+				},
+				form: {
+					currentPassword: {
+						label: "Current password",
+						placeholder: "Current password",
+					},
+					password: {
+						label: "New password",
+						placeholder: "New password",
+					},
+					confirmPassword: {
+						label: "Confirm new password",
+						placeholder: "New password",
+					},
+				},
+				button: {
+					submit: "Change",
+				},
+				toast: {
+					success: "Password successfully changed!",
+				},
+			},
 			selectLang: {
 				select: "Select a language",
 				fr: "French",

@@ -30,26 +30,6 @@ export default {
 				page: {
 					title: "Modifier votre mot de passe",
 					description: "Entrez vos informations pour modifier votre mot de passe.",
-					error: {
-						password: "Le mot de passe doit contenir au moins 6 caractères",
-						passwordMatch: "Les mots de passe ne correspondent pas",
-					},
-					form: {
-						password: {
-							label: "Nouveau mot de passe",
-							placeholder: "Nouveau mot de passe",
-						},
-						confirmPassword: {
-							label: "Confirmer le nouveau mot de passe",
-							placeholder: "Nouveau mot de passe",
-						},
-					},
-					button: {
-						submit: "Modifier",
-					},
-					toast: {
-						success : "Mot de passe modifier avec succès !"
-					},
 				},
 			},
 			login: {
@@ -153,10 +133,10 @@ export default {
 						description: "Mettez à jour les paramètres de votre compte.",
 						form: {
 							changePassword: {
-								label: "Changer mon mot de passe",
-  								description: "Un e-mail vous sera envoyé. Cliquez sur ce lien pour définir un nouveau mot de passe.",
-								confirmTitle: "Confirmer l'envoi de l'e-mail de réinitialisation",
-								confirmDescription: "Un lien de réinitialisation sera envoyé à votre adresse e-mail. Cette action est irréversible. Voulez-vous continuer ?",
+								label: "Changer votre mot de passe",
+  								description: "Cliquez sur ce bouton pour définir un nouveau mot de passe.",
+								confirmTitle: "Modifier votre mot de passe",
+								confirmDescription: "Entrez vos informations pour modifier votre mot de passe.",
 							},
 							name: {
 								label: "Prénom Nom",
@@ -179,7 +159,7 @@ export default {
 							continue: "Continuer",
 						},
 						link: {
-							changePassword: "Envoyer l'email de changement",
+							changePassword: "Modifier votre mot de passe",
 						},
 						toast: {
 							emailSuccess: "Adresse e-mail modifier avec succès !",
@@ -223,6 +203,32 @@ export default {
 			logOut: "Déconnexion"
 		},
 		utils: {
+			managePassword: {
+				error: {
+					password: "Le mot de passe doit contenir au moins 6 caractères",
+					passwordMatch: "Les mots de passe ne correspondent pas",
+				},
+				form: {
+					currentPassword: {
+						label: "Mot de passe actuel",
+						placeholder: "Mot de passe actuel",
+					},
+					password: {
+						label: "Nouveau mot de passe",
+						placeholder: "Nouveau mot de passe",
+					},
+					confirmPassword: {
+						label: "Confirmer le nouveau mot de passe",
+						placeholder: "Nouveau mot de passe",
+					},
+				},
+				button: {
+					submit: "Modifier",
+				},
+				toast: {
+					success : "Mot de passe modifier avec succès !"
+				},
+			},
 			selectLang: {
 				select: "Choisir une langue",
 				fr: "Français",

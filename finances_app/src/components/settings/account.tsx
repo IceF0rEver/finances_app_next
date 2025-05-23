@@ -124,7 +124,7 @@ export default function Account() {
             </header>
             <section className="flex flex-col gap-9">
                 <ChangePassword/>
-                <form action="" className="grid gap-9">
+                <form className="grid gap-9">
                     {errorMessage.betterError && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.betterError}</p>}
                     <div className="flex flex-col gap-1.5">
                         <Label htmlFor="name">{t('app.dashboard.settings.components.account.form.name.label')}</Label>
