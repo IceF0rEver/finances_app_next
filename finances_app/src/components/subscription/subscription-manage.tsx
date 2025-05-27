@@ -27,15 +27,19 @@ type SubscriptionManageProps = {
     sheetOpen: boolean;
     onSheetOpen: (sheetOpen: boolean) => void;
     status: boolean;
-    data: subscriptionParams | [] // a modifier
+    data?: subscriptionParams
 };
 
 export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data} : SubscriptionManageProps){
     const t = useI18n();
     const locale = useCurrentLocale();
-    const [icon, setIcon] = useState<string | null>(null); // data.icon
-    const [calendardate, setCalendarDate] = useState<Date| undefined>(new Date());
 
+    const [subscriptionName, setSubscriptionName] = useState<string>(data?.name || "");
+    const [subscriptionAmount, setSubscriptionAmount] = useState<number>(data?.amount || 0);
+    const [subscriptionRecurrence, setSubscriptionRecurrence] = useState<string>(data?.recurrence || 'monthly');
+    const [subscriptionExecutionDate, setSubscriptionExecutionDate] = useState<Date | undefined>(data?.executionDate || new Date());
+    const [subscriptionIcon, setSubscriptionIcon] = useState<string | null>(data?.icon || null);
+    
     return (
         <Sheet open={sheetOpen} onOpenChange={onSheetOpen}>
         <SheetContent>
@@ -59,15 +63,18 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
                 <div className="grid gap-2">
                     <Label htmlFor="name">{ t("app.dashboard.subscription.components.subscriptionManage.form.name.label") }</Label>
                     <Input 
-                        // v-model="props.data.name"  
-                        id="name" 
+                        value={subscriptionName}
+                        onChange={(e) => setSubscriptionName(e.target.value)}  
+                        id="name"
+                        type="text" 
                         required 
                     />
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="amount">{ t("app.dashboard.subscription.components.subscriptionManage.form.amount.label") }</Label>
                     <Input 
-                        // v-model="props.data.amount" 
+                        value={subscriptionAmount}
+                        onChange={(e) => setSubscriptionAmount(Number(e.target.value))}   
                         id="amount" 
                         type="number" 
                         required 
@@ -77,7 +84,8 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
                     <Label htmlFor="recurrence">{ t("app.dashboard.subscription.components.subscriptionManage.form.recurrence.label") }</Label>
                     <RadioGroup 
                         defaultValue="monthly" 
-                        // v-model="props.data.recurrence" 
+                        value={subscriptionRecurrence}
+                        onValueChange={(e) => setSubscriptionRecurrence(e)}
                         orientation="horizontal" 
                         className="flex flex-row gap-4"
                     >
@@ -98,7 +106,7 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
                             <div>
                                 <Button variant="outline" className="w-full text-start font-normal text-muted-foreground">   
                                     <span>
-                                        { calendardate ? format(calendardate, 'yyyy-MM-dd') : ''}
+                                        { subscriptionExecutionDate ? format(subscriptionExecutionDate, 'yyyy-MM-dd') : ''}
                                     </span>
                                     <CalendarIcon className="ms-auto h-4 w-4 opacity-50"/>
                                 </Button>
@@ -106,19 +114,18 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
                             </div>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0">
-                            {/* <Calendar v-model="value" :locale="locale"/> */}
                             <Calendar
                                 mode="single"
                                 locale={locale === "fr" ? fr : enUS}
-                                selected={calendardate}
-                                onSelect={setCalendarDate}
+                                selected={subscriptionExecutionDate}
+                                onSelect={setSubscriptionExecutionDate}
                                 className="rounded-md border mx-auto"
                             />
                         </PopoverContent>
                     </Popover>
                 </div>
                 <div>
-                    <InputIcon icon={icon} onIcon={setIcon}/>
+                    <InputIcon icon={subscriptionIcon} onIcon={setSubscriptionIcon}/>
                 </div>
             </div>
             <SheetFooter>

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useI18n } from "@/locales/client";
 import { AlertDialog, AlertDialogContent, AlertDialogCancel, AlertDialogHeader, AlertDialogAction, AlertDialogFooter, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useState } from "react";
+import SubscriptionManage from "./subscription-manage";
 
 type SubscriptionListItemProps = {
   item: subscriptionParams;
@@ -19,8 +20,12 @@ type SubscriptionListItemProps = {
 export default function SubscriptionListItem({item} : SubscriptionListItemProps){
     const t = useI18n();
     const [isOpenDeleteDialog,setIsOpenDeleteDialog] = useState(false);
+    const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
+    const [isEdit, setIsEdit] = useState<boolean>(false);
+
     return (
         <Card className="overflow-hidden border-border/40 hover:border-border/80 transition-colors p-0">
+            <SubscriptionManage sheetOpen={isSheetOpen} onSheetOpen={setIsSheetOpen} status={isEdit} data={item} />
             <div className="flex">
                 <div className="flex items-center justify-center bg-muted w-16 sm:w-20">
                     <div className="flex items-center justify-center">
@@ -62,9 +67,12 @@ export default function SubscriptionListItem({item} : SubscriptionListItemProps)
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 <DropdownMenuItem 
-                                    // @click="isSheetOpen = true, isEdit = true, subscriptionData = subscription" 
+                                    onClick={() => {
+                                        setIsSheetOpen(true),
+                                        setIsEdit(true)
+                                    }}
                                     className="flex items-center gap-2 cursor-pointer"
-                                    >
+                                >
                                     <Pencil/>
                                     { t('app.dashboard.subscription.components.subscriptionList.button.update') }
                                 </DropdownMenuItem>
