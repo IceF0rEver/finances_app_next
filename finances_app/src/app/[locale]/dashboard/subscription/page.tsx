@@ -14,7 +14,7 @@ export default function Page() {
             name: "téléphone",
             amount: 15,
             recurrence: 'monthly',
-            executionDate: new Date(2025, 5, 25),
+            executionDate:  new Date("2025-5-25"),
             icon: "lucide:phone",
         },
         {
@@ -22,7 +22,7 @@ export default function Page() {
             name: "téléphone",
             amount: 15.50,
             recurrence: 'annually',
-            executionDate: new Date(2025, 5, 25),
+            executionDate:  new Date("2025-5-25"),
             icon: "lucide:phone",
         },
         {
@@ -30,7 +30,7 @@ export default function Page() {
             name: "téléphone",
             amount: 15,
             recurrence: 'monthly',
-            executionDate: new Date(2025, 5, 25),
+            executionDate: new Date("2025-5-25"),
             icon: "lucide:phone",
         },
         {
@@ -38,7 +38,7 @@ export default function Page() {
             name: "téléphone",
             amount: 15,
             recurrence: 'monthly',
-            executionDate: new Date(2025, 5, 25),
+            executionDate:  new Date("2025-5-25"),
             icon: "lucide:phone",
         },
         {
@@ -46,7 +46,7 @@ export default function Page() {
             name: "téléphone",
             amount: 15,
             recurrence: 'monthly',
-            executionDate: new Date(2025, 5, 25),
+            executionDate: new Date("2025-5-25"),
             icon: "lucide:phone",
         },
         {
@@ -54,7 +54,7 @@ export default function Page() {
             name: "téléphone",
             amount: 15,
             recurrence: 'monthly',
-            executionDate: new Date(2025, 5, 26),
+            executionDate:  new Date("2025-5-26"),
             icon: "lucide:phone",
         },
     ];
@@ -65,7 +65,6 @@ export default function Page() {
             </div>
             <div className="w-full xl:w-3/5">
                 <SubscriptionList datas={subscriptionsData} date={date}/>
-                {/* <SubscriptionList :subscriptions="subscriptions" :date="valueCalendar"/> */}
             </div>
         </div>
     )

@@ -67,8 +67,7 @@ export default function SubscriptionList({datas, date}: SubscriptionCalendarProp
 
     return (
         <Card>
-            <SubscriptionManage sheetOpen={isSheetOpen} onSheetOpen={setIsSheetOpen} status={isEdit} data={[]} />
-            {/* <SubscriptionManage v-model:open="isSheetOpen" :status="isEdit" :data="subscriptionData" @closeSheet="isSheetOpen = false"/> */}
+            <SubscriptionManage sheetOpen={isSheetOpen} onSheetOpen={setIsSheetOpen} status={isEdit} />
             <CardHeader>
                 <div className="flex items-center justify-between">
                     <div>

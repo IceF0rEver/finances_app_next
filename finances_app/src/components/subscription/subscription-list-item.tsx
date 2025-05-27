@@ -47,7 +47,7 @@ export default function SubscriptionListItem({item} : SubscriptionListItemProps)
                                 </Badge>
                                 <span className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1 whitespace-nowrap">
                                     <Calendar/>
-                                    {format(new Date(item.executionDate), 'yyyy-MM-dd')}
+                                    {format(item.executionDate, 'yyyy-MM-dd')}
                                 </span>
                             </div>
                         </div>
