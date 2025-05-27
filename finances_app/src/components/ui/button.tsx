@@ -9,6 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        calendar:
+          "hover:bg-primary/50 hover:text-accent-foreground",
         default:
           "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 text-black dark:text-white",
         destructive:
