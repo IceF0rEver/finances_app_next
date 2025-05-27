@@ -19,7 +19,7 @@ type SubscriptionListItemProps = {
 
 export default function SubscriptionListItem({item} : SubscriptionListItemProps){
     const t = useI18n();
-    const [isOpenDeleteDialog,setIsOpenDeleteDialog] = useState(false);
+    const [isOpenDeleteDialog,setIsOpenDeleteDialog] = useState<boolean>(false);
     const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
     const [isEdit, setIsEdit] = useState<boolean>(false);
 

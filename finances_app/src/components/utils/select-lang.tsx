@@ -1,6 +1,6 @@
 "use client"
 import { useI18n } from "@/locales/client"
-import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from "../ui/select"
+import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from "@/components/ui/select"
 import { useChangeLocale, useCurrentLocale } from "@/locales/client";
 
 export default function SelectLang(){

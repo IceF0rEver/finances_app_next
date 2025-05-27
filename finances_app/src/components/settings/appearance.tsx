@@ -1,12 +1,10 @@
 "use client"
 
 import { Separator } from "@/components/ui/separator"
-import { Label } from "@radix-ui/react-label"
 import { useI18n } from "@/locales/client"
 import DarkMode from "../utils/dark-mode"
 import SelectLang from "../utils/select-lang"
 import ThemeColor from "../utils/theme-color"
-import { Card } from "../ui/card"
 
 export default function Appearance() {
     const t = useI18n()

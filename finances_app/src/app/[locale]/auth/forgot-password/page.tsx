@@ -17,8 +17,8 @@ export default function Page() {
 	const t = useI18n();
 	const router = useRouter();
 
-	const [email, setEmail] = useState("");
-	const [loading, setLoading] = useState(false);
+	const [email, setEmail] = useState<string>("");
+	const [loading, setLoading] = useState<boolean>(false);
 	
 	const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
 	const forgotPasswordSchema = z.object({

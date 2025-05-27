@@ -25,10 +25,10 @@ onOpenChange?: (open: boolean) => void;
 	const searchParams = useSearchParams();
 	const token = searchParams.get("token");
 	
-	const [password, setPassword] = useState("");
-	const [passwordConfirmation, setPasswordConfirmation] = useState("");
-    const [currentPassword, setCurrentPassword] = useState("");
-    const [loading, setLoading] = useState(false);
+	const [password, setPassword] = useState<string>("");
+	const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
+    const [currentPassword, setCurrentPassword] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
 	const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
 

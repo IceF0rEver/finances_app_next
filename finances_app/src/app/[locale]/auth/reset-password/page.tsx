@@ -1,4 +1,3 @@
-"use client"
 import ManagePassword from "@/components/utils/manage-password";
 import { 
 	Card,
@@ -7,10 +6,10 @@ import {
 	CardDescription,
 	CardContent
 } from "@/components/ui/card";
-import { useI18n } from "@/locales/client";
+import { getI18n } from "@/locales/server";
 
-export default function Page() {
-	const t = useI18n();
+export default async function Page() {
+	const t = await getI18n();
 	return (
 		<section className="flex h-screen justify-center items-center">
 			<Card className="w-full max-w-md">

@@ -13,7 +13,7 @@ import Account from "@/components/settings/account";
 
 export default function Page() {
     const t = useI18n();
-    const [settingItemSelected, setSettingItemSelected] = useState("appearance");
+    const [settingItemSelected, setSettingItemSelected] = useState<string>("appearance");
 
     const items = [
         { title: t('app.dashboard.settings.page.items.appearance.title'), key: "appearance" },

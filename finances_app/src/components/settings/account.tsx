@@ -18,12 +18,12 @@ export default function Account() {
     const t = useI18n();
     const { data : session } = useSession();
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const [name, setName] = useState<string | null>(session?.user.name || null);
     const [email, setEmail] = useState<string | null>(session?.user.email || null);
     const [imagePreview, setImagePreview] = useState<string | null>(session?.user.image || null);
     const [image, setImage] = useState<File | null>(null);
-    const [isImageChanged, setIsImageChanged] = useState(false);
+    const [isImageChanged, setIsImageChanged] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
 

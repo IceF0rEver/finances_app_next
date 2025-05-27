@@ -3,7 +3,6 @@
 import { useI18n } from "@/locales/client"
 import { Button } from "../ui/button"
 import { useState } from "react"
-import { Loader2 } from "lucide-react"
 import {
   AlertDialog,
   AlertDialogContent,
@@ -18,7 +17,7 @@ import ManagePassword from "../utils/manage-password"
 
 export default function ChangePassword() {
     const t = useI18n();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
 
     return (
         <article className="flex flex-col gap-2">

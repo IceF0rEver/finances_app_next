@@ -27,9 +27,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useRouter } from "next/navigation"
-import { authClient } from "../../lib/auth-client"
+import { authClient } from "@/lib/auth-client"
 import Link from "next/link"
-import { useI18n } from "../../locales/client"
+import { useI18n } from "@/locales/client"
 
 export function NavUser({
   user,
