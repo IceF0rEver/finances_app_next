@@ -59,7 +59,7 @@ export function AppSidebar() {
 					{dataSideBar.navMain.map((item) => (
 					<SidebarMenuItem key={item.title}>
 						<SidebarMenuButton variant={"transparent"} asChild>
-						<a href={item.url} className="font-medium">
+						<a href={`/dashboard/${item.url}`} className="font-medium">
 							{item.title}
 						</a>
 						</SidebarMenuButton>

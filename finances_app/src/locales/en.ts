@@ -108,6 +108,86 @@ export default {
 			page: {
 				title: "Welcome to your dashboard!",
 			},
+			subscription: {
+				layout: {
+					title: "Subscription",
+					description: "Manage the distribution of your subscriptions visually.",
+				},
+				page:{
+
+				},
+				components: {
+					subscriptionCalendar: {
+						title: "Calendar",
+						description: "View your subscriptions by date.",
+					},
+					subscriptionList: {
+						title: "Your Subscriptions",
+						description: "Manage the distribution of your subscriptions.",
+						totalMonthly: "Monthly Total:",
+						totalAnnually: "Annual Total:",
+						empty: {
+							title: "No Subscriptions",
+							description: "No subscriptions scheduled for this date.",
+						},
+						tabs: {
+							thisDay: "Calendar Day",
+							all: "All Subscriptions",
+							annually: "Annual Subscriptions",
+							monthly: "Monthly Subscriptions",
+						},
+						badge: {
+							annually: "Annual",
+							monthly: "Monthly",
+						},
+						button: {
+							add: "Add",
+							menu: "Menu",
+							update: "Edit",
+							delete: "Delete",
+							cancel: "Cancel",
+							confirm: "Confirm"
+						},
+						delete: {
+							title: "Deleting your budget",
+							description: "Are you sure you want to delete your budget? This action is irreversible, and all associated data will be lost.",
+						},
+					},
+					subscriptionManage: {
+						add: {
+							title: "Adding a new subscription.",
+							description: "You can now easily add a subscription.",
+						},
+						update: {
+							title: "Editing your subscription.",
+							description: "You can now easily edit your subscription.",
+						},
+						form: {
+							name: {
+							label: "Name",
+							},
+							amount: {
+							label: "Amount",
+							},
+							recurrence: {
+							label: "Recurrence",
+							annually: "Annual",
+							monthly: "Monthly",
+							},
+							executionDate: {
+							label: "Execution date",
+							},
+							icon: {
+							label: "Icon",
+							},
+						},
+						button: {
+							add: "Add",
+							update: "Update",
+						},
+					},
+				},
+			},
 			settings: {
 				components: {
 					appearance: {
@@ -246,6 +326,10 @@ export default {
 					yellow: "Yellow",
 					violet: "Violet",
 				},
+			},
+			inputIcon: {
+				label: "Icon",
+				noResults: "No matching icon(s).",
 			},
 		},
 	},

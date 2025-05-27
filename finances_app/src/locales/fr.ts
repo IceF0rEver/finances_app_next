@@ -108,6 +108,86 @@ export default {
 			page: {
 				title: "Bienvenu sur votre dashboard !"
 			},
+			subscription: {
+				layout: {
+					title: "Abonnement",
+					description: "Gérez visuellement la répartition de vos abonnements.",
+				},
+				page:{
+
+				},
+				components: {
+					subscriptionCalendar: {
+						title: "Calendrier",
+						description: "Visualisez vos abonnements par date.",
+					},
+					subscriptionList: {
+						title: "Vos abonnements",
+						description: "Gérez la répartition de vos abonnements.",
+						totalMonthly: "Total mensuel:",
+						totalAnnually: "Total annuel:",
+						empty: {
+							title: "Aucun abonnement",
+							description: "Aucun abonnement prévu pour cette date.",
+						},
+						tabs: {
+							thisDay: "Jour du calendrier",
+							all: "Tout les abonnements",
+							annually: "Abonnements annuels",
+							monthly: "Abonnements mensuels"	
+						},
+						badge: {
+							annually: "Annuel",
+							monthly: "Mensuel"	
+						},
+						button: {
+							add: "Ajouter",
+							menu: "Menu",
+							update: "Modifier",
+							delete: "Supprimer",
+							cancel: "Annuler",
+							confirm: "Confirmer"
+						},
+						delete: {
+							title: "Suppression de votre abonnement",
+							description: "Êtes-vous sûr de vouloir supprimer votre abonnement ? Cette action est irréversible et toutes les données associées seront perdues.",
+						},
+					},
+					subscriptionManage: {
+						add: {
+							title: "Ajout d'un nouvel abonnement.",
+							description: "Vous pouvez désormais ajouter facilement un abonnement.",
+						},
+						update: {
+							title: "Modification de votre abonnement.",
+							description: "Vous pouvez désormais modifier facilement votre abonnement.",
+						},
+						form: {
+							name: {
+								label: "Nom",
+							},
+							amount: {
+								label: "Montant",
+							},
+							recurrence: {
+								label: "Récurrence",
+								annually : "Annuel",
+               					monthly: "Mensuel",
+							},
+							executionDate: {
+								label: "Date d'éxécution",
+							},
+							icon: {
+								label: "Icône",
+							},
+						},
+						button: {
+							add: "Ajouter",
+							update: "Modifier",
+						},
+					},
+				},
+			},
 			settings: {
 				components: {
 					appearance: {
@@ -246,6 +326,10 @@ export default {
 					yellow: "Jaune",
 					violet: "Violet",
 				},
+			},
+			inputIcon: {
+				label: "Icône",
+				noResults : "Pas d'icône(s) correspondante(s).",
 			},
 		},
 	},
