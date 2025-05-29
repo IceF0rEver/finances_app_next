@@ -143,6 +143,7 @@ export default {
 						button: {
 							add: "Add",
 							cancel: "Cancel",
+							delete: "Delete",
 							confirm: "Confirm"
 						},
 						delete: {
