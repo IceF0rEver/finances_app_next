@@ -78,7 +78,7 @@ model Verification {
 }
 
 model Sankey {
-	id			String		@id
+	id			String		@id @default(uuid())
 	from		String
 	to			String
 	amount		Decimal		@db.Decimal(10, 2)
@@ -98,7 +98,7 @@ model Sankey {
 }
 
 model Subscription {
-	id				String 		@id
+	id				String 		@id @default(uuid())
 	name 			String
 	amount			Decimal 	@db.Decimal(10,2)
 	recurrence		String
