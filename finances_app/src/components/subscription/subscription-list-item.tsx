@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import type { subscriptionParams } from "@/types/subscription-types"
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/locales/client";
-import { AlertDialog, AlertDialogContent, AlertDialogCancel, AlertDialogHeader, AlertDialogAction, AlertDialogFooter, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { AlertDialogCancel } from "@/components/ui/alert-dialog";
 import { useState, useEffect } from "react";
 import SubscriptionManage from "./subscription-manage";
 import { deleteSubscription } from "@/lib/actions/subscription";
@@ -17,6 +17,7 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import ManageMenu from "../utils/manage-menu";
 
 type SubscriptionListItemProps = {
     item: subscriptionParams;
@@ -94,41 +95,17 @@ export default function SubscriptionListItem({item} : SubscriptionListItemProps)
                     </div>
                 </CardContent>
                 <div className="flex items-start p-2">
-                    <AlertDialog open={isOpenDeleteDialog} onOpenChange={setIsOpenDeleteDialog}>
-                        <DropdownMenu modal={false}>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-8 w-8">
-                                    <MoreVertical/>
-                                    <span className="sr-only">{ t('app.dashboard.subscription.components.subscriptionList.button.menu') }</span>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuItem 
-                                    onClick={() => {
-                                        setIsSheetOpen(true),
-                                        setIsEdit(true)
-                                    }}
-                                    className="flex items-center gap-2 cursor-pointer"
-                                >
-                                    <Pencil/>
-                                    { t('app.dashboard.subscription.components.subscriptionList.button.update') }
-                                </DropdownMenuItem>
-                                <AlertDialogTrigger asChild>
-                                    <DropdownMenuItem
-                                        className="flex items-center gap-2 text-destructive focus:text-destructive cursor-pointer"
-                                        >
-                                        <Trash2 className="text-destructive"/>
-                                        { t('app.dashboard.subscription.components.subscriptionList.button.delete') }
-                                    </DropdownMenuItem>
-                                </AlertDialogTrigger>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>{ t('app.dashboard.subscription.components.subscriptionList.delete.title') }</AlertDialogTitle>
-                                <AlertDialogDescription>{ t('app.dashboard.subscription.components.subscriptionList.delete.description') }</AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
+                    <ManageMenu 
+                        onSheetOpen={setIsSheetOpen} 
+                        onEdit={setIsEdit}
+                        title={t('app.dashboard.subscription.components.subscriptionList.delete.title')}
+                        description={t('app.dashboard.subscription.components.subscriptionList.delete.description')}
+                    >
+                        <div className="grid gap-2 w-full">
+                            <div className="float-start">
+                                {state.errors?.id && <p className="text-sm text-red-500">{state.errors.id[0]}</p>}
+                            </div>  
+                            <div className="flex flex-row justify-end gap-2">
                                 <AlertDialogCancel >
                                     { t('app.dashboard.subscription.components.subscriptionList.button.cancel') }
                                 </AlertDialogCancel>
@@ -136,10 +113,9 @@ export default function SubscriptionListItem({item} : SubscriptionListItemProps)
                                     {item?.id && <input type="hidden" name="id" value={item.id} />}
                                     <DeleteButton t={t} />
                                 </form>
-                            </AlertDialogFooter>
-                            {state.errors?.id && <p className="text-sm text-red-500">{state.errors.id[0]}</p>}
-                        </AlertDialogContent>
-                    </AlertDialog>
+                            </div>
+                        </div>
+                    </ManageMenu>
                 </div>
             </div>
         </Card>

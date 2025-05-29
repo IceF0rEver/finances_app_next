@@ -142,9 +142,6 @@ export default {
 						},
 						button: {
 							add: "Add",
-							menu: "Menu",
-							update: "Edit",
-							delete: "Delete",
 							cancel: "Cancel",
 							confirm: "Confirm"
 						},
@@ -265,6 +262,13 @@ export default {
 		},
 	},
 	components: {
+		manageMenu: {
+			button: {
+				menu: "Menu",
+				update: "Edit",
+				delete: "Delete",
+			},
+		},
 		appSideBar: {
 			navMain: {
 				title: "My budget",

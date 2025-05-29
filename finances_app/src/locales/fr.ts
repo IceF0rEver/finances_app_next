@@ -142,9 +142,6 @@ export default {
 						},
 						button: {
 							add: "Ajouter",
-							menu: "Menu",
-							update: "Modifier",
-							delete: "Supprimer",
 							cancel: "Annuler",
 							confirm: "Confirmer"
 						},
@@ -283,6 +280,13 @@ export default {
 			logOut: "Déconnexion"
 		},
 		utils: {
+			manageMenu: {
+				button: {
+					menu: "Menu",
+					update: "Modifier",
+					delete: "Supprimer",
+				},
+			},
 			managePassword: {
 				error: {
 					password: "Le mot de passe doit contenir au moins 6 caractères",
