@@ -19,7 +19,6 @@ import { useI18n } from "@/locales/client";
 import { usePathname } from "next/navigation";
 import { Calendar, HandCoins } from "lucide-react";
 
-
 export function AppSidebar() {
     const { data: session, isPending, error } = useSession();
 	const t = useI18n();
@@ -47,7 +46,7 @@ export function AppSidebar() {
 	const dataUser = {
 		name : session?.user.name || "",
 		email : session?.user.email || "",
-		avatar : session?.user.image || "/image/userDefault.webp"
+		avatar : session?.user.image || "",
 	};
 	
   	return (
@@ -68,7 +67,7 @@ export function AppSidebar() {
 							{item.items.map((item) => (
 							<SidebarMenuSubItem key={item.title}>
 								<SidebarMenuSubButton asChild isActive={item.url === pathname.split("/")[pathname.split("/").findIndex((i) => i === "dashboard")+1] ? true : false }>
-								<a href={item.url}>{item.icon}{item.title}</a>
+								<a href={`/dashboard/${item.url}`}>{item.icon}{item.title}</a>
 								</SidebarMenuSubButton>
 							</SidebarMenuSubItem>
 							))}
