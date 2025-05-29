@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { Loader2, X } from "lucide-react";
 import { signUp } from "@/lib/auth-client";
@@ -28,6 +28,7 @@ export default function SignUp() {
 	const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
 	const [image, setImage] = useState<File | null>(null);
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 	const router = useRouter();
 	const t = useI18n();
 	const [loading, setLoading] = useState(false);
@@ -56,6 +57,14 @@ export default function SignUp() {
 		}
 	};
 
+	const handleRemoveImage = () => {
+        setImage(null);
+        setImagePreview(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    }
+
 	const handleSubmit = async () => {
 		try {
 			setErrorMessage({});
@@ -66,7 +75,6 @@ export default function SignUp() {
 				name: `${firstName} ${lastName}`,
 				image: image ? await convertImageToBase64(image) : "",
 			});
-
 			await signUp.email(validatedData, {
 				onResponse: () => {
 					setLoading(false);
@@ -193,14 +201,12 @@ export default function SignUp() {
 									accept="image/*"
 									onChange={handleImageChange}
 									className="w-full"
+									ref={fileInputRef}
 								/>
 								{imagePreview && (
 									<X
 										className="cursor-pointer"
-										onClick={() => {
-											setImage(null);
-											setImagePreview(null);
-										}}
+										onClick={handleRemoveImage}
 									/>
 								)}
 							</div>
