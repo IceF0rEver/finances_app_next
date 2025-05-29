@@ -25,11 +25,12 @@ export default function SubscriptionList({datas, date}: SubscriptionCalendarProp
 
     useEffect(() => {
         handleActiveTab()
-    }, [date]);
+    }, [activeTab, date]);
 
     useEffect(() => {
-        handleActiveTab()
-    }, [activeTab]);
+        setFiltredDatas([...datas]);
+        handleActiveTab();
+    }, [datas]);
 
     const handleActiveTab = () => {
         switch (activeTab) {
@@ -64,7 +65,6 @@ export default function SubscriptionList({datas, date}: SubscriptionCalendarProp
         .reduce((sum, sub) => sum + sub.amount, 0);
         return monthlyTotal + annualSubs;
     };
-
     return (
         <Card>
             <SubscriptionManage sheetOpen={isSheetOpen} onSheetOpen={setIsSheetOpen} status={isEdit} />
@@ -76,15 +76,14 @@ export default function SubscriptionList({datas, date}: SubscriptionCalendarProp
                     </div>
                     <Button 
                         onClick={() => {setIsSheetOpen(true), setIsEdit(false)}} 
-                        // subscriptionData = { name: '', amount: 0, recurrence: 'monthly', execution_date: new Date(), icon: '' }" 
                         className="flex items-center gap-1.5"
-                        >
+                    >
                         <PlusCircle/>
                         <span>{ t('app.dashboard.subscription.components.subscriptionList.button.add') }</span>
                     </Button>
                 </div>
                 <Tabs defaultValue={activeTab} onValueChange={(value) => setActiveTab(value as typeof activeTab)} className="w-full mt-4">
-                    <TabsList className="grid grid-cols-4 w-full">
+                    <TabsList className="flex grid-cols-4 w-full">
                         <TabsTrigger value="this-day">{ t('app.dashboard.subscription.components.subscriptionList.tabs.thisDay') }</TabsTrigger>
                         <TabsTrigger value="all">{ t('app.dashboard.subscription.components.subscriptionList.tabs.all') }</TabsTrigger>
                         <TabsTrigger value="annually">{ t('app.dashboard.subscription.components.subscriptionList.tabs.annually') }</TabsTrigger>

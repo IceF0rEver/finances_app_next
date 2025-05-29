@@ -1,8 +1,11 @@
+
 export interface subscriptionParams {
-    id?: number;
+    id?: string;
     name: string;
     amount: number;
-    recurrence: 'monthly' | 'annually'
+    recurrence: string;
     executionDate: Date;
     icon: string;
+    createdAt?: Date | null;
+    updatedAt?: Date | null;
 }

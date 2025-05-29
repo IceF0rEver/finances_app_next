@@ -10,12 +10,39 @@ import type { subscriptionParams } from "@/types/subscription-types"
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/locales/client";
 import { AlertDialog, AlertDialogContent, AlertDialogCancel, AlertDialogHeader, AlertDialogAction, AlertDialogFooter, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SubscriptionManage from "./subscription-manage";
+import { deleteSubscription } from "@/lib/actions/subscription";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 type SubscriptionListItemProps = {
-  item: subscriptionParams;
+    item: subscriptionParams;
 };
+
+const initialState = {
+    message: "",
+    errors: {},
+    success: false,
+}
+
+function DeleteButton({ t }: { t: any }) {
+    const { pending } = useFormStatus()
+
+    return (
+        <Button type="submit" variant="default" className="w-full" disabled={pending}>
+            {pending ? (
+                <Loader2 size={16} className="animate-spin" />
+            ) : (
+                <span>
+                    { t('app.dashboard.subscription.components.subscriptionList.button.delete') }
+                </span>
+            )}
+        </Button>
+    )
+}
 
 export default function SubscriptionListItem({item} : SubscriptionListItemProps){
     const t = useI18n();
@@ -23,6 +50,16 @@ export default function SubscriptionListItem({item} : SubscriptionListItemProps)
     const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
     const [isEdit, setIsEdit] = useState<boolean>(false);
 
+    const [state, deleteFormAction] = useActionState(deleteSubscription, initialState);
+
+    useEffect(() => {
+        if (state.success) {
+            toast.success(state.message)
+            setIsOpenDeleteDialog(false)
+        } else if (state.message && !state.success) {
+            toast.error(state.message)
+        }
+    }, [state]);
     return (
         <Card className="overflow-hidden border-border/40 hover:border-border/80 transition-colors p-0">
             <SubscriptionManage sheetOpen={isSheetOpen} onSheetOpen={setIsSheetOpen} status={isEdit} data={item} />
@@ -95,12 +132,12 @@ export default function SubscriptionListItem({item} : SubscriptionListItemProps)
                                 <AlertDialogCancel >
                                     { t('app.dashboard.subscription.components.subscriptionList.button.cancel') }
                                 </AlertDialogCancel>
-                                <AlertDialogAction 
-                                    // @click="remove(subscription.id?.toString() ?? '')"
-                                >
-                                    { t('app.dashboard.subscription.components.subscriptionList.button.delete') }
-                                </AlertDialogAction>
+                                <form action={deleteFormAction}>
+                                    {item?.id && <input type="hidden" name="id" value={item.id} />}
+                                    <DeleteButton t={t} />
+                                </form>
                             </AlertDialogFooter>
+                            {state.errors?.id && <p className="text-sm text-red-500">{state.errors.id[0]}</p>}
                         </AlertDialogContent>
                     </AlertDialog>
                 </div>

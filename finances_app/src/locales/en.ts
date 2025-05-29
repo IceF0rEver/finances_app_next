@@ -131,10 +131,10 @@ export default {
 							description: "No subscriptions scheduled for this date.",
 						},
 						tabs: {
-							thisDay: "Calendar Day",
-							all: "All Subscriptions",
-							annually: "Annual Subscriptions",
-							monthly: "Monthly Subscriptions",
+							thisDay: "Day",
+							all: "All",
+							annually: "Annual",
+							monthly: "Monthly",
 						},
 						badge: {
 							annually: "Annual",
@@ -330,6 +330,35 @@ export default {
 			inputIcon: {
 				label: "Icon",
 				noResults: "No matching icon(s).",
+			},
+		},
+	},
+	action: {
+		subscription: {
+			user: {
+				badId: "User not authenticated",
+			},
+			form: {
+				validateField: "Validation error. Please correct the fields.",
+				id: "Invalid ID!",
+				name: "Please enter a valid name",
+				amount: "Please enter a valid amount",
+				recurrence: "Please enter a valid recurrence",
+				executionDate: "Please enter a valid execution date",
+				icon: "Please enter a valid icon",
+			},
+			create: {
+				success: "Subscription created successfully!",
+				error: "Server error. Unable to create the subscription.",
+			},
+			update: {
+				success: "Subscription updated successfully!",
+				error: "Server error. Unable to update the subscription.",
+			},
+			delete: {
+				badId: "Invalid subscription ID.",
+				success: "Subscription deleted successfully!",
+				error: "Server error. Unable to delete the subscription.",
 			},
 		},
 	},

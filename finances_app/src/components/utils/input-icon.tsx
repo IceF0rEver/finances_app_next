@@ -104,15 +104,16 @@ export default function InputIcon({icon, onIcon} : InputIconProps) {
             </div>
             {allIcons.length > 0 &&
                 <div className="border rounded-md h-32 overflow-y-auto p-2">
-                    { allIconsFiltred.length === 0 ? 
+                    { allIconsFiltred.length === 0 ? (
                         <div className="flex items-center justify-center h-full text-muted-foreground">
                             { t("components.utils.inputIcon.noResults") }
                         </div>
-                    : 
+                    ):( 
                         <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-8">
                             { allIconsFiltred.map((item : any, index) => (
                                 <button
                                     key={index}
+                                    type="button"
                                     className="flex flex-col items-center justify-center p-2 rounded-md hover:bg-muted transition-colors"
                                     onClick={() => setselectdIcon({ key: item.key, name: item.name })}
                                 >
@@ -123,7 +124,7 @@ export default function InputIcon({icon, onIcon} : InputIconProps) {
                                 </button>
                             ))}
                         </div>
-                    }
+                    )}
                 </div>
             }
         </div>

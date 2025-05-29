@@ -131,10 +131,10 @@ export default {
 							description: "Aucun abonnement prévu pour cette date.",
 						},
 						tabs: {
-							thisDay: "Jour du calendrier",
-							all: "Tout les abonnements",
-							annually: "Abonnements annuels",
-							monthly: "Abonnements mensuels"	
+							thisDay: "Jour",
+							all: "Tous",
+							annually: "Annuels",
+							monthly: "Mensuels"	
 						},
 						badge: {
 							annually: "Annuel",
@@ -330,6 +330,35 @@ export default {
 			inputIcon: {
 				label: "Icône",
 				noResults : "Pas d'icône(s) correspondante(s).",
+			},
+		},
+	},
+	action: {
+		subscription: {
+			user: {
+				badId: "Utilisateur non authentifié",
+			},
+			form: {
+				validateField: "Erreur de validation. Veuillez corriger les champs.",
+				id: "ID invalide !",
+				name: "Veuillez entrer un nom valide",
+				amount: "Veuillez entrer un montant valide",
+				recurrence: "Veuillez entrer une récurrence valide",
+				executionDate: "Veuillez entrer une date d'exécution valide",
+				icon:"Veuillez entrer une icône valide",
+			},
+			create: {
+				success: "Abonnement créé avec succès !",
+				error: "Erreur serveur. Impossible de créer l'abonnement.",
+			},
+			update: {
+				success: "Abonnement modifier avec succès !",
+				error: "Erreur serveur. Impossible de modifier l'abonnement.",
+			},
+			delete: {
+				badId: "ID de l'abonnement invalide.",
+				success: "Abonnement supprimer avec succès !",
+				error: "Erreur serveur. Impossible de supprimer l'abonnement.",
 			},
 		},
 	},

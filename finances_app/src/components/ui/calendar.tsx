@@ -127,9 +127,9 @@ function Calendar({
 												transform: `translateX(${index * 50}%)`, 
 												filter: `brightness(${200 - (index * 30)}%)`,
 											}}
-											className="bg-primary border border-black rounded-full w-5/12 aspect-square flex items-center justify-center" 
+											className="bg-primary border border-black rounded-full p-1 max-w-xs md:max-w-sm aspect-square sm:flex items-center justify-center hidden" 
 										>
-                      <Icon icon={item.icon} />
+                      <Icon icon={item.icon}/>
 										</span>
 									</div>
 								))}
