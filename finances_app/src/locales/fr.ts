@@ -108,6 +108,70 @@ export default {
 			page: {
 				title: "Bienvenu sur votre dashboard !"
 			},
+			budget: {
+				layout: {
+					title: "Budget",
+					description: "Gérez visuellement la répartition de vos dépenses.",
+				},
+				page:{
+
+				},
+				components:{
+					budgetSheet: {
+						add: {
+							title: "Ajout d'un nouveau budget.",
+							description: "Vous pouvez désormais ajouter facilement votre budget.",
+						},
+						update: {
+							title: "Modification de votre budget.",
+							description: "Vous pouvez désormais modifier facilement votre budget.",
+						},
+					},
+					budgetChart: {
+						delete: {
+							title: "Suppression de votre budget",
+							description: "Êtes-vous sûr de vouloir supprimer votre budget ? Cette action est irréversible et toutes les données associées seront perdues.",
+						},
+						button: {
+							delete: "Supprimer",
+							cancel: "Annuler",
+						},
+					},
+					budgetManage: {
+						tabs: {
+							incomes: "Revenus",
+							expenses: "Dépenses",
+						},
+						title:{
+							income: "Revenus",
+							expense: "Dépenses",
+						},
+						description:{
+							income: "Inscrivez vos différents revenus.",
+							expense: "Inscrivez vos différentes dépenses.",
+						},
+						form:{
+							name:{
+								label:"Nom",
+							},
+							amount:{
+								label: "Montant",
+							},
+							categoryName: {
+								label: "Nom de la catégorie",
+							},
+
+						},
+						button: {
+							addIncome: "Ajouter une source de revenu",
+							addExpense: "Ajouter une source de dépense",
+							addCategoryExpense: "Ajouter une catégorie de dépense",
+							discoverBudget: "Découvrir mon budget",
+            				saveChange: "Sauvegarder les changements",
+						}
+					},
+				},
+			},
 			subscription: {
 				layout: {
 					title: "Abonnement",
@@ -364,6 +428,30 @@ export default {
 				badId: "ID de l'abonnement invalide.",
 				success: "Abonnement supprimer avec succès !",
 				error: "Erreur serveur. Impossible de supprimer l'abonnement.",
+			},
+		},
+		budget: {
+			user: {
+				badId: "Utilisateur non authentifié",
+			},
+			form: {
+				validateField: "Erreur de validation. Veuillez corriger les champs.",
+				id: "ID invalide !",
+				name: "Veuillez entrer un nom valide",
+				amount: "Veuillez entrer un montant valide",
+				categoryName: "Veuillez entrer un nom de catégorie valide",
+			},
+			create: {
+				success: "Budget créé avec succès !",
+				error: "Erreur serveur. Impossible de créer le budget.",
+			},
+			update: {
+				success: "Budget modifier avec succès !",
+				error: "Erreur serveur. Impossible de modifier le budget.",
+			},
+			delete: {
+				success: "Budget supprimer avec succès !",
+				error: "Erreur serveur. Impossible de supprimer le budget.",
 			},
 		},
 	},

@@ -108,6 +108,69 @@ export default {
 			page: {
 				title: "Welcome to your dashboard!",
 			},
+			budget: {
+				layout: {
+					title: "Budget",
+					description: "Manage the distribution of your expenses visually.",
+				},
+				page:{
+
+				},
+				components: {
+					budgetSheet: {
+						add: {
+							title: "Adding a new budget.",
+							description: "You can now easily add your budget.",
+						},
+						update: {
+							title: "Editing your budget.",
+							description: "You can now easily edit your budget.",
+						},
+					},
+					budgetChart: {
+						delete: {
+							title: "Deleting your budget",
+							description: "Are you sure you want to delete your budget? This action is irreversible and all associated data will be lost.",
+						},
+						button: {
+							delete: "Delete",
+							cancel: "Cancel",
+						},
+					},
+					budgetManage: {
+						tabs: {
+						incomes: "Incomes",
+						expenses: "Expenses",
+						},
+						title: {
+						income: "Incomes",
+						expense: "Expenses",
+						},
+						description: {
+						income: "Enter your various income sources.",
+						expense: "Enter your various expenses.",
+						},
+						form: {
+						name: {
+							label: "Name",
+						},
+						amount: {
+							label: "Amount",
+						},
+						categoryName: {
+							label: "Category name",
+						},
+						},
+						button: {
+						addIncome: "Add an income source",
+						addExpense: "Add an expense source",
+						addCategoryExpense: "Add an expense category",
+						discoverBudget: "Discover my budget",
+						saveChange: "Save changes",
+						}
+					},
+				},
+			},
 			subscription: {
 				layout: {
 					title: "Subscription",
@@ -263,13 +326,6 @@ export default {
 		},
 	},
 	components: {
-		manageMenu: {
-			button: {
-				menu: "Menu",
-				update: "Edit",
-				delete: "Delete",
-			},
-		},
 		appSideBar: {
 			navMain: {
 				title: "My budget",
@@ -288,6 +344,13 @@ export default {
 			logOut: "Logout",
 		},
 		utils: {
+			manageMenu: {
+				button: {
+					menu: "Menu",
+					update: "Edit",
+					delete: "Delete",
+				},
+			},
 			managePassword: {
 				error: {
 					password: "The password must be at least 6 characters long",
@@ -364,6 +427,30 @@ export default {
 				badId: "Invalid subscription ID.",
 				success: "Subscription deleted successfully!",
 				error: "Server error. Unable to delete the subscription.",
+			},
+		},
+		budget: {
+			user: {
+				badId: "User not authenticated",
+			},
+			form: {
+				validateField: "Validation error. Please correct the fields.",
+				id: "Invalid ID!",
+				name: "Please enter a valid name",
+				amount: "Please enter a valid amount",
+				categoryName: "Please enter a valid category name",
+			},
+			create: {
+				success: "Budget created successfully!",
+				error: "Server error. Unable to create the budget.",
+			},
+			update: {
+				success: "Budget updated successfully!",
+				error: "Server error. Unable to update the budget.",
+			},
+			delete: {
+				success: "Budget deleted successfully!",
+				error: "Server error. Unable to delete the budget.",
 			},
 		},
 	},
