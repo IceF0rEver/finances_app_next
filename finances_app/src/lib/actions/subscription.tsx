@@ -76,7 +76,7 @@ export async function createSubscription(prevState: SubscriptionState, formData:
             message: t('action.subscription.create.success'),
         }
     } catch (err) {
-        console.log(err);
+        console.error(err)        
         return {
             message: t('action.subscription.create.error'),
         };
@@ -140,7 +140,7 @@ export async function updateSubscription(prevState: SubscriptionState, formData:
             message: t('action.subscription.update.success'),
         }
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return {
             message: t('action.subscription.update.error'),
         };
@@ -192,7 +192,7 @@ export async function deleteSubscription(prevState: SubscriptionState, formData:
             message: t('action.subscription.delete.success'),
         }
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return {
             message: ('action.subscription.delete.error'),
         };
