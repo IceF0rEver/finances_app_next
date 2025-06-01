@@ -49,7 +49,7 @@ onEdit,
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="h-8 w-8">
                         <MoreVertical/>
-                        <span className="sr-only">{ t('components.manageMenu.button.menu') }</span>
+                        <span className="sr-only">{ t('components.utils.manageMenu.button.menu') }</span>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
@@ -61,14 +61,14 @@ onEdit,
                         className="flex items-center gap-2 cursor-pointer"
                     >
                         <Pencil/>
-                        { t('components.manageMenu.button.update') }
+                        { t('components.utils.manageMenu.button.update') }
                     </DropdownMenuItem>
                     <AlertDialogTrigger asChild>
                         <DropdownMenuItem
                             className="flex items-center gap-2 text-destructive focus:text-destructive cursor-pointer"
                             >
                             <Trash2 className="text-destructive"/>
-                            { t('components.manageMenu.button.delete') }
+                            { t('components.utils.manageMenu.button.delete') }
                         </DropdownMenuItem>
                     </AlertDialogTrigger>
                 </DropdownMenuContent>
