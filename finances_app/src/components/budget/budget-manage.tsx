@@ -152,7 +152,7 @@ onOpen
     }, [state]);
 
     return (
-        <form onSubmit={handleSubmit} className="overflow-x-auto max-h-screen"> 
+        <form onSubmit={handleSubmit} className={cn(status ? "overflow-y-auto max-h-screen" : "md:overflow-y-hidden md:max-h-full", "w-full")}> 
             <Tabs 
                 defaultValue={activeTab} 
                 onValueChange={(value) => setActiveTab(value as typeof activeTab)}

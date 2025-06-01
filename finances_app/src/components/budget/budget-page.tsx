@@ -29,7 +29,7 @@ datas
                         <BudgetChart datas={datas}/>
                     </div>
                 ):(
-                    <div className="md:p-6 w-full max-w-2/5">
+                    <div className="h-full md:p-6 w-full md:max-w-4/5 lg:max-w-3/5 xl:max-w-2/5">
                         <BudgetManage datas={datas} status={status}/>
                     </div>
                 )}
