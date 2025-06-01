@@ -63,11 +63,13 @@ datas
     }, [datas]);
 
     return (
-        <div>
-            <HighchartsReact 
-                highcharts={Highcharts}
-                options={chartOptions}
-            />
+        <div className="w-full overflow-x-auto">
+            <div className="min-w-[1000px]">
+                <HighchartsReact 
+                    highcharts={Highcharts}
+                    options={chartOptions}
+                />
+            </div>
         </div>
     )
 }

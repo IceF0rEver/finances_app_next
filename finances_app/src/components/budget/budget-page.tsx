@@ -22,10 +22,10 @@ datas
     }, [datas])
 
     return (
-        <div className="max-w-[calc(100vw-3rem)] md:w-full">
+        <div className="w-full">
             <div className="flex justify-center">
                 {status && status === true ? (        
-                    <div className="overflow-x-auto">
+                    <div className="w-full sm:max-w-4/5">
                         <BudgetChart datas={datas}/>
                     </div>
                 ):(

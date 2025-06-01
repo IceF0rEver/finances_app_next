@@ -59,7 +59,7 @@ datas
         }
     }, [state]);
     return (
-        <div className="pt-12 min-w-[750px]">
+        <div className="pt-12">
             <div className="float-end">
                 <ManageMenu 
                     onSheetOpen={setIsSheetOpen} 
@@ -82,7 +82,9 @@ datas
                     </div>
                </ManageMenu>
             </div>
-            <BudgetChartItem datas={datas} />
+            <div>
+                <BudgetChartItem datas={datas} />
+            </div>
             <BudgetSheet data={datas} sheetOpen={isSheetOpen} onSheetOpen={setIsSheetOpen} status={isEdit}/>
         </div>
     )
