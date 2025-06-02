@@ -86,26 +86,26 @@ export default function SignIn() {
 		});
 	};
 
-	const handleSubmitGithub = async () => {
-		await signIn.social({
-			provider: "github",
-			callbackURL: "/dashboard"
-		},
-		{
-			onRequest: (ctx) => {
-				setLoading(true);
-			},
-			onResponse: (ctx) => {
-				setLoading(false);
-			},
-			onError: (ctx) => {
-				setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
-			},
-			onSuccess: async () => {
-				router.push(`/dashboard`)
-			},
-		});
-	};
+	// const handleSubmitGithub = async () => {
+	// 	await signIn.social({
+	// 		provider: "github",
+	// 		callbackURL: "/dashboard"
+	// 	},
+	// 	{
+	// 		onRequest: (ctx) => {
+	// 			setLoading(true);
+	// 		},
+	// 		onResponse: (ctx) => {
+	// 			setLoading(false);
+	// 		},
+	// 		onError: (ctx) => {
+	// 			setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
+	// 		},
+	// 		onSuccess: async () => {
+	// 			router.push(`/dashboard`)
+	// 		},
+	// 	});
+	// };
 	return (
 		<section className="flex h-screen justify-center items-center">
 			<Card className="max-w-md w-full">
@@ -166,9 +166,6 @@ export default function SignIn() {
 								<p > {t('app.auth.login.page.button.submit')} </p>
 							)}
 						</Button>
-
-					
-
 						<div className={cn(
 							"w-full gap-2 flex items-center",
 							"justify-between flex-col"
@@ -190,7 +187,7 @@ export default function SignIn() {
 								</svg>
 								{t('app.auth.login.page.button.google')}
 							</Button>
-							<Button
+							{/* <Button
 								variant="outline"
 								className={cn(
 									"w-full gap-2"
@@ -210,7 +207,7 @@ export default function SignIn() {
 									></path>
 								</svg>
 								{t('app.auth.login.page.button.github')}
-							</Button>
+							</Button> */}
 						</div>
 					</div>
 				</CardContent>
