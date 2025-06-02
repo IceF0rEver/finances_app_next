@@ -47,6 +47,7 @@ datas
     const [isOpenDeleteDialog,setIsOpenDeleteDialog] = useState<boolean>(false);
     const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
     const [isEdit, setIsEdit] = useState<boolean>(false);
+    const [remainingAmount, setRemainingAmount] = useState<number>(0);
 
     const [state, deleteFormAction] = useActionState(deleteSankey, initialState);
 
@@ -58,6 +59,11 @@ datas
             toast.error(state.message)
         }
     }, [state]);
+
+    useEffect(() => {
+        const total = (datas.filter((e) => e.to === "budget").reduce((sum, e) => sum + e.amount, 0)) - (datas.filter((e) => e.parentId === null && e.from === "budget").reduce((sum, e) => sum + e.amount, 0));
+        setRemainingAmount(total)
+    }, [datas]);
     return (
         <div className="pt-12">
             <div className="float-end">
@@ -84,6 +90,9 @@ datas
             </div>
             <div>
                 <BudgetChartItem datas={datas} />
+                <div className="flex justify-center">
+                    <p>{t('app.dashboard.budget.components.budgetChart.remainingAmount', { amount: remainingAmount.toFixed(2) ?? 0 })}</p>
+                </div>
             </div>
             <BudgetSheet data={datas} sheetOpen={isSheetOpen} onSheetOpen={setIsSheetOpen} status={isEdit}/>
         </div>

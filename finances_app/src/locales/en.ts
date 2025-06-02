@@ -136,6 +136,7 @@ export default {
 							delete: "Delete",
 							cancel: "Cancel",
 						},
+						remainingAmount: "You have {amount} € left to spend or to invest this month.",
 					},
 					budgetManage: {
 						tabs: {
