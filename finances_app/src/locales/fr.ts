@@ -136,7 +136,10 @@ export default {
 							delete: "Supprimer",
 							cancel: "Annuler",
 						},
-						remainingAmount: "Il vous reste {amount} € à dépenser ou à investir ce mois-ci.",
+						remainingAmount: {
+							positive: "Il vous reste {amount} € à dépenser ou à investir ce mois-ci.",
+							negative: "Vous avez dépassé votre budget de {amount} € ce mois-ci.",
+						},
 					},
 					budgetManage: {
 						tabs: {

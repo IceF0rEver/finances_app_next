@@ -91,7 +91,11 @@ datas
             <div>
                 <BudgetChartItem datas={datas} />
                 <div className="flex justify-center text-center">
-                    <p>{t('app.dashboard.budget.components.budgetChart.remainingAmount', { amount: remainingAmount.toFixed(2) ?? 0 })}</p>
+                    { remainingAmount > 0 ? (
+                        <p>{t('app.dashboard.budget.components.budgetChart.remainingAmount.positive', { amount: remainingAmount.toFixed(2) ?? 0 })}</p>
+                    ):(
+                        <p>{t('app.dashboard.budget.components.budgetChart.remainingAmount.negative', { amount: remainingAmount.toFixed(2) ?? 0 })}</p>
+                    )}
                 </div>
             </div>
             <BudgetSheet data={datas} sheetOpen={isSheetOpen} onSheetOpen={setIsSheetOpen} status={isEdit}/>
