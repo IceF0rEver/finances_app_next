@@ -90,7 +90,7 @@ datas
             </div>
             <div>
                 <BudgetChartItem datas={datas} />
-                <div className="flex justify-center">
+                <div className="flex justify-center text-center">
                     <p>{t('app.dashboard.budget.components.budgetChart.remainingAmount', { amount: remainingAmount.toFixed(2) ?? 0 })}</p>
                 </div>
             </div>
