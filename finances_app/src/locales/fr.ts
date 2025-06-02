@@ -486,5 +486,108 @@ export default {
 		ACCOUNT_NOT_FOUND: "Compte introuvable.",
 		EMAIL_IS_THE_SAME: "Adresse e-mail identique.",
 		undefined: "Une erreur inattendue est survenue !",
-	},	
+	},
+	seo: {
+		layout: {
+			app: {
+				title: "MyBudget",
+				description: "Une application moderne pour la gestion de son budget.",
+				keywords: {
+					budget: "Budget",
+					expenses: "Dépenses",
+					incomes: "Revenus",
+					investment: "Investissement",
+					subscription: "Abonnements",
+				},
+			},
+			forgotPassword: {
+				title: "Mot de passe oublié",
+				description: "Réinitialisez facilement votre mot de passe pour accéder à votre compte en toute sécurité.",
+				keywords: {
+					security: "Sécurité",
+					password: "Mot de passe",
+					reset: "Réinitialisation",
+					account: "Compte",
+					access: "Connexion",
+				},
+			},
+			login: {
+				title: "Connexion",
+				description: "Connectez-vous à votre compte pour gérer facilement vos finances personnelles.",
+				keywords: {
+					login: "Connexion",
+					account: "Compte",
+					secure: "Sécurité",
+					authentication: "Authentification",
+					access: "Accès"
+				},
+			},
+			register: {
+				title: "Inscription",
+				description: "Créez un compte gratuitement pour commencer à gérer votre budget efficacement.",
+				keywords: {
+					register: "Inscription",
+					account: "Compte",
+					create: "Créer",
+					budget: "Budget",
+					start: "Commencer"
+				},
+			},
+			resetPassword: {
+				title: "Réinitialiser le mot de passe",
+				description: "Choisissez un nouveau mot de passe pour sécuriser l’accès à votre compte.",
+				keywords: {
+					reset: "Réinitialisation",
+					password: "Mot de passe",
+					security: "Sécurité",
+					account: "Compte",
+					new: "Nouveau mot de passe"
+				},
+			},
+			dashboard: {
+				title: "Tableau de bord",
+				description: "Visualisez et analysez vos dépenses, revenus et abonnements en un seul endroit.",
+				keywords: {
+					dashboard: "Tableau de bord",
+					budget: "Budget",
+					expenses: "Dépenses",
+					incomes: "Revenus",
+					subscriptions: "Abonnements"
+				},
+			},
+			subscription: {
+				title: "Abonnements",
+				description: "Gérez tous vos abonnements et suivez leurs échéances facilement.",
+				keywords: {
+					subscription: "Abonnements",
+					manage: "Gérer",
+					billing: "Facturation",
+					renewal: "Renouvellement",
+					services: "Services"
+				},
+			},
+			settings: {
+				title: "Paramètres",
+				description: "Personnalisez votre expérience et gérez les préférences de votre compte.",
+				keywords: {
+					settings: "Paramètres",
+					preferences: "Préférences",
+					account: "Compte",
+					customization: "Personnalisation",
+					security: "Sécurité"
+				},
+			},
+			budget: {
+				title: "Budget",
+				description: "Suivez et planifiez vos revenus, dépenses et économies pour une meilleure gestion financière.",
+				keywords: {
+					budget: "Budget",
+					expenses: "Dépenses",
+					incomes: "Revenus",
+					savings: "Économies",
+					planning: "Planification"
+				},
+			},
+		},
+	},
 } as const

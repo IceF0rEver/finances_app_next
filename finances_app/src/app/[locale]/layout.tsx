@@ -5,8 +5,8 @@ import { I18nProviderClient } from "@/locales/client";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import ThemeColorProvider from "@/components/providers/theme-color-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { ReactElement } from 'react'
-
+import { ReactElement } from 'react';
+import { getI18n } from "@/locales/server";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -18,19 +18,68 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-	title: "Finance App",
-	description: "Manage your budget with Finance App",
-};
-export default async function RootLayout(
-{ 
+export async function generateMetadata(): Promise<Metadata> {
+	const t = await getI18n();
+	return {
+		title: {
+			default: t("seo.layout.app.title"),
+			template: `${t("seo.layout.app.title")} - %s`,
+		},
+		description: t("seo.layout.app.description"),
+		keywords: [
+			t("seo.layout.app.keywords.budget"),
+			t("seo.layout.app.keywords.expenses"),
+			t("seo.layout.app.keywords.incomes"),
+			t("seo.layout.app.keywords.investment"),
+			t("seo.layout.app.keywords.subscription"),
+		],
+		metadataBase: new URL("https://finances-app-next.vercel.app/"),
+		alternates: {
+			canonical: "/",
+			languages: {
+			"fr-FR": "/fr",
+			"en-US": "/en",
+			},
+		},
+		openGraph: {
+			type: "website",
+			locale: "fr_FR",
+			url: "https://finances-app-next.vercel.app/",
+			title: t("seo.layout.app.title"),
+			description: t("seo.layout.app.description"),
+			siteName: t("seo.layout.app.title"),
+			images: [
+			{
+				url: "/og-image.jpg",
+				width: 1200,
+				height: 630,
+				alt: `${t("seo.layout.app.title")} - Image`,
+			},
+			],
+		},
+		robots: {
+			index: true,
+			follow: true,
+			googleBot: {
+			index: true,
+			follow: true,
+			"max-video-preview": -1,
+			"max-image-preview": "large",
+			"max-snippet": -1,
+			},
+		},
+		category: "technology",
+	}
+}
+
+type RootLayoutProps = {
+	params: Promise<{ locale: string }>, 
+	children: ReactElement 
+}
+export default async function RootLayout({ 
 params, 
 children 
-}: { 
-params: Promise<{ locale: string }>, 
-children: ReactElement 
-}
-) {
+}: RootLayoutProps) {
 	const { locale } = await params
 
 	return (

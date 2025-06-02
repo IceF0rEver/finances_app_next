@@ -486,4 +486,107 @@ export default {
 		EMAIL_IS_THE_SAME: "Same Email address.",
 		undefined: "An unexpected error has occurred!",
 	},
+	seo: {
+		layout: {
+			app: {
+				title: "MyBudget",
+				description: "A modern application for managing your budget.",
+				keywords: {
+					budget: "Budget",
+					expenses: "Expenses",
+					incomes: "Incomes",
+					investment: "Investment",
+					subscription: "Subscriptions",
+				},
+			},
+			forgotPassword: {
+				title: "Forgot Password",
+				description: "Easily reset your password to securely access your account.",
+				keywords: {
+					security: "Security",
+					password: "Password",
+					reset: "Reset",
+					account: "Account",
+					access: "Login",
+				},
+			},
+			login: {
+				title: "Login",
+				description: "Log in to your account to easily manage your personal finances.",
+				keywords: {
+					login: "Login",
+					account: "Account",
+					secure: "Security",
+					authentication: "Authentication",
+					access: "Access"
+				},
+			},
+			register: {
+				title: "Register",
+				description: "Create a free account to start managing your budget effectively.",
+				keywords: {
+					register: "Register",
+					account: "Account",
+					create: "Create",
+					budget: "Budget",
+					start: "Start"
+				},
+			},
+			resetPassword: {
+				title: "Reset Password",
+				description: "Choose a new password to secure access to your account.",
+				keywords: {
+					reset: "Reset",
+					password: "Password",
+					security: "Security",
+					account: "Account",
+					new: "New password"
+				},
+			},
+			dashboard: {
+				title: "Dashboard",
+				description: "View and analyze your expenses, incomes, and subscriptions all in one place.",
+				keywords: {
+					dashboard: "Dashboard",
+					budget: "Budget",
+					expenses: "Expenses",
+					incomes: "Incomes",
+					subscriptions: "Subscriptions"
+				},
+			},
+			subscription: {
+				title: "Subscriptions",
+				description: "Manage all your subscriptions and track their renewal dates easily.",
+				keywords: {
+					subscription: "Subscriptions",
+					manage: "Manage",
+					billing: "Billing",
+					renewal: "Renewal",
+					services: "Services"
+				},
+			},
+			settings: {
+				title: "Settings",
+				description: "Customize your experience and manage your account preferences.",
+				keywords: {
+					settings: "Settings",
+					preferences: "Preferences",
+					account: "Account",
+					customization: "Customization",
+					security: "Security"
+				},
+			},
+			budget: {
+				title: "Budget",
+				description: "Track and plan your incomes, expenses, and savings for better financial management.",
+				keywords: {
+					budget: "Budget",
+					expenses: "Expenses",
+					incomes: "Incomes",
+					savings: "Savings",
+					planning: "Planning"
+				},
+			},
+		},
+	},
 } as const
