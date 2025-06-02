@@ -18,6 +18,7 @@ import { useSession } from "@/lib/auth-client";
 import { useI18n } from "@/locales/client";
 import { usePathname } from "next/navigation";
 import { Calendar, HandCoins } from "lucide-react";
+import Image from "next/image";
 
 export function AppSidebar() {
     const { data: session, isPending, error } = useSession();
@@ -51,7 +52,19 @@ export function AppSidebar() {
 	
   	return (
 		<Sidebar>
-		<SidebarHeader />
+		<SidebarHeader className="p-0">
+			<div className="w-full flex flex-row justify-center items-center gap-2 bg-primary/30">
+				<Image src="/image/MyBudget.png" 
+					width={250}
+					height={250}
+					alt="Logo picture"
+					className="w-1/3"
+				/>
+				<h1 className="text-2xl font-bold whitespace-nowrap">
+					<span className="text-primary">My</span>Budget
+				</h1>
+			</div>
+		</SidebarHeader>
 		<SidebarContent>
 			<SidebarGroup />
 				<SidebarMenu>
