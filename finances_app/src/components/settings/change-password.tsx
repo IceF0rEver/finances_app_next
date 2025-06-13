@@ -13,7 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogDescription
 } from "@/components/ui/alert-dialog"
-import ManagePassword from "../utils/manage-password"
+import ManagePassword from "./manage-password"
 
 export default function ChangePassword() {
     const t = useI18n();
