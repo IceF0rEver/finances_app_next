@@ -1,39 +1,70 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
-import { Loader2, Key } from "lucide-react";
-import { signIn } from "@/lib/auth-client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { string, z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { authSchemas } from "@/lib/zod/auth-schemas";
+import { z, string } from "zod"
 import { useI18n } from "@/locales/client";
+import { useState } from "react";
+import Link from "next/link";
+import AuthCard from "@/components/auth/auth-card"
+import AuthField from "@/components/auth/auth-field";
+import AuthForm from "@/components/auth/auth-form";
+import AuthButton from "@/components/auth/auth-button";
+import AuthFooter from "@/components/auth/auth-footer";
+import { useRouter } from "next/navigation";
+import { signIn } from "@/lib/auth-client";
 
-export default function SignIn() {
-	const [email, setEmail] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
-	const [loading, setLoading] = useState<boolean>(false);
-
-	const router = useRouter();
+const GoogleLabel = () => {
 	const t = useI18n();
+	return (
+		<span className="flex gap-2">
+			<svg xmlns="http://www.w3.org/2000/svg" width="0.98em" height="1em" viewBox="0 0 256 262">
+				<path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+				<path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055c-34.523 0-63.824-22.773-74.269-54.25l-1.531.13l-40.298 31.187l-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+				<path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82c0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602z"></path>
+				<path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+			</svg>
+			{t('app.auth.login.page.button.google')}
+		</span>
+	)
+}
+
+// const GithubLabel = () => {
+// 	const t = useI18n();
+// 	return (
+// 		<span className="flex gap-2">
+// 			<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+// 				<path fill="currentColor" d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"></path>
+// 			</svg>
+// 			{t('app.auth.login.page.button.github')}
+// 		</span>
+// 	)
+// }
+
+export default function Page() {
+	const t = useI18n();
+	const router = useRouter();
+
 	
+	const [loading, setLoading] = useState<boolean>(false);
 	const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
-	const signInSchema = z.object({
-		email: z.string().email(t('app.auth.login.page.error.email')),
-		password: z.string().min(6, t('app.auth.login.page.error.password')),
-	});
 	
-	const handleSubmitUser = async () => {
-		try {
-			setErrorMessage({});
+	const signInSchema = authSchemas(t).signIn
+	type SignInType = z.infer<typeof signInSchema>
+	const form = useForm<SignInType>({
+		resolver: zodResolver(signInSchema),
+		defaultValues: {
+			email: "",
+			password: "",
+		},
+	})
+
+	const onSubmit = async (values: SignInType) => {
+    	try {
 			const validatedData = signInSchema.parse({
-				email,
-				password,
+				email: values.email,
+				password: values.password,
 			});
 
 			await signIn.email(validatedData, {
@@ -52,178 +83,40 @@ export default function SignIn() {
 			});
 		} catch (error) {
 			if (error instanceof z.ZodError) {
-				const messages: Record<string, string> = {};
-
-				error.errors.forEach((err) => {
-					const key = err.path.join(".");
-					messages[key] = err.message;
-				});
-
-				setErrorMessage(messages);
+				console.error(error)
 			}
 			setLoading(false)
 		}
-	};
+ 	}
 
-	const handleSubmitGoogle = async () => {
-		await signIn.social({
-			provider: "google",
-			callbackURL: "/dashboard"
-		},
-		{
-			onRequest: (ctx) => {
-				setLoading(true);
-			},
-			onResponse: (ctx) => {
-				setLoading(false);
-			},
-			onError: (ctx) => {
-				setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
-			},
-			onSuccess: async () => {
-				router.push(`/dashboard`)
-			},
-		});
-	};
-
-	// const handleSubmitGithub = async () => {
-	// 	await signIn.social({
-	// 		provider: "github",
-	// 		callbackURL: "/dashboard"
-	// 	},
-	// 	{
-	// 		onRequest: (ctx) => {
-	// 			setLoading(true);
-	// 		},
-	// 		onResponse: (ctx) => {
-	// 			setLoading(false);
-	// 		},
-	// 		onError: (ctx) => {
-	// 			setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
-	// 		},
-	// 		onSuccess: async () => {
-	// 			router.push(`/dashboard`)
-	// 		},
-	// 	});
-	// };
 	return (
-		<section className="flex h-screen justify-center items-center">
-			<Card className="max-w-md w-full">
-				<CardHeader>
-					<CardTitle className="text-lg md:text-xl">{t('app.auth.login.page.title')}</CardTitle>
-					<CardDescription className="text-xs md:text-sm">
-					{t('app.auth.login.page.description')}
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<div className="grid gap-4">
-						{errorMessage.betterError && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.betterError}</p>}
-						<div className="grid gap-2">
-							<Label htmlFor="email">{t('app.auth.login.page.form.email.label')}</Label>
-							<Input
-								id="email"
-								type="email"
-								placeholder={t('app.auth.login.page.form.email.placeholder')}
-								required
-								onChange={(e) => {
-								setEmail(e.target.value);
-								}}
-								value={email}
-							/>
-							{errorMessage.email && <p className="text-sm text-red-500"  aria-live="polite" aria-atomic="true">{errorMessage.email}</p>}
-
-						</div>
-						<div className="grid gap-2">
-							<div className="flex items-center">
-								<Label htmlFor="password">{t('app.auth.login.page.form.password.label')}</Label>
-								<Link
-									href="/auth/forgot-password"
-									className="ml-auto inline-block text-sm underline"
-								>
-									{t('app.auth.login.page.link.forgotPassword')}
-								</Link>
-							</div>
-							<Input
-								id="password"
-								type="password"
-								placeholder={t('app.auth.login.page.form.password.placeholder')}
-								autoComplete="password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-							{errorMessage.password && <p className="text-sm text-red-500" aria-live="polite" aria-atomic="true">{errorMessage.password}</p>}
-						</div>
-						<Button
-							variant={"default"}
-							type="submit"
-							className="w-full"
-							disabled={loading}
-							onClick={handleSubmitUser}
-						>
-							{loading ? (
-								<Loader2 size={16} className="animate-spin" />
-							) : (
-								<p > {t('app.auth.login.page.button.submit')} </p>
-							)}
-						</Button>
-						<div className={cn(
-							"w-full gap-2 flex items-center",
-							"justify-between flex-col"
-							)}
-						>
-							<Button
-								variant="outline"
-								className={cn(
-									"w-full gap-2"
-								)}
-								disabled={loading}
-								onClick={handleSubmitGoogle}
-							>
-								<svg xmlns="http://www.w3.org/2000/svg" width="0.98em" height="1em" viewBox="0 0 256 262">
-									<path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
-									<path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055c-34.523 0-63.824-22.773-74.269-54.25l-1.531.13l-40.298 31.187l-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
-									<path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82c0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602z"></path>
-									<path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
-								</svg>
-								{t('app.auth.login.page.button.google')}
-							</Button>
-							{/* <Button
-								variant="outline"
-								className={cn(
-									"w-full gap-2"
-								)}
-								disabled={loading}
-								onClick={handleSubmitGithub}
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="1em"
-									height="1em"
-									viewBox="0 0 24 24"
-								>
-									<path
-										fill="currentColor"
-										d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"
-									></path>
-								</svg>
-								{t('app.auth.login.page.button.github')}
-							</Button> */}
-						</div>
-					</div>
-				</CardContent>
-				<CardFooter>
-					<div className="flex justify-center w-full border-t py-4">
-						<p className="text-center text-xs text-neutral-500">
-						<Link
-							href="/auth/register"
-							className="underline"
-						>
-							<span>{t('app.auth.login.page.link.register')}</span>
-						</Link>
-						</p>
-					</div>
-				</CardFooter>
-			</Card>
-		</section>
-	);
-}
+		<AuthCard
+			title={t('app.auth.login.page.title')}
+			description={t('app.auth.login.page.description')}
+			className="max-w-md"
+			footer={<AuthFooter href={"/auth/register"} text={t('app.auth.login.page.link.register')} />}
+		>
+			<AuthForm form={form} onSubmit={onSubmit} className="grid gap-4">
+				{errorMessage.betterError && <p className="text-sm text-destructive" aria-live="polite" aria-atomic="true">{errorMessage.betterError}</p>}
+				<AuthField 
+					label={t('app.auth.login.page.form.email.label')}
+					placeholder={t('app.auth.login.page.form.email.placeholder')}
+					control={form.control}
+					name="email"
+					type="email"
+				/>
+				<AuthField 
+					label={t('app.auth.login.page.form.password.label')}
+					placeholder={t('app.auth.login.page.form.password.placeholder')}
+					control={form.control}
+					name="password"
+					type="password"
+				/>
+				<Link href="/auth/forgot-password" className="ml-auto inline-block text-sm underline">{t('app.auth.login.page.link.forgotPassword')}</Link>
+				<AuthButton isLoading={loading} label={t('app.auth.login.page.button.submit')}/>
+				<AuthButton socialProvider={"google"} isSocial={true} type={"button"} variant={"outline"} label={<GoogleLabel/>}/>
+				{/* <AuthButton type={"button"} variant={"outline"} label={<GithubLabel/>}/> */}
+			</AuthForm>
+		</AuthCard>
+	)
+};
