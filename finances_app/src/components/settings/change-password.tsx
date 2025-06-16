@@ -14,15 +14,18 @@ import {
   AlertDialogDescription
 } from "@/components/ui/alert-dialog"
 import ManagePassword from "./manage-password"
+import SettingsArticle from "./settings-article"
 
 export default function ChangePassword() {
     const t = useI18n();
     const [open, setOpen] = useState<boolean>(false);
 
     return (
-        <article className="flex flex-col gap-2">
-        <div className="flex flex-col md:flex-row gap-2">
-            <p className="my-auto text-nowrap">{t("app.dashboard.settings.components.account.form.changePassword.label")} :</p>
+        <SettingsArticle
+            className={"flex flex-col gap-2"}
+            label={t("app.dashboard.settings.components.account.form.changePassword.label")}
+            description={t("app.dashboard.settings.components.account.form.changePassword.description")}
+        >
             <AlertDialog open={open} onOpenChange={setOpen}>
                 <AlertDialogTrigger asChild>
                     <Button type="button" variant={"default"} className="min-w-1/4">
@@ -44,10 +47,6 @@ export default function ChangePassword() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-        </div>
-        <p className="text-sm opacity-60">
-            {t("app.dashboard.settings.components.account.form.changePassword.description")}
-        </p>
-        </article>
+        </SettingsArticle>
     )
 }
