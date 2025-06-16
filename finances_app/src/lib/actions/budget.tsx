@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { getUser } from '@/lib/server';
 import { getCurrentLocale, getI18n } from '@/locales/server';
 import { Decimal } from '@/generated/prisma/runtime/library';
+import { budgetSchemas } from '../zod/budget-schemas';
 
 const prisma = new PrismaClient()
 
@@ -23,14 +24,7 @@ export async function createSankey(prevState: SankeyState, formData: FormData): 
     const t = await getI18n()
     const locale = await getCurrentLocale()
 
-    const sankeySchema = z.array(z.object({
-        id: z.string({ message: t("action.budget.form.id") }).uuid(),
-        from: z.string({ message: t("action.budget.form.categoryName") }),
-        to: z.string({ message: t("action.budget.form.name") }),
-        amount: z.number({ message: t("action.budget.form.amount") }),
-        type: z.string(),
-        parentId: z.string().uuid().optional().nullable(),
-    }))
+    const sankeySchema = budgetSchemas(t).sankey
 
     if (!user?.id) {
         return {
@@ -87,14 +81,7 @@ export async function updateSankey(prevState: SankeyState, formData: FormData): 
     const t = await getI18n()
     const locale = await getCurrentLocale()
 
-    const sankeySchema = z.array(z.object({
-        id: z.string({ message: t("action.budget.form.id") }).uuid(),
-        from: z.string({ message: t("action.budget.form.categoryName") }),
-        to: z.string({ message: t("action.budget.form.name") }),
-        amount: z.number({ message: t("action.budget.form.amount") }),
-        type: z.string(),
-        parentId: z.string().uuid().optional().nullable(),
-    }))
+    const sankeySchema = budgetSchemas(t).sankey
 
     if (!user?.id) {
         return {
