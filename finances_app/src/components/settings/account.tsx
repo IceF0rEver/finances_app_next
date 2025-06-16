@@ -1,6 +1,5 @@
 "use client"
 import { useI18n } from "@/locales/client"
-import { Separator } from "@/components/ui/separator"
 import { useState } from "react";
 import { useSession } from "@/lib/auth-client";
 import ChangePassword from "./change-password";
@@ -13,6 +12,7 @@ import AuthField from "../auth/auth-field";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import AuthButton from "../auth/auth-button";
+import SettingsItemsHeader from "./settings-items-header";
 
 export default function Account() {
     const t = useI18n();
@@ -83,11 +83,10 @@ export default function Account() {
     }
     return (
         <article className="max-w-3xl">
-            <header>
-              <h1 className="text-xl font-bold">{t('app.dashboard.settings.components.account.title')}</h1>
-                <p className="py-2">{t('app.dashboard.settings.components.account.description')}</p>
-                <Separator className="my-4" />          
-            </header>
+            <SettingsItemsHeader
+                title={t('app.dashboard.settings.components.account.title')}
+                description={t('app.dashboard.settings.components.account.description')}
+            />
             <section className="flex flex-col gap-9">
                 <ChangePassword/>
                 <AuthForm form={form} onSubmit={onSubmit} className="grid gap-9">

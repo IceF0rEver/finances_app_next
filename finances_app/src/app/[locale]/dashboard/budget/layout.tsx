@@ -1,4 +1,4 @@
-import { Separator } from "@/components/ui/separator"
+import LayoutHeader from "@/components/dashboard/layout/layout-header";
 import { getI18n } from "@/locales/server";
 import { Metadata } from "next";
 
@@ -25,11 +25,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
     const t = await getI18n();
     return (
          <section className="p-6">
-            <header>
-                <h1 className="text-3xl font-bold">{t('app.dashboard.budget.layout.title')}</h1>
-                <p className="py-2">{t('app.dashboard.budget.layout.description')}</p>
-                <Separator className="my-4" />
-            </header>
+            <LayoutHeader
+                title={t('app.dashboard.budget.layout.title')}
+                description={t('app.dashboard.budget.layout.description')}
+            />
             {children}           
         </section>
     )

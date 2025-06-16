@@ -5,6 +5,7 @@ import z from "zod";
 import { revalidatePath } from "next/cache";
 import { getUser } from '@/lib/server';
 import { getCurrentLocale, getI18n } from '@/locales/server';
+import { subscriptionSchemas  } from '../zod/subscription-schemas';
 
 const prisma = new PrismaClient()
 
@@ -27,16 +28,8 @@ export async function createSubscription(prevState: SubscriptionState, formData:
     const t = await getI18n();
     const locale = await getCurrentLocale();
 
-    const subscriptionSchema = z.object({
-        id: z.string().optional(),
-        name: z.string({ message: t('action.subscription.form.name')}),
-        amount: z.number({ message: t('action.subscription.form.amount')}),
-        recurrence: z.string({ message: t('action.subscription.form.recurrence')}),
-        executionDate: z.string({ message: t('action.subscription.form.executionDate')}),
-        icon: z.string({ message: t('action.subscription.form.icon')}),
-        userId: z.string({ message: t('action.subscription.form.id')}),
-    });
-
+    const subscriptionSchema = subscriptionSchemas(t).subscription
+    
     if (!user?.id) {
         return {
             message: t('action.subscription.user.badId'),
@@ -88,15 +81,7 @@ export async function updateSubscription(prevState: SubscriptionState, formData:
     const t = await getI18n();
     const locale = await getCurrentLocale();
 
-    const subscriptionSchema = z.object({
-        id: z.string().optional(),
-        name: z.string({ message: t('action.subscription.form.name')}),
-        amount: z.number({ message: t('action.subscription.form.amount')}),
-        recurrence: z.string({ message: t('action.subscription.form.recurrence')}),
-        executionDate: z.string({ message: t('action.subscription.form.executionDate')}),
-        icon: z.string({ message: t('action.subscription.form.icon')}),
-        userId: z.string({ message: t('action.subscription.form.id')}),
-    });
+    const subscriptionSchema = subscriptionSchemas(t).subscription
 
     if (!user?.id) {
         return {
@@ -152,9 +137,7 @@ export async function deleteSubscription(prevState: SubscriptionState, formData:
     const t = await getI18n();
     const locale = await getCurrentLocale();
 
-    const delteSubscriptionSchema = z.object({
-        id: z.string({ message: t('action.subscription.form.id')}),
-    });
+    const deleteSubscriptionSchema = subscriptionSchemas(t).deleteSubscription
 
     if (!user?.id) {
         return {
@@ -162,7 +145,7 @@ export async function deleteSubscription(prevState: SubscriptionState, formData:
         }
     }
     try {
-        const validatedData = delteSubscriptionSchema.safeParse({
+        const validatedData = deleteSubscriptionSchema.safeParse({
             id: formData.get("id"),
 		});
 
