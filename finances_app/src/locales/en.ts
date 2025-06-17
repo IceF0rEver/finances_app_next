@@ -278,10 +278,10 @@ export default {
 						description: "Update your account settings.",
 						form: {
 							changePassword: {
-								label: "Change my password",
-								description: "An email will be sent to you. Click the link in the email to set a new password.",
-								confirmTitle: "Confirm sending the password reset email",
-								confirmDescription: "A reset link will be sent to your email address. This action is irreversible. Do you want to proceed?",
+								label: "Change your password",
+								description: "Click this button to set a new password.",
+								confirmTitle: "Change your password",
+								confirmDescription: "Enter your information to change your password.",
 							},
 							name: {
 								label: "Name",
@@ -304,7 +304,7 @@ export default {
 							continue: "Continue",
 						},
 						link: {
-							changePassword: "Send password reset email",
+							changePassword: "Update your password",		
 						},
 						toast: {
 							emailSuccess: "Email address updated successfully!",

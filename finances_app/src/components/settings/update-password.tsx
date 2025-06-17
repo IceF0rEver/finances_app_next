@@ -12,23 +12,23 @@ import AuthForm from "../auth/auth-form";
 import AuthField from "../auth/auth-field";
 import AuthButton from "../auth/auth-button";
 
-interface ManagePasswordProps {
+interface UpdatePasswordProps {
 	onOpenChange?: (open: boolean) => void;
 }
 
-export default function ManagePassword({
+export default function UpdatePassword({
 onOpenChange
-}: ManagePasswordProps) {
+}: UpdatePasswordProps) {
 	
 	const t = useI18n();
 
     const [loading, setLoading] = useState<boolean>(false);
 	const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
 
-	const changePasswordSessionSchema = authSchemas(t).changePasswordSession
-	type ChangePasswordSessionType = z.infer<typeof changePasswordSessionSchema>
-	const form = useForm<ChangePasswordSessionType>({
-		resolver: zodResolver(changePasswordSessionSchema),
+	const updatePasswordSchema = authSchemas(t).updatePassword
+	type UpdatePasswordType = z.infer<typeof updatePasswordSchema>
+	const form = useForm<UpdatePasswordType>({
+		resolver: zodResolver(updatePasswordSchema),
 		defaultValues: {
 			password: "",
 			passwordConfirmation: "",
@@ -36,9 +36,9 @@ onOpenChange
 		},
 	})
 
-	const onSubmit = async (values: ChangePasswordSessionType) => {
+	const onSubmit = async (values: UpdatePasswordType) => {
 		try {
-			const validatedData = changePasswordSessionSchema.parse({
+			const validatedData = updatePasswordSchema.parse({
 				password : values.password,
                 currentPassword: values.currentPassword,
 				passwordConfirmation: values.passwordConfirmation,
