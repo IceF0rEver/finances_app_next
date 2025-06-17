@@ -1,7 +1,6 @@
 'use server'
 
 import { PrismaClient } from '@/generated/prisma';
-import z from "zod";
 import { revalidatePath } from "next/cache";
 import { getUser } from '@/lib/server';
 import { getCurrentLocale, getI18n } from '@/locales/server';
@@ -40,11 +39,10 @@ export async function createSubscription(prevState: SubscriptionState, formData:
 			name: formData.get("name"),
             amount: Number(formData.get("amount")),
             recurrence: formData.get("recurrence"),
-            executionDate: formData.get("executionDate"),
+            executionDate: new Date(formData.get("executionDate") as string),
             icon: formData.get("icon"),
             userId: user?.id,
 		});
-
         if (!validatedData.success) {
             return {
             errors: validatedData.error.flatten().fieldErrors,
@@ -53,7 +51,7 @@ export async function createSubscription(prevState: SubscriptionState, formData:
         };
         const { name, amount, recurrence, executionDate, icon, userId } = validatedData.data;
 
-        const subscription = await prisma.subscription.create({
+        await prisma.subscription.create({
             data: {
                 name,
                 amount,
@@ -94,7 +92,7 @@ export async function updateSubscription(prevState: SubscriptionState, formData:
 			name: formData.get("name"),
             amount: Number(formData.get("amount")),
             recurrence: formData.get("recurrence"),
-            executionDate: formData.get("executionDate"),
+            executionDate: new Date(formData.get("executionDate") as string),
             icon: formData.get("icon"),
             userId: user?.id,
 		});
@@ -107,7 +105,7 @@ export async function updateSubscription(prevState: SubscriptionState, formData:
         };
         const { id, name, amount, recurrence, executionDate, icon, userId } = validatedData.data;
 
-        const subscription = await prisma.subscription.update({
+        await prisma.subscription.update({
             where: { id, userId },
             data: {
                 name,

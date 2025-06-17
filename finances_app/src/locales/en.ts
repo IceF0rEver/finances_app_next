@@ -401,6 +401,7 @@ export default {
 			},
 			inputIcon: {
 				label: "Icon",
+				placeholder: "Search icon(s)...",
 				noResults: "No matching icon(s).",
 			},
 		},

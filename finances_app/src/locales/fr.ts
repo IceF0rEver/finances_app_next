@@ -402,6 +402,7 @@ export default {
 			},
 			inputIcon: {
 				label: "Icône",
+				placeholder: "Recherche d'icône(s)...",
 				noResults : "Pas d'icône(s) correspondante(s).",
 			},
 		},
