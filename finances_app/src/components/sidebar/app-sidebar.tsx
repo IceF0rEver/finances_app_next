@@ -20,6 +20,18 @@ import { usePathname } from "next/navigation";
 import { Calendar, HandCoins } from "lucide-react";
 import Image from "next/image";
 
+const NavUserSkeleton = () => {
+	return (
+		<div className="flex flex-row gap-1 w-full h-12 rounded-lg dark:bg-zinc-800 bg-zinc-200 p-2">
+			<span className="w-10 aspect-square rounded-lg dark:bg-zinc-700 bg-zinc-300"></span>
+			<div className="grid gap-1 w-full p-1">
+				<span className="rounded-full w-3/5 dark:bg-zinc-700 bg-zinc-300"></span>
+				<span className="rounded-full w-4/5 dark:bg-zinc-700 bg-zinc-300"></span>
+			</div>
+		</div>
+	)
+}
+
 export function AppSidebar() {
     const { data: session, isPending, error } = useSession();
 	const t = useI18n();
@@ -92,7 +104,11 @@ export function AppSidebar() {
 			<SidebarGroup />
 		</SidebarContent>
 		<SidebarFooter>
-			<NavUser user={dataUser} />
+			{isPending ? (
+				<NavUserSkeleton />
+			) : (
+				<NavUser user={dataUser} />
+			)}
 		</SidebarFooter>
 		</Sidebar>
 	)
