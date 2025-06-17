@@ -3,23 +3,16 @@
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
-import type { subscriptionParams } from "@/types/subscription-types"
-import { Icon } from "@iconify/react"
-import { calendarCheckDate } from "@/lib/utils"
-
-
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
 type CalendarProps = React.ComponentProps<typeof DayPicker> & {
-  datas?: subscriptionParams[];
   utilitie?: 'subscription';
 };
 
 function Calendar({
   className,
   classNames,
-  datas,
   utilitie,
   showOutsideDays = true,
   ...props
@@ -91,53 +84,6 @@ function Calendar({
         IconRight: ({ className, ...props }) => (
           <ChevronRight className={cn("size-4", className)} {...props} />
         ),
-				DayContent: ({ date }) => {
-          if (utilitie != "subscription") {
-            return (
-              <div className="w-full aspect-square flex items-center justify-center">
-                {date.getDate()}
-              </div>
-            );
-          }
-          let items: subscriptionParams[] = [];
-          
-          if (datas){
-            items = datas.filter((day: any) => calendarCheckDate(day, date))
-          }
-
-          return (
-            <div className="relative size-full">
-              <span
-                className={cn(
-                  "w-full aspect-square rounded-md flex items-start justify-end p-1"
-                )}
-              >
-                {date.getDate()}
-              </span>
-							 {items.length > 0 && (
-							<div>
-								{items.slice(0,5).map((item: subscriptionParams, index : number) => (
-									<div 
-										key={item.id} 
-										style={{ zIndex: 20 - index }}
-										className="absolute w-full bottom-0 flex justify-start p-1 overflow-hidden"
-									>
-										<span 
-											style={{ 
-												transform: `translateX(${index * 50}%)`, 
-												filter: `brightness(${200 - (index * 30)}%)`,
-											}}
-											className="bg-primary border border-black rounded-full p-1 max-w-xs md:max-w-sm aspect-square sm:flex items-center justify-center hidden" 
-										>
-                      <Icon icon={item.icon}/>
-										</span>
-									</div>
-								))}
-							</div>
-							)}
-            </div>
-          )
-        },
       }}
       {...props}
     />
