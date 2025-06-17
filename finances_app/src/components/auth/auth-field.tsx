@@ -78,19 +78,12 @@ className,
                         setImagePreview(field.value)
                     }
                 }, [field.value])
-                return (
-                    <FormItem>
-                        { label && <FormLabel>{label}</FormLabel>}
+                 if (fieldType === "image") {
+                    return (
+                        <FormItem>
+                            { label && <FormLabel>{label}</FormLabel>}
 
-                        <FormControl>
-                            { fieldType === "default" ? (
-                                <Input
-                                    placeholder={placeholder}
-                                    type={type}
-                                    {...field}
-                                    className={cn(className)}
-                                />
-                            ): (
+                            <FormControl>
                                 <div className={cn("flex items-end gap-2", className)}>
                                     {fieldType === "image" && imagePreview && (
                                         <div className="relative w-16 h-16 rounded-sm overflow-hidden">
@@ -118,12 +111,28 @@ className,
                                         )}
                                     </div>
                                 </div>
-                            )}
-                        </FormControl>
-                        { description && <FormDescription>{description}</FormDescription>}
-                        <FormMessage />
-                    </FormItem>
-                )
+                            </FormControl>
+                            { description && <FormDescription>{description}</FormDescription>}
+                            <FormMessage />
+                        </FormItem>
+                    )
+                } else {
+                    return (
+                        <FormItem>
+                            { label && <FormLabel>{label}</FormLabel>}
+                            <FormControl>
+                                <Input
+                                    placeholder={placeholder}
+                                    type={type}
+                                    {...field}
+                                    className={cn(className)}
+                                />
+                            </FormControl>
+                            { description && <FormDescription>{description}</FormDescription>}
+                            <FormMessage />
+                        </FormItem>
+                    )
+                }
             }}
         />
     )
