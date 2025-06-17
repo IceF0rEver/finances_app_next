@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { useI18n, useCurrentLocale } from "@/locales/client"
 import { Card, CardTitle, CardDescription, CardHeader, CardContent } from "@/components/ui/card"
 import { Calendar } from "@/components/ui/calendar"
