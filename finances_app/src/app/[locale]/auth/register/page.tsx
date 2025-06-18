@@ -5,8 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { authSchemas } from "@/lib/zod/auth-schemas";
 import { z, string } from "zod"
 import { useI18n } from "@/locales/client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState } from "react";
 import AuthCard from "@/components/auth/auth-card"
 import AuthField from "@/components/auth/auth-field";
 import AuthForm from "@/components/auth/auth-form";
@@ -14,15 +13,6 @@ import AuthButton from "@/components/auth/auth-button";
 import AuthFooter from "@/components/auth/auth-footer";
 import { useRouter } from "next/navigation";
 import { signUp } from "@/lib/auth-client";
-
-async function convertImageToBase64(file: File): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onloadend = () => resolve(reader.result as string);
-		reader.onerror = reject;
-		reader.readAsDataURL(file);
-	});
-}
 
 export default function Page() {
 	const t = useI18n();
