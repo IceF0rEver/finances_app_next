@@ -1,8 +1,8 @@
+"use client"
+
 import Link from "next/link";
-interface AuthFooterProps {
-    href: string,
-    text: string,
-}
+import type { AuthFooterProps } from "@/types/auth-types";
+
 export default function AuthFooter({
 href,
 text,

@@ -7,24 +7,14 @@ import {
     FormControl,
     FormDescription,
     FormMessage
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import type { Control, FieldPath, FieldValues } from "react-hook-form"
-import Image from "next/image"
-import { useState, useRef, useEffect } from "react"
-import { X } from "lucide-react"
-import { cn } from "@/lib/utils"
-
-interface AuthFieldProps<T extends FieldValues> {
-    label?: string,
-    description?: string,
-    placeholder?: string,
-    type: string,
-    name: FieldPath<T>,
-    control: Control<T>,
-    fieldType?: "image" | "default",
-    className?: string,
-}
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import type { FieldValues } from "react-hook-form";
+import Image from "next/image";
+import { useState, useRef, useEffect } from "react";
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { AuthFieldProps } from "@/types/auth-types";
 
 async function convertImageToBase64(file: File): Promise<string> {
 	return new Promise((resolve, reject) => {

@@ -1,24 +1,13 @@
 "use client"
 
-import { Loader2 } from "lucide-react"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { useState, useEffect } from "react"
-import { VariantProps } from "class-variance-authority";
+import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 import { signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/locales/client";
 import { string } from "zod";
-
-
-interface AuthButtonProps {
-    type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"],
-    variant?: VariantProps<typeof buttonVariants>["variant"],
-    className?: string,
-    label: string | React.ReactNode,
-    isSocial?: boolean,
-    isLoading?: boolean,
-    socialProvider?: Parameters<typeof signIn.social>[0]["provider"],
-}
+import type { AuthButtonProps } from "@/types/auth-types";
 
 export default function AuthButton({
 type = "submit",
