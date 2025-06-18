@@ -11,9 +11,8 @@ import { subscriptionParams } from "@/types/subscription-types"
 import { Separator } from "@/components/ui/separator"
 import { useI18n } from "@/locales/client";
 import { Button } from "@/components/ui/button"
-import { startTransition, useActionState, useEffect, useCallback } from "react";
+import { useActionState, useEffect, useCallback, startTransition } from "react";
 import { createSubscription, updateSubscription } from "@/lib/actions/subscription";
-import { useFormStatus } from "react-dom"
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Form } from "@/components/ui/form"
@@ -30,23 +29,6 @@ interface SubscriptionManageProps {
     status: boolean;
     data?: subscriptionParams
 };
-
-function SubmitButton({ status, t }: { status: boolean; t: any }) {
-    const { pending } = useFormStatus()
-    return (
-        <Button type="submit" variant="default" className="w-full" disabled={pending}>
-            {pending ? (
-                <Loader2 size={16} className="animate-spin" />
-            ) : (
-                <span>
-                    {status
-                        ? t("app.dashboard.subscription.components.subscriptionManage.button.update")
-                        : t("app.dashboard.subscription.components.subscriptionManage.button.add")}
-                </span>
-            )}
-        </Button>
-    )
-}
 
 export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data} : SubscriptionManageProps){
     const t = useI18n();
@@ -65,9 +47,10 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
         [session?.user.id],
     )
     
-    const [createState, createFormAction] = useActionState(createSubscription, {success: false});
-    const [updateState, updateFormAction] = useActionState(updateSubscription, {success: false});
+    const [createState, createFormAction, isPendingCreate] = useActionState(createSubscription, {success: false});
+    const [updateState, updateFormAction, isPendingUpdate] = useActionState(updateSubscription, {success: false});
 
+    const isPending = status ? isPendingUpdate : isPendingCreate;
     const state = status ? updateState : createState;
     const formAction = status ? updateFormAction : createFormAction;
 
@@ -77,22 +60,7 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
         resolver: zodResolver(subscriptionSchema),
         defaultValues: getDefaultValues(),
     })
-
-    const handleSubmit = (formData: SubscriptionType) => {
-        const data = new FormData()
-        Object.entries(formData).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-            if (value instanceof Date) {
-            data.append(key, value.toISOString())
-            } else {
-            data.append(key, String(value))
-            }
-        }
-        })
-        startTransition(() => {
-        formAction(data)
-        })
-    }
+    
     useEffect(() => {
         if (sheetOpen) {
             form.reset(getDefaultValues(data))
@@ -107,22 +75,18 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
             toast.error(state.message);
         }
     }, [state]);
+    
+    const onSubmit = (data: SubscriptionType) => {
+        const formData = new FormData();
+        console.log(data)
+        Object.entries(data).forEach(([key, value]) => {
+            formData.append(key, value instanceof Date ? value.toISOString() : String(value));
+        });
 
-    useEffect(() => {
-    if (sheetOpen) {
-      const formData = {
-        id: data?.id || "",
-        name: data?.name || "",
-        amount: data?.amount || 0,
-        recurrence: data?.recurrence || "monthly",
-        executionDate: data?.executionDate || new Date(),
-        icon: data?.icon || "",
-        userId: session?.user.id,
-      }
-
-      form.reset(formData)
-    }
-  }, [sheetOpen, data, session?.user.id, form])
+        startTransition(() => {
+            formAction(formData);
+        });
+    };
 
     return (
         <Sheet open={sheetOpen} onOpenChange={onSheetOpen}>
@@ -143,7 +107,7 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
                 <Separator className="my-2" />
             </SheetHeader>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleSubmit)} className="grid gap-6 px-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6 px-4">
                     <SubscriptionField
                         label={t("app.dashboard.subscription.components.subscriptionManage.form.name.label")}
                         control={form.control}
@@ -181,7 +145,17 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
                         fieldType="icon"
                     />
                     <SheetFooter>
-                        <SubmitButton status={status} t={t} />
+                        <Button type="submit" variant="default" className="w-full" disabled={isPending}>
+                            {isPending ? (
+                                <Loader2 size={16} className="animate-spin" />
+                            ) : (
+                                <span>
+                                    {status
+                                        ? t("app.dashboard.subscription.components.subscriptionManage.button.update")
+                                        : t("app.dashboard.subscription.components.subscriptionManage.button.add")}
+                                </span>
+                            )}
+                        </Button>
                     </SheetFooter>
                 </form>
 		    </Form>
