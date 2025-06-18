@@ -47,12 +47,7 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
         [session?.user.id],
     )
     
-    const [createState, createFormAction, isPendingCreate] = useActionState(createSubscription, {success: false});
-    const [updateState, updateFormAction, isPendingUpdate] = useActionState(updateSubscription, {success: false});
-
-    const isPending = status ? isPendingUpdate : isPendingCreate;
-    const state = status ? updateState : createState;
-    const formAction = status ? updateFormAction : createFormAction;
+    const [state, FormAction, isPending] = useActionState(status ? updateSubscription: createSubscription , {success: false});
 
     const subscriptionSchema = subscriptionSchemas(t).subscription
     type SubscriptionType = z.infer<typeof subscriptionSchema>
@@ -78,13 +73,12 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
     
     const onSubmit = (data: SubscriptionType) => {
         const formData = new FormData();
-        console.log(data)
         Object.entries(data).forEach(([key, value]) => {
             formData.append(key, value instanceof Date ? value.toISOString() : String(value));
         });
 
         startTransition(() => {
-            formAction(formData);
+            FormAction(formData);
         });
     };
 
