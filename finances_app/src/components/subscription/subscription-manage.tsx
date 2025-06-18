@@ -6,31 +6,31 @@ import {
   SheetHeader,
   SheetTitle,
   SheetFooter,
-} from "@/components/ui/sheet"
-import { subscriptionParams } from "@/types/subscription-types"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/sheet";
+import { subscriptionParams } from "@/types/subscription-types";
+import { Separator } from "@/components/ui/separator";
 import { useI18n } from "@/locales/client";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { useActionState, useEffect, useCallback, startTransition } from "react";
 import { createSubscription, updateSubscription } from "@/lib/actions/subscription";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { Form } from "@/components/ui/form"
+import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import { subscriptionSchemas } from "@/lib/zod/subscription-schemas";
-import { z } from "zod"
+import { z } from "zod";
 import { useSession } from "@/lib/auth-client"; 
 import SubscriptionField from "./form/subscription-field";
+import type { SubscriptionManageProps } from "@/types/subscription-types";
 
-interface SubscriptionManageProps {
-    sheetOpen: boolean;
-    onSheetOpen: (sheetOpen: boolean) => void;
-    status: boolean;
-    data?: subscriptionParams
-};
 
-export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data} : SubscriptionManageProps){
+export default function SubscriptionManage({
+sheetOpen, 
+onSheetOpen, 
+status, 
+data
+} : SubscriptionManageProps){
     const t = useI18n();
     const { data: session} = useSession();
 
@@ -71,9 +71,9 @@ export default function SubscriptionManage({sheetOpen, onSheetOpen, status, data
         }
     }, [state]);
     
-    const onSubmit = (data: SubscriptionType) => {
+    const onSubmit = () => {
         const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
+        Object.entries(form.getValues()).forEach(([key, value]) => {
             formData.append(key, value instanceof Date ? value.toISOString() : String(value));
         });
 

@@ -1,20 +1,19 @@
 "use client"
 
-import { useI18n, useCurrentLocale } from "@/locales/client"
-import { Card, CardTitle, CardDescription, CardHeader, CardContent } from "@/components/ui/card"
-import { Calendar } from "@/components/ui/calendar"
+import { useI18n, useCurrentLocale } from "@/locales/client";
+import { Card, CardTitle, CardDescription, CardHeader, CardContent } from "@/components/ui/card";
+import { Calendar } from "@/components/ui/calendar";
 import { enUS, fr } from 'date-fns/locale';
-import type { subscriptionParams } from "@/types/subscription-types"
-import { calendarCheckDate, cn } from "@/lib/utils"
-import { Icon } from "@iconify/react"
+import type { subscriptionParams } from "@/types/subscription-types";
+import { calendarCheckDate, cn } from "@/lib/utils";
+import { Icon } from "@iconify/react";
+import type { SubscriptionCalendarProps } from "@/types/subscription-types";
 
-type SubscriptionCalendarProps = {
-  datas: subscriptionParams[];
-  date: Date | undefined;
-  setDate: (date: Date | undefined) => void;
-};
-
-export default function SubscriptionCalendar({datas, date, setDate}: SubscriptionCalendarProps) {
+export default function SubscriptionCalendar({
+datas, 
+date, 
+setDate
+}: SubscriptionCalendarProps) {
 
     const t = useI18n();
     const locale = useCurrentLocale();

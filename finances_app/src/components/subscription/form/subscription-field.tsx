@@ -7,39 +7,27 @@ import {
     FormControl,
     FormDescription,
     FormMessage
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import { 
     RadioGroup,
     RadioGroupItem,
-} from "@/components/ui/radio-group"
+} from "@/components/ui/radio-group";
 import { 
     Popover,
     PopoverTrigger,
     PopoverContent,
-} from "@/components/ui/popover"
-import { Button } from "@/components/ui/button"
-import { format } from "date-fns"
-import { Calendar } from "@/components/ui/calendar"
-import { CalendarIcon } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import type { Control, FieldPath, FieldValues } from "react-hook-form"
-import { cn } from "@/lib/utils"
-import { useCurrentLocale } from "@/locales/client"
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import type { FieldValues } from "react-hook-form";
+import { cn } from "@/lib/utils";
+import { useCurrentLocale } from "@/locales/client";
 import { enUS, fr } from 'date-fns/locale';
-import InputIcon from "@/components/utils/input-icon"
-
-
-interface SubscriptionFieldProps<T extends FieldValues> {
-    label?: string,
-    description?: string,
-    placeholder?: string,
-    type?: string,
-    name: FieldPath<T>,
-    control: Control<T>,
-    datas?: any,
-    fieldType?: "radio" | "date" | "icon" | "default",
-    className?: string,
-}
+import InputIcon from "@/components/utils/input-icon";
+import type { SubscriptionFieldProps } from "@/types/subscription-types";
 
 export default function SubscriptionField<T extends FieldValues>({
 label,
