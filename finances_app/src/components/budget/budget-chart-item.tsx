@@ -1,14 +1,10 @@
 "use client"
 
-import { sankeyParams } from "@/types/budget-types"
 import { useEffect, useState } from 'react';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import 'highcharts/modules/sankey';
-
-type BudgetChartItemProps = {
-    datas: sankeyParams[]
-}
+import type { BudgetChartItemProps } from "@/types/budget-types"; 
 
 export default function BudgetChartItem({
 datas
