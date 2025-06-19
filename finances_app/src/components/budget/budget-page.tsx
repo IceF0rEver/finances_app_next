@@ -1,12 +1,9 @@
 "use client"
+
 import BudgetManage from "@/components/budget/budget-manage";
-import type { sankeyParams } from "@/types/budget-types";
 import { useEffect, useState } from "react";
 import BudgetChart from "./budget-chart";
-
-type BudgetPageProps = {
-    datas: sankeyParams[]
-}
+import type { BudgetPageProps } from "@/types/budget-types"; 
 
 export default function BudgetPage({
 datas

@@ -1,15 +1,23 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
+"use client"
 
-interface AuthCardProps {
-    title: string
-    description: string
-    children: React.ReactNode
-    footer?: React.ReactNode
-    className?: string
-}
+import { Card,
+    CardContent, 
+    CardHeader, 
+    CardTitle, 
+    CardDescription, 
+    CardFooter
+} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import type { AuthCardProps } from "@/types/auth-types";
 
-export default function AuthCard({ title, description, children, footer, className }: AuthCardProps) {
+
+export default function AuthCard({ 
+title, 
+description, 
+children, 
+footer, 
+className 
+}: AuthCardProps) {
     return (
         <section className="flex h-screen justify-center items-center">
             <Card className={cn("w-full", className)}>

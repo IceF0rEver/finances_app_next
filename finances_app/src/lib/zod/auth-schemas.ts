@@ -31,7 +31,7 @@ export const authSchemas = (t: (...args: Parameters<(key: string, ...params: any
         path: ["passwordConfirmation"],
     }),
 
-    changePasswordSession : z.object({
+    updatePassword: z.object({
         password: z.string().min(6, t('components.utils.managePassword.error.password')),
         passwordConfirmation: z.string(),
         currentPassword: z.string(),

@@ -1,22 +1,39 @@
 "use client"
 
-import { Card, CardTitle, CardDescription, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
-import { useI18n } from "@/locales/client"
+import { 
+    Card, 
+    CardTitle, 
+    CardDescription, 
+    CardHeader, 
+    CardContent, 
+    CardFooter 
+} from "@/components/ui/card";
+import { useI18n } from "@/locales/client";
 import { Tabs,TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { CalendarX, PlusCircle} from "lucide-react";
-import type { subscriptionParams } from "@/types/subscription-types"
+import type { subscriptionParams } from "@/types/subscription-types";
 import { useEffect, useState } from "react";
 import { calendarCheckDate } from "@/lib/utils";
 import SubscriptionListItem from "./subscription-list-item";
 import SubscriptionManage from "./subscription-manage";
+import type { SubscriptionList } from "@/types/subscription-types";
 
-type SubscriptionCalendarProps = {
-  datas: subscriptionParams[];
-  date: Date | undefined;
-};
+const TotalAmount = ({label, amount}: {label: string, amount: string}) => {
+    return (
+        <div className="w-full flex justify-between items-center mb-2 whitespace-nowrap">
+            <span className="text-sm text-muted-foreground">{ label }</span>
+            <span className="font-medium">
+                 { amount } €
+            </span>
+        </div>
+    )
+}
 
-export default function SubscriptionList({datas, date}: SubscriptionCalendarProps) {
+export default function SubscriptionList({
+datas, 
+date
+}: SubscriptionList) {
     const t = useI18n();
     const [activeTab, setActiveTab] = useState<'this-day' | 'all' | 'annually' | 'monthly'>('this-day');
     const [filtredDatas, setFiltredDatas] = useState<subscriptionParams[]>([...datas]);
@@ -114,18 +131,14 @@ export default function SubscriptionList({datas, date}: SubscriptionCalendarProp
                 }
             </CardContent>
             <CardFooter className="flex-col border-t pt-6 px-6">
-                <div className="w-full flex justify-between items-center mb-2 whitespace-nowrap">
-                    <span className="text-sm text-muted-foreground">{ t('app.dashboard.subscription.components.subscriptionList.totalMonthly') }</span>
-                    <span className="font-medium">
-                        { totalMonthly().toFixed(2) } €
-                    </span>
-                </div>
-                <div className="w-full flex justify-between items-center whitespace-nowrap">
-                    <span className="text-sm text-muted-foreground">{ t('app.dashboard.subscription.components.subscriptionList.totalAnnually') }</span>
-                    <span className="font-medium">
-                        { totalAnnual().toFixed(2) }  €
-                    </span>
-                </div>
+                <TotalAmount 
+                    label={t('app.dashboard.subscription.components.subscriptionList.totalMonthly')} 
+                    amount={totalMonthly().toFixed(2)}
+                />
+                <TotalAmount 
+                    label={t('app.dashboard.subscription.components.subscriptionList.totalAnnually')} 
+                    amount={totalAnnual().toFixed(2)}
+                />
             </CardFooter>
         </Card>
     )

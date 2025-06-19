@@ -7,24 +7,14 @@ import {
     FormControl,
     FormDescription,
     FormMessage
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import type { Control, FieldPath, FieldValues } from "react-hook-form"
-import Image from "next/image"
-import { useState, useRef, useEffect } from "react"
-import { X } from "lucide-react"
-import { cn } from "@/lib/utils"
-
-interface AuthFieldProps<T extends FieldValues> {
-    label?: string,
-    description?: string,
-    placeholder?: string,
-    type: string,
-    name: FieldPath<T>,
-    control: Control<T>,
-    fieldType?: "image" | "default",
-    className?: string,
-}
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import type { FieldValues } from "react-hook-form";
+import Image from "next/image";
+import { useState, useRef, useEffect } from "react";
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { AuthFieldProps } from "@/types/auth-types";
 
 async function convertImageToBase64(file: File): Promise<string> {
 	return new Promise((resolve, reject) => {
@@ -78,19 +68,12 @@ className,
                         setImagePreview(field.value)
                     }
                 }, [field.value])
-                return (
-                    <FormItem>
-                        { label && <FormLabel>{label}</FormLabel>}
+                 if (fieldType === "image") {
+                    return (
+                        <FormItem>
+                            { label && <FormLabel>{label}</FormLabel>}
 
-                        <FormControl>
-                            { fieldType === "default" ? (
-                                <Input
-                                    placeholder={placeholder}
-                                    type={type}
-                                    {...field}
-                                    className={cn(className)}
-                                />
-                            ): (
+                            <FormControl>
                                 <div className={cn("flex items-end gap-2", className)}>
                                     {fieldType === "image" && imagePreview && (
                                         <div className="relative w-16 h-16 rounded-sm overflow-hidden">
@@ -118,12 +101,28 @@ className,
                                         )}
                                     </div>
                                 </div>
-                            )}
-                        </FormControl>
-                        { description && <FormDescription>{description}</FormDescription>}
-                        <FormMessage />
-                    </FormItem>
-                )
+                            </FormControl>
+                            { description && <FormDescription>{description}</FormDescription>}
+                            <FormMessage />
+                        </FormItem>
+                    )
+                } else {
+                    return (
+                        <FormItem>
+                            { label && <FormLabel>{label}</FormLabel>}
+                            <FormControl>
+                                <Input
+                                    placeholder={placeholder}
+                                    type={type}
+                                    {...field}
+                                    className={cn(className)}
+                                />
+                            </FormControl>
+                            { description && <FormDescription>{description}</FormDescription>}
+                            <FormMessage />
+                        </FormItem>
+                    )
+                }
             }}
         />
     )

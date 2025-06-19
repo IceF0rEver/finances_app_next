@@ -4,7 +4,6 @@ import ManageMenu from "@/components/utils/manage-menu";
 import { useState, useActionState, useEffect } from "react";
 import { useI18n } from "@/locales/client";
 import { AlertDialogCancel } from "@/components/ui/alert-dialog";
-import { sankeyParams } from "@/types/budget-types";
 import BudgetChartItem from "./budget-chart-item";
 import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
@@ -12,16 +11,7 @@ import { Loader2 } from "lucide-react";
 import { deleteSankey } from "@/lib/actions/budget";
 import { toast } from "sonner";
 import BudgetSheet from "./budget-sheet";
-
-type BudgetChartProps = {
-    datas: sankeyParams[]
-}
-
-const initialState = {
-    message: "",
-    errors: {},
-    success: false,
-}
+import type { BudgetChartProps } from "@/types/budget-types"; 
 
 function DeleteButton({ t }: { t: any }) {
     const { pending } = useFormStatus()
@@ -49,7 +39,7 @@ datas
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [remainingAmount, setRemainingAmount] = useState<number>(0);
 
-    const [state, deleteFormAction] = useActionState(deleteSankey, initialState);
+    const [state, deleteFormAction] = useActionState(deleteSankey, {success: false});
 
     useEffect(() => {
         if (state.success) {

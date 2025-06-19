@@ -2,14 +2,13 @@
 
 import SubscriptionCalendar from "@/components/subscription/subscription-calendar";
 import SubscriptionList from "@/components/subscription/subscription-list";
-import type { subscriptionParams } from "@/types/subscription-types"
+import type { subscriptionParams } from "@/types/subscription-types";
 import { useEffect, useState } from "react";
+import type { SubscriptionPageProps } from "@/types/subscription-types";
 
-type SubscriptionPageProps = {
-    datas: subscriptionParams[]
-}
-
-export default function SubscriptionPage({datas}: SubscriptionPageProps) {
+export default function SubscriptionPage({
+datas
+}: SubscriptionPageProps) {
     const [date, setDate] = useState<Date | undefined>(new Date())
     const [data, setData] = useState<subscriptionParams[]>([...datas])
     

@@ -13,10 +13,10 @@ import {
   AlertDialogTitle,
   AlertDialogDescription
 } from "@/components/ui/alert-dialog"
-import ManagePassword from "./manage-password"
+import UpdatePassword from "./update-password"
 import SettingsArticle from "./settings-article"
 
-export default function ChangePassword() {
+export default function SettingsArticlePassword() {
     const t = useI18n();
     const [open, setOpen] = useState<boolean>(false);
 
@@ -41,7 +41,7 @@ export default function ChangePassword() {
                             {t("app.dashboard.settings.components.account.form.changePassword.confirmDescription")}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <ManagePassword onOpenChange={setOpen}/>
+                    <UpdatePassword onOpenChange={setOpen}/>
                     <AlertDialogFooter>
                         <AlertDialogCancel className="w-full">{t("app.dashboard.settings.components.account.button.cancel")}</AlertDialogCancel>
                     </AlertDialogFooter>

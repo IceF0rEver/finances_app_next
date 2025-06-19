@@ -2,7 +2,7 @@
 import { useI18n } from "@/locales/client"
 import { useState } from "react";
 import { useSession } from "@/lib/auth-client";
-import ChangePassword from "./change-password";
+import SettingsArticlePassword from "./settings-article-password";
 import { z, string } from "zod";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
@@ -88,7 +88,7 @@ export default function Account() {
                 description={t('app.dashboard.settings.components.account.description')}
             />
             <section className="flex flex-col gap-9">
-                <ChangePassword/>
+                <SettingsArticlePassword/>
                 <AuthForm form={form} onSubmit={onSubmit} className="grid gap-9">
                     {errorMessage.betterError && <p className="text-sm text-destructive" aria-live="polite" aria-atomic="true">{errorMessage.betterError}</p>}
                     <AuthField 

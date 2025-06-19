@@ -1,33 +1,20 @@
 "use client"
 
-import { MoreVertical, Pencil, Trash2, Calendar} from "lucide-react";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { Calendar, Loader2} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { format } from 'date-fns';
-import { Icon } from "@iconify/react"
-import { Card, CardContent } from "@/components/ui/card"
-import type { subscriptionParams } from "@/types/subscription-types"
+import { Icon } from "@iconify/react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/locales/client";
 import { AlertDialogCancel } from "@/components/ui/alert-dialog";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useActionState } from "react";
 import SubscriptionManage from "./subscription-manage";
 import { deleteSubscription } from "@/lib/actions/subscription";
-import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import ManageMenu from "../utils/manage-menu";
-
-type SubscriptionListItemProps = {
-    item: subscriptionParams;
-};
-
-const initialState = {
-    message: "",
-    errors: {},
-    success: false,
-}
+import type { SubscriptionListItemProps } from "@/types/subscription-types";
 
 function DeleteButton({ t }: { t: any }) {
     const { pending } = useFormStatus()
@@ -45,13 +32,15 @@ function DeleteButton({ t }: { t: any }) {
     )
 }
 
-export default function SubscriptionListItem({item} : SubscriptionListItemProps){
+export default function SubscriptionListItem({
+item
+}: SubscriptionListItemProps){
     const t = useI18n();
     const [isOpenDeleteDialog,setIsOpenDeleteDialog] = useState<boolean>(false);
     const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
     const [isEdit, setIsEdit] = useState<boolean>(false);
 
-    const [state, deleteFormAction] = useActionState(deleteSubscription, initialState);
+    const [state, deleteFormAction] = useActionState(deleteSubscription, {success: false});
 
     useEffect(() => {
         if (state.success) {

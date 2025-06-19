@@ -1,5 +1,5 @@
 "use client"
-import { sankeyParams } from "@/types/budget-types";
+
 import BudgetManage from "./budget-manage";
 import { 
     Sheet,
@@ -10,13 +10,8 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { useI18n } from "@/locales/client";
+import type { BudgetSheetProps } from "@/types/budget-types"; 
 
-type BudgetSheetProps = {
-    sheetOpen: boolean;
-    onSheetOpen: (sheetOpen: boolean) => void;
-    status: boolean;
-    data: sankeyParams[]
-};
 export default function BudgetSheet({
 sheetOpen, 
 onSheetOpen, 

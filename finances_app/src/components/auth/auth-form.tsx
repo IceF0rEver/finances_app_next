@@ -1,16 +1,9 @@
 "use client"
 
-import { Form } from "@/components/ui/form"
-import { cn } from "@/lib/utils"
-import type { UseFormReturn, FieldValues, SubmitHandler } from "react-hook-form"
-
-
-interface AuthFormProps<T extends FieldValues> {
-    children: React.ReactNode,
-    form: UseFormReturn<T>,
-    onSubmit: SubmitHandler<T>
-    className?: string, 
-}
+import { Form } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
+import type { FieldValues } from "react-hook-form";
+import type { AuthFormProps } from "@/types/auth-types";
 
 export default function AuthForm<T extends FieldValues>({
 children,
