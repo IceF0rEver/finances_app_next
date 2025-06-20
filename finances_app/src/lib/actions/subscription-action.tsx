@@ -1,7 +1,7 @@
 'use server'
 
 import { PrismaClient } from '@/generated/prisma';
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { getUser } from '@/lib/server';
 import { getCurrentLocale, getI18n } from '@/locales/server';
 import { subscriptionSchemas  } from '../zod/subscription-schemas';
@@ -62,6 +62,7 @@ export async function createSubscription(prevState: SubscriptionState, formData:
             },
         });
         revalidatePath(`/${locale}/dashboard/subscription`, 'page');
+        revalidateTag(`subscriptions-${user.id}`);
         return {
             success: true,
             message: t('action.subscription.create.success'),
@@ -117,6 +118,7 @@ export async function updateSubscription(prevState: SubscriptionState, formData:
         });
 
         revalidatePath(`/${locale}/dashboard/subscription`, 'page');
+        revalidateTag(`subscriptions-${user.id}`);
         
         return {
             success: true,
@@ -167,6 +169,7 @@ export async function deleteSubscription(prevState: SubscriptionState, formData:
         }
 
         revalidatePath(`/${locale}/dashboard/subscription`, 'page');
+        revalidateTag(`subscriptions-${user.id}`);
 
         return {
             success: true,

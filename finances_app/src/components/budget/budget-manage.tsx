@@ -3,7 +3,7 @@
 import { useActionState, startTransition, useEffect, useCallback } from "react";
 import { useI18n } from "@/locales/client";
 import type { sankeyParams } from "@/types/budget-types";
-import { createSankey, updateSankey } from "@/lib/actions/budget";
+import { createSankey, updateSankey } from "@/lib/actions/budget-action";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import type { BudgetManageProps } from "@/types/budget-types";

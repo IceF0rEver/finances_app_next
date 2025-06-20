@@ -10,7 +10,7 @@ import { useI18n } from "@/locales/client";
 import { AlertDialogCancel } from "@/components/ui/alert-dialog";
 import { useState, useEffect, useActionState } from "react";
 import SubscriptionManage from "./subscription-manage";
-import { deleteSubscription } from "@/lib/actions/subscription";
+import { deleteSubscription } from "@/lib/actions/subscription-action";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import ManageMenu from "../utils/manage-menu";

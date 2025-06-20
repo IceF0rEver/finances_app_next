@@ -8,7 +8,7 @@ import BudgetChartItem from "./budget-chart-item";
 import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { deleteSankey } from "@/lib/actions/budget";
+import { deleteSankey } from "@/lib/actions/budget-action";
 import { toast } from "sonner";
 import BudgetSheet from "./budget-sheet";
 import type { BudgetChartProps } from "@/types/budget-types"; 

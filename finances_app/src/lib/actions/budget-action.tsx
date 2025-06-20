@@ -1,8 +1,7 @@
 "use server"
 
 import { PrismaClient } from '@/generated/prisma';
-import z from "zod";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { getUser } from '@/lib/server';
 import { getCurrentLocale, getI18n } from '@/locales/server';
 import { Decimal } from '@/generated/prisma/runtime/library';
@@ -62,8 +61,9 @@ export async function createSankey(prevState: SankeyState, formData: FormData): 
             data: sankeyArray,
         })
 
-        revalidatePath(`/${locale}/dashboard/budget`, "page")
-
+        revalidatePath(`/${locale}/dashboard/budget`, "page");
+        revalidateTag(`budgets-${user.id}`);
+    
         return {
             success: true,
             message: t("action.budget.create.success"),
@@ -120,7 +120,8 @@ export async function updateSankey(prevState: SankeyState, formData: FormData): 
             data: sankeyArray,
         })
 
-        revalidatePath(`/${locale}/dashboard/budget`, "page")
+        revalidatePath(`/${locale}/dashboard/budget`, "page");
+        revalidateTag(`budgets-${user.id}`);
 
         return {
             success: true,
@@ -161,6 +162,7 @@ export async function deleteSankey(prevState: SankeyState): Promise<SankeyState>
         }
    
         revalidatePath(`/${locale}/dashboard/budget`, 'page');
+        revalidateTag(`budgets-${user.id}`);
    
         return {
             success: true,
