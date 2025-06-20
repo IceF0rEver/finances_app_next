@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma"
 import type{ sankeyParams } from "@/types/budget-types";
 
 async function getBudgets(userId: string) {
+    "use server"
     const datas = await prisma.sankey.findMany({
         where: {
             userId: userId,
@@ -15,7 +16,6 @@ async function getBudgets(userId: string) {
 }
 
 export function getCachedBudgets(userId: string) {
-
     return unstable_cache(
         async () => {
             return getBudgets(userId)
