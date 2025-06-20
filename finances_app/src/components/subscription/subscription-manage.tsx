@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { useI18n } from "@/locales/client";
 import { Button } from "@/components/ui/button";
 import { useActionState, useEffect, useCallback, startTransition } from "react";
-import { createSubscription, updateSubscription } from "@/lib/actions/subscription";
+import { createSubscription, updateSubscription } from "@/lib/actions/subscription-action";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Form } from "@/components/ui/form";
