@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma"
 import type { subscriptionParams } from "@/types/subscription-types"
 
 async function getSubscriptions(userId: string) {
+    "use server"
     const datas = await prisma.subscription.findMany({
         where: {
             userId: userId,
@@ -16,7 +17,6 @@ async function getSubscriptions(userId: string) {
 }
 
 export function getCachedSubscriptions(userId: string) {
-
     return unstable_cache(
         async () => {
             return getSubscriptions(userId)
