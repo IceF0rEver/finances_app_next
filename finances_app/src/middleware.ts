@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
   }
   
   if (!sessionCookie && pathname.startsWith(`/${locale}/dashboard`)) {
-    return NextResponse.redirect(new URL(`/${locale}`, request.url));
+    return NextResponse.redirect(new URL(`/${locale}/auth`, request.url));
   }
   
   const i18nResponse = I18nMiddleware(request);
