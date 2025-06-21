@@ -6,7 +6,7 @@ import { signIn } from "@/lib/auth-client";
 export interface AuthFormProps<T extends FieldValues> {
     children: React.ReactNode,
     form: UseFormReturn<T>,
-    onSubmit: SubmitHandler<T>
+    onSubmit: SubmitHandler<T>,
     className?: string, 
 }
 
@@ -27,11 +27,11 @@ export interface AuthFieldProps<T extends FieldValues> {
 }
 
 export interface AuthCardProps {
-    title: string
-    description: string
-    children: React.ReactNode
-    footer?: React.ReactNode
-    className?: string
+    title: string,
+    description: string,
+    children: React.ReactNode,
+    footer?: React.ReactNode,
+    className?: string,
 }
 
 export interface AuthButtonProps {
