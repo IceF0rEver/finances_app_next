@@ -13,8 +13,7 @@ export default function BudgetCard({
   title,
   description,
   status,
-  datas,
-  allData,
+  fields,
   form,
   type,
   onAdd,
@@ -36,15 +35,15 @@ export default function BudgetCard({
 
         {type === "income" ? (
             <CardContent>
-                {datas &&
-                    datas.map((item, index) => {
-                    const realIndex = allData.findIndex((d) => d.id === item.id)
+                {fields &&
+                    [...fields.filter((f) => f.type === "income")].map((field) => {
+                    const index = fields.findIndex((d) => d.id === field.id)
                     return (
-                        <div className={cn(status ? "p-0" : "", "grid grid-cols-11 gap-3 mb-4 items-start")} key={item.id}>
+                        <div className={cn(status ? "p-0" : "", "grid grid-cols-11 gap-3 mb-4 items-start")} key={field.id}>
                             <div className={cn(status ? "col-span-6" : "col-span-6 md:col-span-5", "grid gap-1")}>
                                 <BudgetField
                                 label={t("app.dashboard.budget.components.budgetManage.form.name.label")}
-                                name={`sankey.${realIndex}.from`}
+                                name={`sankey.${index}.from`}
                                 type="text"
                                 control={form.control}
                                 />
@@ -52,7 +51,7 @@ export default function BudgetCard({
                             <div className={cn(status ? "col-span-3" : "col-span-3 md:col-span-5", "grid gap-1")}>
                                 <BudgetField
                                 label={t("app.dashboard.budget.components.budgetManage.form.amount.label")}
-                                name={`sankey.${realIndex}.amount`}
+                                name={`sankey.${index}.amount`}
                                 type="number"
                                 control={form.control}
                                 />
@@ -61,7 +60,7 @@ export default function BudgetCard({
                                 <Button
                                 type="button"
                                 variant="destructive"
-                                onClick={() => onRemove("category", item.id)}
+                                onClick={() => onRemove("category", field.id)}
                                 className="w-full p-2"
                                 >
                                 <Trash2 />
@@ -73,22 +72,19 @@ export default function BudgetCard({
             </CardContent>
         ) : (
             <CardContent>
-                {datas &&
-                    datas.map((itemCategory) => {
-                    const categoryIndex = allData.findIndex((d) => d.id === itemCategory.id)
-                    const subExpenses = allData.filter(
-                        (i) => i.type === "expense" && i.from !== "budget" && i.parentId === itemCategory.id,
-                    )
+                {fields &&
+                    [...fields.filter((f) => f.type === "expense" && f.from === "budget")].map((fieldCategory) => {
+                    const index = fields.findIndex((d) => d.id === fieldCategory.id)
 
                     return (
-                        <Card className={cn(status ? "mt-2" : "m-2", "p-0 grid gap-1")} key={itemCategory.id}>
+                        <Card className={cn(status ? "mt-2" : "m-2", "p-0 grid gap-1")} key={fieldCategory.id}>
                             <div className="relative">
                                 <div className="absolute right-0">
                                     <Button
                                         type="button"
                                         className="p-2 rounded-none rounded-bl-xl rounded-tr-xl"
                                         variant="secondary"
-                                        onClick={() => onRemove("subCategory", itemCategory.id)}
+                                        onClick={() => onRemove("subCategory", fieldCategory.id)}
                                     >
                                         <Trash2 />
                                     </Button>
@@ -99,17 +95,17 @@ export default function BudgetCard({
                                 <div className={cn(status ? "col-span-6" : "col-span-6 md:col-span-5", "grid gap-1")}>
                                     <BudgetField
                                         label={t("app.dashboard.budget.components.budgetManage.form.categoryName.label")}
-                                        name={`sankey.${categoryIndex}.to`}
+                                        name={`sankey.${index}.to`}
                                         type="text"
                                         control={form.control}
                                     />
                                 </div>
 
                                 <div className="col-span-11 row-start-2">
-                                    {subExpenses.map((item) => {
-                                        const subIndex = allData.findIndex((d) => d.id === item.id)
+                                    {[...fields.filter((f) => f.type === "expense" && f.from !== "budget" && f.parentId === fieldCategory.id)].map((field) => {
+                                        const subIndex = fields.findIndex((d) => d.id === field.id)
                                         return (
-                                            <div className="grid grid-cols-11 gap-3 py-1 items-start" key={item.id}>
+                                            <div className="grid grid-cols-11 gap-3 py-1 items-start" key={field.id}>
                                                 <div className={cn(status ? "col-span-6" : "col-span-6 md:col-span-5", "grid gap-1")}>
                                                     <BudgetField
                                                         label={t("app.dashboard.budget.components.budgetManage.form.name.label")}
@@ -130,7 +126,7 @@ export default function BudgetCard({
                                                     <Button
                                                         type="button"
                                                         variant="destructive"
-                                                        onClick={() => onRemove("category", item.id)}
+                                                        onClick={() => onRemove("category", field.id)}
                                                         className="w-full p-2"
                                                     >
                                                         <Trash2 />
@@ -147,7 +143,7 @@ export default function BudgetCard({
                                     type="button"
                                     variant="secondary"
                                     className={cn(status ? "w-full" : "")}
-                                    onClick={() => onAdd("expense", itemCategory.id)}
+                                    onClick={() => onAdd("expense", fieldCategory.id)}
                                 >
                                     {t("app.dashboard.budget.components.budgetManage.button.addExpense")}
                                 </Button>

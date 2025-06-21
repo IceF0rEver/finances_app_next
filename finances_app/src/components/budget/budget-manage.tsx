@@ -43,7 +43,7 @@ export default function BudgetManage({ datas, status, onOpen }: BudgetManageProp
         defaultValues: getDefaultValues(),
     })
 
-    const { fields, append, remove } = useFieldArray({
+    const { append, remove } = useFieldArray({
         control: form.control,
         name: "sankey",
     })
@@ -81,8 +81,6 @@ export default function BudgetManage({ datas, status, onOpen }: BudgetManageProp
     }
 
     const handleRemove = (type: "category" | "subCategory", id?: string) => {
-        const currentData = form.getValues("sankey")
-
         switch (type) {
         case "category":
             const index = currentData.findIndex((item) => item.id === id)
@@ -154,8 +152,7 @@ export default function BudgetManage({ datas, status, onOpen }: BudgetManageProp
                             title={t("app.dashboard.budget.components.budgetManage.title.income")}
                             description={t("app.dashboard.budget.components.budgetManage.description.income")}
                             status={status}
-                            datas={currentData.filter((i) => i.type === "income")}
-                            allData={currentData}
+                            fields={currentData as sankeyParams[]}
                             form={form}
                             type={"income"}
                             onAdd={handleAdd}
@@ -171,8 +168,7 @@ export default function BudgetManage({ datas, status, onOpen }: BudgetManageProp
                             title={t("app.dashboard.budget.components.budgetManage.title.expense")}
                             description={t("app.dashboard.budget.components.budgetManage.description.expense")}
                             status={status}
-                            datas={currentData.filter((i) => i.type === "expense" && i.from === "budget")}
-                            allData={currentData}
+                            fields={currentData as sankeyParams[]}
                             form={form}
                             type={"expense"}
                             onAdd={handleAdd}
