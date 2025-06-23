@@ -1,7 +1,9 @@
+"use server"
+
 import { unstable_cache } from "next/cache"
 import { getSubscriptions } from "../actions/subscription-action"
 
-export function getCachedSubscriptions(userId: string) {
+export async function getCachedSubscriptions(userId: string) {
     return unstable_cache(
         async () => {
             return getSubscriptions(userId)

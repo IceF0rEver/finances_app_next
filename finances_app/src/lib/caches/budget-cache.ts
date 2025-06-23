@@ -1,7 +1,9 @@
+"use server"
+
 import { unstable_cache } from "next/cache"
 import { getBudgets } from "../actions/budget-action"
 
-export function getCachedBudgets(userId: string) {
+export async function getCachedBudgets(userId: string) {
     return unstable_cache(
         async () => {
             return getBudgets(userId)
