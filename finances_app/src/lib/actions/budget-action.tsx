@@ -6,6 +6,7 @@ import { getUser } from '@/lib/server';
 import { getCurrentLocale, getI18n } from '@/locales/server';
 import { Decimal } from '@/generated/prisma/runtime/library';
 import { budgetSchemas } from '../zod/budget-schemas';
+import { sankeyParams } from '@/types/budget-types';
 
 const prisma = new PrismaClient()
 
@@ -16,6 +17,19 @@ type SankeyState = {
     }
     message?: string
     success?: boolean
+}
+
+export async function getBudgets(userId: string) {
+    "use server"
+    const datas = await prisma.sankey.findMany({
+        where: {
+            userId: userId,
+        }
+    });
+     return datas.map((item: any) => ({
+        ...item,
+        amount: Number(item.amount),
+    })) as sankeyParams[]
 }
 
 export async function createSankey(prevState: SankeyState, formData: FormData): Promise<SankeyState> {

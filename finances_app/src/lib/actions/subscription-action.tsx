@@ -5,6 +5,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { getUser } from '@/lib/server';
 import { getCurrentLocale, getI18n } from '@/locales/server';
 import { subscriptionSchemas  } from '../zod/subscription-schemas';
+import type { subscriptionParams } from "@/types/subscription-types"
 
 const prisma = new PrismaClient()
 
@@ -20,6 +21,19 @@ type SubscriptionState = {
     }
     message?: string
     success?: boolean
+}
+
+export async function getSubscriptions(userId: string) {
+    const datas = await prisma.subscription.findMany({
+        where: {
+            userId: userId,
+        },
+    })
+
+    return datas.map((sub: any) => ({
+        ...sub,
+        amount: Number(sub.amount),
+    })) as subscriptionParams[]
 }
 
 export async function createSubscription(prevState: SubscriptionState, formData: FormData): Promise<SubscriptionState> {
