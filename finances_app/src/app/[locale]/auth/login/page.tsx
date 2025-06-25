@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import { authSchemas } from "@/lib/zod/auth-schemas";
-import { z, string } from "zod"
+import { z, type string } from "zod";
 import { useI18n } from "@/locales/client";
 import { useState } from "react";
 import Link from "next/link";
-import AuthCard from "@/components/auth/auth-card"
+import AuthCard from "@/components/auth/auth-card";
 import AuthField from "@/components/auth/auth-field";
 import AuthForm from "@/components/auth/auth-form";
 import AuthButton from "@/components/auth/auth-button";
@@ -19,16 +19,36 @@ const GoogleLabel = () => {
 	const t = useI18n();
 	return (
 		<span className="flex gap-2">
-			<svg xmlns="http://www.w3.org/2000/svg" width="0.98em" height="1em" viewBox="0 0 256 262">
-				<path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
-				<path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055c-34.523 0-63.824-22.773-74.269-54.25l-1.531.13l-40.298 31.187l-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
-				<path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82c0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602z"></path>
-				<path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+			<svg
+				role="img"
+				aria-label="google"
+				aria-labelledby="google"
+				xmlns="http://www.w3.org/2000/svg"
+				width="0.98em"
+				height="1em"
+				viewBox="0 0 256 262"
+			>
+				<path
+					fill="#4285F4"
+					d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+				></path>
+				<path
+					fill="#34A853"
+					d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055c-34.523 0-63.824-22.773-74.269-54.25l-1.531.13l-40.298 31.187l-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+				></path>
+				<path
+					fill="#FBBC05"
+					d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82c0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602z"
+				></path>
+				<path
+					fill="#EB4335"
+					d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+				></path>
 			</svg>
-			{t('app.auth.login.page.button.google')}
+			{t("app.auth.login.page.button.google")}
 		</span>
-	)
-}
+	);
+};
 
 // const GithubLabel = () => {
 // 	const t = useI18n();
@@ -46,77 +66,88 @@ export default function Page() {
 	const t = useI18n();
 	const router = useRouter();
 
-	
 	const [loading, setLoading] = useState<boolean>(false);
 	const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
-	
-	const signInSchema = authSchemas(t).signIn
-	type SignInType = z.infer<typeof signInSchema>
+
+	const signInSchema = authSchemas(t).signIn;
+	type SignInType = z.infer<typeof signInSchema>;
 	const form = useForm<SignInType>({
 		resolver: zodResolver(signInSchema),
 		defaultValues: {
 			email: "",
 			password: "",
 		},
-	})
+	});
 
 	const onSubmit = async (values: SignInType) => {
-    	try {
+		try {
 			const validatedData = signInSchema.parse({
 				email: values.email,
 				password: values.password,
 			});
 
 			await signIn.email(validatedData, {
-				onRequest: (ctx) => {
-					setLoading(true)
+				onRequest: () => {
+					setLoading(true);
 				},
-				onResponse: (ctx) => {
-					setLoading(false)
+				onResponse: () => {
+					setLoading(false);
 				},
 				onError: (ctx) => {
-					setErrorMessage({betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string)})
+					setErrorMessage({ betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string) });
 				},
 				onSuccess: async () => {
-					router.push(`/dashboard`)
+					router.push(`/dashboard`);
 				},
 			});
 		} catch (error) {
 			if (error instanceof z.ZodError) {
-				console.error(error)
+				console.error(error);
 			}
-			setLoading(false)
+			setLoading(false);
 		}
- 	}
+	};
 
 	return (
 		<AuthCard
-			title={t('app.auth.login.page.title')}
-			description={t('app.auth.login.page.description')}
+			title={t("app.auth.login.page.title")}
+			description={t("app.auth.login.page.description")}
 			className="max-w-md"
-			footer={<AuthFooter href={"/auth/register"} text={t('app.auth.login.page.link.register')} />}
+			footer={<AuthFooter href={"/auth/register"} text={t("app.auth.login.page.link.register")} />}
 		>
 			<AuthForm form={form} onSubmit={onSubmit} className="grid gap-4">
-				{errorMessage.betterError && <p className="text-sm text-destructive" aria-live="polite" aria-atomic="true">{errorMessage.betterError}</p>}
-				<AuthField 
-					label={t('app.auth.login.page.form.email.label')}
-					placeholder={t('app.auth.login.page.form.email.placeholder')}
+				{errorMessage.betterError && (
+					<p className="text-sm text-destructive" aria-live="polite" aria-atomic="true">
+						{errorMessage.betterError}
+					</p>
+				)}
+				<AuthField
+					label={t("app.auth.login.page.form.email.label")}
+					placeholder={t("app.auth.login.page.form.email.placeholder")}
 					control={form.control}
 					name="email"
 					type="email"
 				/>
-				<AuthField 
-					label={t('app.auth.login.page.form.password.label')}
-					placeholder={t('app.auth.login.page.form.password.placeholder')}
+				<AuthField
+					label={t("app.auth.login.page.form.password.label")}
+					placeholder={t("app.auth.login.page.form.password.placeholder")}
 					control={form.control}
 					name="password"
 					type="password"
 				/>
-				<Link href="/auth/forgot-password" className="ml-auto inline-block text-sm underline">{t('app.auth.login.page.link.forgotPassword')}</Link>
-				<AuthButton isLoading={loading} label={t('app.auth.login.page.button.submit')}/>
-				<AuthButton socialProvider={"google"} isSocial={true} type={"button"} variant={"outline"} label={<GoogleLabel/>}/>
+				<Link href="/auth/forgot-password" className="ml-auto inline-block text-sm underline">
+					{t("app.auth.login.page.link.forgotPassword")}
+				</Link>
+				<AuthButton isLoading={loading} label={t("app.auth.login.page.button.submit")} />
+				<AuthButton
+					socialProvider={"google"}
+					isSocial={true}
+					type={"button"}
+					variant={"outline"}
+					label={<GoogleLabel />}
+				/>
 				{/* <AuthButton type={"button"} variant={"outline"} label={<GithubLabel/>}/> */}
 			</AuthForm>
 		</AuthCard>
-	)
-};
+	);
+}

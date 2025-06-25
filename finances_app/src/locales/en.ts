@@ -1,4 +1,3 @@
-
 export default {
 	app: {
 		auth: {
@@ -22,7 +21,7 @@ export default {
 						submit: "Send the link",
 					},
 					toast: {
-						success : "Link sent successfully!"
+						success: "Link sent successfully!",
 					},
 				},
 			},
@@ -33,7 +32,7 @@ export default {
 				},
 			},
 			login: {
-				page:{
+				page: {
 					title: "Sign In",
 					description: "Enter your email below to login to your account",
 					error: {
@@ -81,7 +80,7 @@ export default {
 						},
 						email: {
 							label: "Email Address",
-							placeholder: "m@example.com"
+							placeholder: "m@example.com",
 						},
 						password: {
 							label: "Password",
@@ -113,9 +112,7 @@ export default {
 					title: "Budget",
 					description: "Manage the distribution of your expenses visually.",
 				},
-				page:{
-
-				},
+				page: {},
 				components: {
 					budgetSheet: {
 						add: {
@@ -130,7 +127,8 @@ export default {
 					budgetChart: {
 						delete: {
 							title: "Deleting your budget",
-							description: "Are you sure you want to delete your budget? This action is irreversible and all associated data will be lost.",
+							description:
+								"Are you sure you want to delete your budget? This action is irreversible and all associated data will be lost.",
 						},
 						button: {
 							delete: "Delete",
@@ -143,35 +141,35 @@ export default {
 					},
 					budgetManage: {
 						tabs: {
-						incomes: "Incomes",
-						expenses: "Expenses",
+							incomes: "Incomes",
+							expenses: "Expenses",
 						},
 						title: {
-						income: "Incomes",
-						expense: "Expenses",
+							income: "Incomes",
+							expense: "Expenses",
 						},
 						description: {
-						income: "Enter your various income sources.",
-						expense: "Enter your various expenses.",
+							income: "Enter your various income sources.",
+							expense: "Enter your various expenses.",
 						},
 						form: {
-						name: {
-							label: "Name",
-						},
-						amount: {
-							label: "Amount",
-						},
-						categoryName: {
-							label: "Category name",
-						},
+							name: {
+								label: "Name",
+							},
+							amount: {
+								label: "Amount",
+							},
+							categoryName: {
+								label: "Category name",
+							},
 						},
 						button: {
-						addIncome: "Add an income source",
-						addExpense: "Add an expense source",
-						addCategoryExpense: "Add an expense category",
-						discoverBudget: "Discover my budget",
-						saveChange: "Save changes",
-						}
+							addIncome: "Add an income source",
+							addExpense: "Add an expense source",
+							addCategoryExpense: "Add an expense category",
+							discoverBudget: "Discover my budget",
+							saveChange: "Save changes",
+						},
 					},
 				},
 			},
@@ -180,9 +178,7 @@ export default {
 					title: "Subscription",
 					description: "Manage the distribution of your subscriptions visually.",
 				},
-				page:{
-
-				},
+				page: {},
 				components: {
 					subscriptionCalendar: {
 						title: "Calendar",
@@ -211,11 +207,12 @@ export default {
 							add: "Add",
 							cancel: "Cancel",
 							delete: "Delete",
-							confirm: "Confirm"
+							confirm: "Confirm",
 						},
 						delete: {
 							title: "Deleting your budget",
-							description: "Are you sure you want to delete your budget? This action is irreversible, and all associated data will be lost.",
+							description:
+								"Are you sure you want to delete your budget? This action is irreversible, and all associated data will be lost.",
 						},
 					},
 					subscriptionManage: {
@@ -229,21 +226,21 @@ export default {
 						},
 						form: {
 							name: {
-							label: "Name",
+								label: "Name",
 							},
 							amount: {
-							label: "Amount",
+								label: "Amount",
 							},
 							recurrence: {
-							label: "Recurrence",
-							annually: "Annual",
-							monthly: "Monthly",
+								label: "Recurrence",
+								annually: "Annual",
+								monthly: "Monthly",
 							},
 							executionDate: {
-							label: "Execution date",
+								label: "Execution date",
 							},
 							icon: {
-							label: "Icon",
+								label: "Icon",
 							},
 						},
 						button: {
@@ -271,7 +268,7 @@ export default {
 								label: "Color",
 								description: "Choose the color you want to use in the dashboard.",
 							},
-						}
+						},
 					},
 					account: {
 						title: "Account",
@@ -304,11 +301,11 @@ export default {
 							continue: "Continue",
 						},
 						link: {
-							changePassword: "Update your password",		
+							changePassword: "Update your password",
 						},
 						toast: {
 							emailSuccess: "Email address updated successfully!",
-  							nameOrImageSuccess: "Name and/or image updated successfully!",
+							nameOrImageSuccess: "Name and/or image updated successfully!",
 						},
 					},
 				},
@@ -388,7 +385,7 @@ export default {
 			},
 			themeColor: {
 				placeholder: "Choose the color",
-				color:{
+				color: {
 					default: "Default",
 					red: "Red",
 					rose: "Rose",
@@ -519,7 +516,7 @@ export default {
 					account: "Account",
 					secure: "Security",
 					authentication: "Authentication",
-					access: "Access"
+					access: "Access",
 				},
 			},
 			register: {
@@ -530,7 +527,7 @@ export default {
 					account: "Account",
 					create: "Create",
 					budget: "Budget",
-					start: "Start"
+					start: "Start",
 				},
 			},
 			resetPassword: {
@@ -541,7 +538,7 @@ export default {
 					password: "Password",
 					security: "Security",
 					account: "Account",
-					new: "New password"
+					new: "New password",
 				},
 			},
 			dashboard: {
@@ -552,7 +549,7 @@ export default {
 					budget: "Budget",
 					expenses: "Expenses",
 					incomes: "Incomes",
-					subscriptions: "Subscriptions"
+					subscriptions: "Subscriptions",
 				},
 			},
 			subscription: {
@@ -563,7 +560,7 @@ export default {
 					manage: "Manage",
 					billing: "Billing",
 					renewal: "Renewal",
-					services: "Services"
+					services: "Services",
 				},
 			},
 			settings: {
@@ -574,7 +571,7 @@ export default {
 					preferences: "Preferences",
 					account: "Account",
 					customization: "Customization",
-					security: "Security"
+					security: "Security",
 				},
 			},
 			budget: {
@@ -585,9 +582,9 @@ export default {
 					expenses: "Expenses",
 					incomes: "Incomes",
 					savings: "Savings",
-					planning: "Planning"
+					planning: "Planning",
 				},
 			},
 		},
 	},
-} as const
+} as const;
