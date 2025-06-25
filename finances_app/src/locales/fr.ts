@@ -1,16 +1,16 @@
-
 export default {
 	app: {
 		auth: {
 			forgetPassword: {
 				page: {
 					title: "Mot de passe oublié",
-					description: "Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+					description:
+						"Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
 					error: {
 						email: "Veuillez entrer une adresse e-mail valide",
 					},
 					form: {
-						email:{
+						email: {
 							label: "Adresse e-mail",
 							placeholder: "m@exemple.com",
 						},
@@ -22,7 +22,7 @@ export default {
 						submit: "Envoyer le lien",
 					},
 					toast: {
-						success : "Lien envoyer avec succès !"
+						success: "Lien envoyer avec succès !",
 					},
 				},
 			},
@@ -104,19 +104,17 @@ export default {
 				},
 			},
 		},
-		dashboard : {
+		dashboard: {
 			page: {
-				title: "Bienvenu sur votre dashboard !"
+				title: "Bienvenu sur votre dashboard !",
 			},
 			budget: {
 				layout: {
 					title: "Budget",
 					description: "Gérez visuellement la répartition de vos dépenses.",
 				},
-				page:{
-
-				},
-				components:{
+				page: {},
+				components: {
 					budgetSheet: {
 						add: {
 							title: "Ajout d'un nouveau budget.",
@@ -130,7 +128,8 @@ export default {
 					budgetChart: {
 						delete: {
 							title: "Suppression de votre budget",
-							description: "Êtes-vous sûr de vouloir supprimer votre budget ? Cette action est irréversible et toutes les données associées seront perdues.",
+							description:
+								"Êtes-vous sûr de vouloir supprimer votre budget ? Cette action est irréversible et toutes les données associées seront perdues.",
 						},
 						button: {
 							delete: "Supprimer",
@@ -146,33 +145,32 @@ export default {
 							incomes: "Revenus",
 							expenses: "Dépenses",
 						},
-						title:{
+						title: {
 							income: "Revenus",
 							expense: "Dépenses",
 						},
-						description:{
+						description: {
 							income: "Inscrivez vos différents revenus.",
 							expense: "Inscrivez vos différentes dépenses.",
 						},
-						form:{
-							name:{
-								label:"Nom",
+						form: {
+							name: {
+								label: "Nom",
 							},
-							amount:{
+							amount: {
 								label: "Montant",
 							},
 							categoryName: {
 								label: "Nom de la catégorie",
 							},
-
 						},
 						button: {
 							addIncome: "Ajouter une source de revenu",
 							addExpense: "Ajouter une source de dépense",
 							addCategoryExpense: "Ajouter une catégorie de dépense",
 							discoverBudget: "Découvrir mon budget",
-            				saveChange: "Sauvegarder les changements",
-						}
+							saveChange: "Sauvegarder les changements",
+						},
 					},
 				},
 			},
@@ -181,9 +179,7 @@ export default {
 					title: "Abonnement",
 					description: "Gérez visuellement la répartition de vos abonnements.",
 				},
-				page:{
-
-				},
+				page: {},
 				components: {
 					subscriptionCalendar: {
 						title: "Calendrier",
@@ -202,21 +198,22 @@ export default {
 							thisDay: "Jour",
 							all: "Tous",
 							annually: "Annuels",
-							monthly: "Mensuels"	
+							monthly: "Mensuels",
 						},
 						badge: {
 							annually: "Annuel",
-							monthly: "Mensuel"	
+							monthly: "Mensuel",
 						},
 						button: {
 							add: "Ajouter",
 							cancel: "Annuler",
 							delete: "Supprimer",
-							confirm: "Confirmer"
+							confirm: "Confirmer",
 						},
 						delete: {
 							title: "Suppression de votre abonnement",
-							description: "Êtes-vous sûr de vouloir supprimer votre abonnement ? Cette action est irréversible et toutes les données associées seront perdues.",
+							description:
+								"Êtes-vous sûr de vouloir supprimer votre abonnement ? Cette action est irréversible et toutes les données associées seront perdues.",
 						},
 					},
 					subscriptionManage: {
@@ -237,8 +234,8 @@ export default {
 							},
 							recurrence: {
 								label: "Récurrence",
-								annually : "Annuel",
-               					monthly: "Mensuel",
+								annually: "Annuel",
+								monthly: "Mensuel",
 							},
 							executionDate: {
 								label: "Date d'éxécution",
@@ -262,7 +259,8 @@ export default {
 						form: {
 							language: {
 								label: "Langue",
-								description: "Choisissez la langue que vous souhaitez utiliser dans le tableau de bord.",
+								description:
+									"Choisissez la langue que vous souhaitez utiliser dans le tableau de bord.",
 							},
 							darkMode: {
 								label: "Thème",
@@ -270,9 +268,10 @@ export default {
 							},
 							themeColor: {
 								label: "Couleur",
-								description: "Choisissez la couleur que vous souhaitez utiliser dans le tableau de bord.",
+								description:
+									"Choisissez la couleur que vous souhaitez utiliser dans le tableau de bord.",
 							},
-						}
+						},
 					},
 					account: {
 						title: "Compte",
@@ -280,7 +279,7 @@ export default {
 						form: {
 							changePassword: {
 								label: "Changer votre mot de passe",
-  								description: "Cliquez sur ce bouton pour définir un nouveau mot de passe.",
+								description: "Cliquez sur ce bouton pour définir un nouveau mot de passe.",
 								confirmTitle: "Modifier votre mot de passe",
 								confirmDescription: "Entrez vos informations pour modifier votre mot de passe.",
 							},
@@ -294,7 +293,7 @@ export default {
 							},
 							image: {
 								label: "Image de profil",
-							}
+							},
 						},
 						error: {
 							email: "Veuillez entrer une adresse e-mail valide",
@@ -346,7 +345,7 @@ export default {
 		},
 		navUser: {
 			setting: "Paramètres",
-			logOut: "Déconnexion"
+			logOut: "Déconnexion",
 		},
 		utils: {
 			manageMenu: {
@@ -379,7 +378,7 @@ export default {
 					submit: "Modifier",
 				},
 				toast: {
-					success : "Mot de passe modifier avec succès !"
+					success: "Mot de passe modifier avec succès !",
 				},
 			},
 			selectLang: {
@@ -389,7 +388,7 @@ export default {
 			},
 			themeColor: {
 				placeholder: "Choisissez une couleur",
-				color:{
+				color: {
 					default: "Défaut",
 					red: "Rouge",
 					rose: "Rose",
@@ -403,7 +402,7 @@ export default {
 			inputIcon: {
 				label: "Icône",
 				placeholder: "Recherche d'icône(s)...",
-				noResults : "Pas d'icône(s) correspondante(s).",
+				noResults: "Pas d'icône(s) correspondante(s).",
 			},
 		},
 	},
@@ -419,7 +418,7 @@ export default {
 				amount: "Veuillez entrer un montant valide",
 				recurrence: "Veuillez entrer une récurrence valide",
 				executionDate: "Veuillez entrer une date d'exécution valide",
-				icon:"Veuillez entrer une icône valide",
+				icon: "Veuillez entrer une icône valide",
 			},
 			create: {
 				success: "Abonnement créé avec succès !",
@@ -503,7 +502,8 @@ export default {
 			},
 			forgotPassword: {
 				title: "Mot de passe oublié",
-				description: "Réinitialisez facilement votre mot de passe pour accéder à votre compte en toute sécurité.",
+				description:
+					"Réinitialisez facilement votre mot de passe pour accéder à votre compte en toute sécurité.",
 				keywords: {
 					security: "Sécurité",
 					password: "Mot de passe",
@@ -520,7 +520,7 @@ export default {
 					account: "Compte",
 					secure: "Sécurité",
 					authentication: "Authentification",
-					access: "Accès"
+					access: "Accès",
 				},
 			},
 			register: {
@@ -531,7 +531,7 @@ export default {
 					account: "Compte",
 					create: "Créer",
 					budget: "Budget",
-					start: "Commencer"
+					start: "Commencer",
 				},
 			},
 			resetPassword: {
@@ -542,7 +542,7 @@ export default {
 					password: "Mot de passe",
 					security: "Sécurité",
 					account: "Compte",
-					new: "Nouveau mot de passe"
+					new: "Nouveau mot de passe",
 				},
 			},
 			dashboard: {
@@ -553,7 +553,7 @@ export default {
 					budget: "Budget",
 					expenses: "Dépenses",
 					incomes: "Revenus",
-					subscriptions: "Abonnements"
+					subscriptions: "Abonnements",
 				},
 			},
 			subscription: {
@@ -564,7 +564,7 @@ export default {
 					manage: "Gérer",
 					billing: "Facturation",
 					renewal: "Renouvellement",
-					services: "Services"
+					services: "Services",
 				},
 			},
 			settings: {
@@ -575,20 +575,21 @@ export default {
 					preferences: "Préférences",
 					account: "Compte",
 					customization: "Personnalisation",
-					security: "Sécurité"
+					security: "Sécurité",
 				},
 			},
 			budget: {
 				title: "Budget",
-				description: "Suivez et planifiez vos revenus, dépenses et économies pour une meilleure gestion financière.",
+				description:
+					"Suivez et planifiez vos revenus, dépenses et économies pour une meilleure gestion financière.",
 				keywords: {
 					budget: "Budget",
 					expenses: "Dépenses",
 					incomes: "Revenus",
 					savings: "Économies",
-					planning: "Planification"
+					planning: "Planification",
 				},
 			},
 		},
 	},
-} as const
+} as const;

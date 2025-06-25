@@ -1,57 +1,58 @@
-import type { FieldValues, Control, FieldPath, } from "react-hook-form";
+import type { Decimal } from "@prisma/client/runtime/library";
+import type { FieldValues, Control, FieldPath } from "react-hook-form";
 
 export interface sankeyParams {
-    id?: string,
-    from: string,
-    to: string,
-    amount: number,
-    type: "income" | "expense",
-    parentId?: string,
+	id?: string;
+	from: string;
+	to: string;
+	amount: number | Decimal;
+	type: string;
+	parentId?: string | null;
 }
 
 export interface BudgetSheetProps {
-    sheetOpen: boolean,
-    onSheetOpen: (sheetOpen: boolean) => void,
-    status: boolean,
-    data: sankeyParams[],
-};
+	sheetOpen: boolean;
+	onSheetOpen: (sheetOpen: boolean) => void;
+	status: boolean;
+	data: sankeyParams[];
+}
 
 export interface BudgetPageProps {
-    datas: sankeyParams[],
+	datas: sankeyParams[];
 }
 
 export interface BudgetManageProps {
-    datas : sankeyParams[],
-    status: boolean,
-    onOpen?: (arg0: boolean) => void,
+	datas: sankeyParams[];
+	status: boolean;
+	onOpen?: (arg0: boolean) => void;
 }
 
 export interface BudgetChartProps {
-    datas: sankeyParams[],
+	datas: sankeyParams[];
 }
 
 export interface BudgetChartItemProps {
-    datas: sankeyParams[],
+	datas: sankeyParams[];
 }
 
 export interface BudgetFieldProps<T extends FieldValues> {
-    label?: string,
-    description?: string,
-    placeholder?: string,
-    type?: string,
-    name: FieldPath<T>,
-    control: Control<T>,
-    className?: string,
+	label?: string;
+	description?: string;
+	placeholder?: string;
+	type?: string;
+	name: FieldPath<T>;
+	control: Control<T>;
+	className?: string;
 }
 
 export interface BudgetCardProps {
-  title: string,
-  description: string,
-  status: boolean,
-  fields: sankeyParams[],
-  form: any,
-  type: "income" | "expense",
-  onAdd: (type: "income" | "expense" | "category", parentId?: string) => void,
-  onRemove: (type: "category" | "subCategory", id?: string) => void,
-  errors?: any,
+	title: string;
+	description: string;
+	status: boolean;
+	fields: sankeyParams[];
+	form: unknown;
+	type: "income" | "expense";
+	onAdd: (type: "income" | "expense" | "category", parentId?: string) => void;
+	onRemove: (type: "category" | "subCategory", id?: string) => void;
+	errors?: unknown;
 }
