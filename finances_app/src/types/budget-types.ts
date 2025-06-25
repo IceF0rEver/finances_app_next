@@ -1,5 +1,5 @@
 import type { Decimal } from "@prisma/client/runtime/library";
-import type { FieldValues, Control, FieldPath } from "react-hook-form";
+import type { FieldValues, Control, FieldPath, UseFormReturn } from "react-hook-form";
 
 export interface sankeyParams {
 	id?: string;
@@ -45,14 +45,19 @@ export interface BudgetFieldProps<T extends FieldValues> {
 	className?: string;
 }
 
-export interface BudgetCardProps {
+export interface BudgetCardProps<T extends FieldValues> {
 	title: string;
 	description: string;
 	status: boolean;
 	fields: sankeyParams[];
-	form: unknown;
+	form: UseFormReturn<T>;
 	type: "income" | "expense";
 	onAdd: (type: "income" | "expense" | "category", parentId?: string) => void;
 	onRemove: (type: "category" | "subCategory", id?: string) => void;
-	errors?: unknown;
+	errors?:
+		| {
+				message?: string;
+				sankeyData?: string[];
+		  }
+		| undefined;
 }

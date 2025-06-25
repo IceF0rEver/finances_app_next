@@ -8,8 +8,9 @@ import BudgetField from "./budget-field";
 import { useI18n } from "@/locales/client";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import type { FieldValues, Path } from "react-hook-form";
 
-export default function BudgetCard({
+export default function BudgetCard<T extends FieldValues>({
 	title,
 	description,
 	status,
@@ -19,7 +20,7 @@ export default function BudgetCard({
 	onAdd,
 	onRemove,
 	errors,
-}: BudgetCardProps) {
+}: BudgetCardProps<T>) {
 	const t = useI18n();
 
 	return (
@@ -48,7 +49,7 @@ export default function BudgetCard({
 									>
 										<BudgetField
 											label={t("app.dashboard.budget.components.budgetManage.form.name.label")}
-											name={`sankey.${index}.from`}
+											name={`sankey.${index}.from` as Path<T>}
 											type="text"
 											control={form.control}
 										/>
@@ -58,7 +59,7 @@ export default function BudgetCard({
 									>
 										<BudgetField
 											label={t("app.dashboard.budget.components.budgetManage.form.amount.label")}
-											name={`sankey.${index}.amount`}
+											name={`sankey.${index}.amount` as Path<T>}
 											type="number"
 											control={form.control}
 										/>
@@ -114,7 +115,7 @@ export default function BudgetCard({
 												label={t(
 													"app.dashboard.budget.components.budgetManage.form.categoryName.label",
 												)}
-												name={`sankey.${index}.to`}
+												name={`sankey.${index}.to` as Path<T>}
 												type="text"
 												control={form.control}
 											/>
@@ -145,7 +146,7 @@ export default function BudgetCard({
 																label={t(
 																	"app.dashboard.budget.components.budgetManage.form.name.label",
 																)}
-																name={`sankey.${subIndex}.to`}
+																name={`sankey.${subIndex}.to` as Path<T>}
 																type="text"
 																control={form.control}
 															/>
@@ -160,7 +161,7 @@ export default function BudgetCard({
 																label={t(
 																	"app.dashboard.budget.components.budgetManage.form.amount.label",
 																)}
-																name={`sankey.${subIndex}.amount`}
+																name={`sankey.${subIndex}.amount` as Path<T>}
 																type="number"
 																control={form.control}
 															/>
