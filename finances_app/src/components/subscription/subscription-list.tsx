@@ -60,14 +60,14 @@ export default function SubscriptionList({ datas, date }: SubscriptionListProps)
 	};
 
 	const totalMonthly = () => {
-		return datas.filter((sub) => sub.recurrence === "monthly").reduce((sum, sub) => sum + sub.amount, 0);
+		return datas.filter((sub) => sub.recurrence === "monthly").reduce((sum, sub) => sum + Number(sub.amount), 0);
 	};
 
 	const totalAnnual = () => {
 		const monthlyTotal = totalMonthly() * 12;
 		const annualSubs = datas
 			.filter((sub) => sub.recurrence === "annually")
-			.reduce((sum, sub) => sum + sub.amount, 0);
+			.reduce((sum, sub) => sum + Number(sub.amount), 0);
 		return monthlyTotal + annualSubs;
 	};
 	return (
