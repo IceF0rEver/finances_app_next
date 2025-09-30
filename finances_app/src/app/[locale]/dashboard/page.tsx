@@ -7,7 +7,6 @@ export default async function Page() {
 
 	return (
 		<section className="flex flex-col justify-center items-center gap-4">
-			<h1>{t("app.dashboard.page.title")}</h1>
 			<p>{user?.name}</p>
 		</section>
 	);
