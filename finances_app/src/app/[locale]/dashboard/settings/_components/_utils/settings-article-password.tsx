@@ -1,20 +1,20 @@
 "use client";
 
-import { useI18n } from "@/locales/client";
-import { Button } from "../ui/button";
 import { useState } from "react";
 import {
 	AlertDialog,
-	AlertDialogContent,
-	AlertDialogTrigger,
 	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
-	AlertDialogDescription,
+	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import UpdatePassword from "./update-password";
+import { Button } from "@/components/ui/button";
+import { useI18n } from "@/locales/client";
 import SettingsArticle from "./settings-article";
+import UpdatePassword from "./update-password";
 
 export default function SettingsArticlePassword() {
 	const t = useI18n();
@@ -23,28 +23,28 @@ export default function SettingsArticlePassword() {
 	return (
 		<SettingsArticle
 			className={"flex flex-col gap-2"}
-			label={t("app.dashboard.settings.components.account.form.changePassword.label")}
-			description={t("app.dashboard.settings.components.account.form.changePassword.description")}
+			label={t("components.settings.form.changePassword.label")}
+			description={t("components.settings.form.changePassword.description")}
 		>
 			<AlertDialog open={open} onOpenChange={setOpen}>
 				<AlertDialogTrigger asChild>
-					<Button type="button" variant={"default"} className="min-w-1/4">
-						<p>{t("app.dashboard.settings.components.account.link.changePassword")}</p>
+					<Button type="button" variant={"link"} className="min-w-1/4">
+						<p>{t("button.updatePassword")}</p>
 					</Button>
 				</AlertDialogTrigger>
 				<AlertDialogContent>
 					<AlertDialogHeader>
 						<AlertDialogTitle>
-							{t("app.dashboard.settings.components.account.form.changePassword.confirmTitle")}
+							{t("components.settings.form.changePassword.confirmTitle")}
 						</AlertDialogTitle>
 						<AlertDialogDescription>
-							{t("app.dashboard.settings.components.account.form.changePassword.confirmDescription")}
+							{t("components.settings.form.changePassword.confirmDescription")}
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<UpdatePassword onOpenChange={setOpen} />
 					<AlertDialogFooter>
 						<AlertDialogCancel className="w-full">
-							{t("app.dashboard.settings.components.account.button.cancel")}
+							{t("button.cancel")}
 						</AlertDialogCancel>
 					</AlertDialogFooter>
 				</AlertDialogContent>

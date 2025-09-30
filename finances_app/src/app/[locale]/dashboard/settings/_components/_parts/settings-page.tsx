@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import Account from "@/app/[locale]/dashboard/settings/_components/_parts/account";
@@ -14,7 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useI18n } from "@/locales/client";
 
-export default function Page() {
+export default function SettingsPage() {
 	const t = useI18n();
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -72,9 +71,7 @@ export default function Page() {
 			</aside>
 			<section className="md:col-span-4 px-6">
 				{items?.map((item) => (
-					<div key={item.key}>
-						{settingItemSelected === item.key && item.component}
-					</div>
+					<div key={item.key}>{settingItemSelected === item.key && item.component}</div>
 				))}
 			</section>
 		</section>
