@@ -1,6 +1,6 @@
-import { clsx, type ClassValue } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { subscriptionParams } from "@/types/subscription-types";
+import type { subscriptionParams } from "@/app/[locale]/dashboard/subscription/_components/_types/subscription-types";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -14,6 +14,7 @@ export function calendarCheckDate(item: subscriptionParams, dateValue: Date) {
 		(executionDate.getDate() === date.getDate() &&
 			executionDate.getMonth() === date.getMonth() &&
 			item.recurrence === "annually") ||
-		(executionDate.getDate() === date.getDate() && item.recurrence === "monthly")
+		(executionDate.getDate() === date.getDate() &&
+			item.recurrence === "monthly")
 	);
 }

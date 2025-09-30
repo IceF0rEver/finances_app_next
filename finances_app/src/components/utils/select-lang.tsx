@@ -1,9 +1,20 @@
 "use client";
-import { useI18n } from "@/locales/client";
-import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from "@/components/ui/select";
-import { useChangeLocale, useCurrentLocale } from "@/locales/client";
 
-export default function SelectLang() {
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
+import { useChangeLocale, useCurrentLocale, useI18n } from "@/locales/client";
+
+interface SelectLangProps {
+	className?: string;
+}
+export default function SelectLang({ className }: SelectLangProps) {
 	const t = useI18n();
 	const changeLocale = useChangeLocale();
 	const currentLocale = useCurrentLocale();
@@ -14,19 +25,24 @@ export default function SelectLang() {
 	];
 
 	return (
-		<Select onValueChange={(value) => changeLocale(value as "fr" | "en")} value={currentLocale}>
-			<SelectTrigger>
-				<SelectValue placeholder={t("components.utils.selectLang.select")} />
-			</SelectTrigger>
-			<SelectContent>
-				<SelectGroup>
-					{langs?.map((item) => (
-						<SelectItem key={item.key} value={item.key}>
-							{item.label}
-						</SelectItem>
-					))}
-				</SelectGroup>
-			</SelectContent>
-		</Select>
+		<div className={cn(className)}>
+			<Select
+				onValueChange={(value) => changeLocale(value as "fr" | "en")}
+				value={currentLocale}
+			>
+				<SelectTrigger>
+					<SelectValue placeholder={t("components.utils.selectLang.select")} />
+				</SelectTrigger>
+				<SelectContent>
+					<SelectGroup>
+						{langs?.map((item) => (
+							<SelectItem key={item.key} value={item.key}>
+								{item.label}
+							</SelectItem>
+						))}
+					</SelectGroup>
+				</SelectContent>
+			</Select>
+		</div>
 	);
 }

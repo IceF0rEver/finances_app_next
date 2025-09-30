@@ -1,7 +1,13 @@
-import type { UseFormReturn, FieldValues, SubmitHandler, Control, FieldPath } from "react-hook-form";
 import type { VariantProps } from "class-variance-authority";
+import type {
+	Control,
+	FieldPath,
+	FieldValues,
+	SubmitHandler,
+	UseFormReturn,
+} from "react-hook-form";
 import type { buttonVariants } from "@/components/ui/button";
-import type { signIn } from "@/lib/auth-client";
+import type { signIn } from "@/lib/auth/auth-client";
 
 export interface AuthFormProps<T extends FieldValues> {
 	children: React.ReactNode;
@@ -12,7 +18,8 @@ export interface AuthFormProps<T extends FieldValues> {
 
 export interface AuthFooterProps {
 	href: string;
-	text: string;
+	text?: string;
+	label: string;
 }
 
 export interface AuthFieldProps<T extends FieldValues> {
