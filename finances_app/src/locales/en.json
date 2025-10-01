@@ -27,7 +27,10 @@
     "currentPlan": "Current plan",
     "plan": "Plan",
     "cancelPlan": "Cancel my subscription",
-    "restorePlan": "Restore my subscription"
+    "restorePlan": "Restore my subscription",
+    "choose": "Choose",
+    "discoverBudget": "Discover my budget",
+    "saveChange": "Save changes"
   },
   "components": {
     "utils": {
@@ -168,6 +171,19 @@
           "title": "Account",
           "description": "Update your account settings."
         }
+      }
+    },
+    "suspense": {
+      "fallback": {
+        "title": "Loading...",
+        "description": "Loading the requested information!"
+      }
+    },
+    "error": {
+      "fallback": {
+        "title": "Loading error",
+        "description": "Unable to load the requested information!",
+        "reload": "Try again"
       }
     }
   },
@@ -319,7 +335,7 @@
   },
   "heroPage": {
     "title": {
-      "firstPart": "Manage your Fiances with ",
+      "firstPart": "Manage your Finances with ",
       "secondPart": "MyBudget"
     },
     "description": "Your personal app to track, organize, and optimize your finances every day.",
@@ -337,6 +353,39 @@
           "description": "Manage the parameters and preferences of your account."
         }
       }
+    }
+  },
+  "budget": {
+    "layout": {
+      "title": "Budget",
+      "description": "Visually manage the distribution of your expenses."
+    },
+    "components": {
+      "budgetChart": {
+        "delete": {
+          "title": "Deletion of your budget",
+          "description": "Are you sure you want to delete your budget? This action is irreversible and all associated data will be lost."
+        },
+        "remainingAmount": {
+          "positive": "You have {amount} to spend or invest this month.",
+          "negative": "You have exceeded your budget for {amount} this month."
+        }
+      },
+      "budgetSheet": {
+        "update": {
+          "title": "Modification of your budget.",
+          "description": "You can now easily change your budget."
+        }
+      }
+    }
+  },
+  "toast": {
+    "success": {
+      "deleteSankey": "Budget successfully delete!"
+    },
+    "error": "An error occurred!",
+    "loading": {
+      "deleteSankey": "Deletion of your budget ..."
     }
   }
 }

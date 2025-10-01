@@ -1,6 +1,6 @@
-import LayoutHeader from "@/components/dashboard/layout/layout-header";
-import { getI18n } from "@/locales/server";
 import type { Metadata } from "next";
+import LayoutHeader from "@/app/[locale]/dashboard/_components/layout-header";
+import { getI18n } from "@/locales/server";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = await getI18n();
@@ -21,13 +21,17 @@ export async function generateMetadata(): Promise<Metadata> {
 		},
 	};
 }
-export default async function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	const t = await getI18n();
 	return (
 		<section className="p-6">
 			<LayoutHeader
-				title={t("app.dashboard.budget.layout.title")}
-				description={t("app.dashboard.budget.layout.description")}
+				title={t("budget.layout.title")}
+				description={t("budget.layout.description")}
 			/>
 			{children}
 		</section>

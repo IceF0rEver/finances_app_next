@@ -27,7 +27,10 @@
     "currentPlan": "Plan actuel",
     "plan": "Plan",
     "cancelPlan": "Annuler mon abonnement",
-    "restorePlan": "Restaurer mon abonnement"
+    "restorePlan": "Restaurer mon abonnement",
+    "choose": "Choisir",
+    "discoverBudget": "Découvrir mon budget",
+    "saveChange": "Sauvegarder les changements"
   },
   "components": {
     "utils": {
@@ -168,6 +171,19 @@
           "title": "Compte",
           "description": "Mettez à jour les paramètres de votre compte."
         }
+      }
+    },
+    "suspense": {
+      "fallback": {
+        "title": "Chargement...",
+        "description": "Chargement des informations demandées !"
+      }
+    },
+    "error": {
+      "fallback": {
+        "title": "Erreur de chargement",
+        "description": "Impossible de charger les informations demandées !",
+        "reload": "Réessayer"
       }
     }
   },
@@ -337,6 +353,39 @@
           "description": "Gérez les paramètres et les préférences de votre compte."
         }
       }
+    }
+  },
+  "budget": {
+    "layout": {
+      "title": "Budget",
+      "description": "Gérez visuellement la répartition de vos dépenses."
+    },
+    "components": {
+      "budgetChart": {
+        "delete": {
+          "title": "Suppression de votre budget",
+          "description": "Êtes-vous sûr de vouloir supprimer votre budget ? Cette action est irréversible et toutes les données associées seront perdues."
+        },
+        "remainingAmount": {
+          "positive": "Il vous reste {amount} à dépenser ou à investir ce mois-ci.",
+          "negative": "Vous avez dépassé votre budget de {amount} ce mois-ci."
+        }
+      },
+      "budgetSheet": {
+        "update": {
+          "title": "Modification de votre budget.",
+          "description": "Vous pouvez désormais modifier facilement votre budget."
+        }
+      }
+    }
+  },
+  "toast": {
+    "success": {
+      "deleteSankey": "Budget supprimer avec succès !"
+    },
+    "error": "Une erreur s'est produite !",
+    "loading": {
+      "deleteSankey": "Suppression de votre budget..."
     }
   }
 }

@@ -1,16 +1,28 @@
-import { getUser } from "@/lib/server";
-import BudgetPage from "@/components/budget/budget-page";
-import EmptyUser from "@/components/dashboard/page/empty-user";
+"use server";
+
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { getUser } from "@/lib/auth/server";
 import { getCachedBudgets } from "@/lib/caches/budget-cache";
+import BudgetPage from "./_components/budget-page";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: erro name
+import Error from "./error";
+import Loading from "./loading";
 
 export default async function Page() {
 	const user = await getUser();
 
 	if (!user?.id) {
-		return <EmptyUser />;
+		return <Error />;
 	}
 
-	const budgets = await getCachedBudgets(user?.id);
+	const cachedbudgets = getCachedBudgets(user.id);
 
-	return <BudgetPage datas={budgets} />;
+	return (
+		<ErrorBoundary fallback={<Error />}>
+			<Suspense fallback={<Loading />}>
+				<BudgetPage budgets={cachedbudgets} />
+			</Suspense>
+		</ErrorBoundary>
+	);
 }

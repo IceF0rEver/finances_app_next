@@ -1,7 +1,7 @@
 "use server";
 
 import { unstable_cache } from "next/cache";
-import { getBudgets } from "../actions/budget-action";
+import { getBudgets } from "@/app/[locale]/dashboard/budget/_components/_serveractions/actions";
 
 export async function getCachedBudgets(userId: string) {
 	return unstable_cache(

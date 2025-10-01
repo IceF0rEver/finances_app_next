@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import { useEffect, useState } from "react";
 import "highcharts/modules/sankey";
-import type { BudgetChartItemProps } from "@/types/budget-types";
+import type { BudgetChartItemProps } from "@/app/[locale]/dashboard/budget/_components/_types/budget-types";
 
 export default function BudgetChartItem({ datas }: BudgetChartItemProps) {
 	const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
