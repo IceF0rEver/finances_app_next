@@ -1,5 +1,10 @@
 import type { Decimal } from "@prisma/client/runtime/library";
-import type { FieldValues, Control, FieldPath, UseFormReturn } from "react-hook-form";
+import type {
+	Control,
+	FieldPath,
+	FieldValues,
+	UseFormReturn,
+} from "react-hook-form";
 
 export interface sankeyParams {
 	id?: string;
@@ -13,12 +18,11 @@ export interface sankeyParams {
 export interface BudgetSheetProps {
 	sheetOpen: boolean;
 	onSheetOpen: (sheetOpen: boolean) => void;
-	status: boolean;
 	data: sankeyParams[];
 }
 
 export interface BudgetPageProps {
-	datas: sankeyParams[];
+	budgets: Promise<{ sankeyDatas: sankeyParams[] | [] }>;
 }
 
 export interface BudgetManageProps {
