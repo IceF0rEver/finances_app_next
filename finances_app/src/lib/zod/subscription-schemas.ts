@@ -1,8 +1,6 @@
 import { z } from "zod";
-// biome-ignore lint/suspicious/noExplicitAny: more complex
-export const subscriptionSchemas = (
-	t: (...args: Parameters<(key: string, ...params: any[]) => string>) => string,
-) => ({
+import type { useI18n } from "@/locales/client";
+export const subscriptionSchemas = (t: ReturnType<typeof useI18n>) => ({
 	subscription: z.object({
 		id: z.string().optional(),
 		name: z.string().min(1, { message: t("action.subscription.form.name") }),

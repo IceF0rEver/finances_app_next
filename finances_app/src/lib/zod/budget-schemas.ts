@@ -1,8 +1,6 @@
 import { z } from "zod";
-// biome-ignore lint/suspicious/noExplicitAny: more complex
-export const budgetSchemas = (
-	t: (...args: Parameters<(key: string, ...params: any[]) => string>) => string,
-) => ({
+import type { useI18n } from "@/locales/client";
+export const budgetSchemas = (t: ReturnType<typeof useI18n>) => ({
 	sankey: z.array(
 		z.object({
 			id: z.string({ message: t("action.budget.form.id") }).uuid(),

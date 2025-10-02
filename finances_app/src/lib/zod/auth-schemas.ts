@@ -1,8 +1,6 @@
 import { z } from "zod";
-export const authSchemas = (
-	// biome-ignore lint/suspicious/noExplicitAny: more complex
-	t: (...args: Parameters<(key: string, ...params: any[]) => string>) => string,
-) => ({
+import type { useI18n } from "@/locales/client";
+export const authSchemas = (t: ReturnType<typeof useI18n>) => ({
 	signIn: z.object({
 		email: z.string().email(t("zod.email")),
 		password: z.string().min(6, t("zod.min.password")),
