@@ -9,9 +9,12 @@ interface ToastState {
 }
 
 interface UseToastOptions {
-	loadingMessage: string;
+	loadingMessage?: string;
 	successMessage: string;
 	errorMessage: string;
+	onSuccess?: () => void;
+	onPending?: () => void;
+	onError?: () => void;
 }
 
 export function useToast(
@@ -28,18 +31,21 @@ export function useToast(
 				toastRef.current = null;
 			}
 			toast.success(options.successMessage);
+			options.onSuccess?.();
 		} else if (state.message && !state.success) {
 			if (toastRef.current) {
 				toast.dismiss(toastRef.current);
 				toastRef.current = null;
 			}
 			toast.error(options.errorMessage);
+			options.onError?.();
 		}
 	}, [state, options]);
 
 	useEffect(() => {
-		if (isPending) {
+		if (isPending && options.loadingMessage !== undefined) {
 			toastRef.current = toast.loading(options.loadingMessage);
+			options.onPending?.();
 		} else if (toastRef.current) {
 			toast.dismiss(toastRef.current);
 			toastRef.current = null;
