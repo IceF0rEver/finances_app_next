@@ -1,10 +1,17 @@
 "use client";
 
-import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import type { FieldValues } from "react-hook-form";
+import type { BudgetFieldProps } from "@/app/[locale]/dashboard/budget/_components/_types/budget-types";
+import {
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import type { BudgetFieldProps } from "@/types/budget-types";
 
 export default function BudgetField<T extends FieldValues>({
 	label,
@@ -24,7 +31,12 @@ export default function BudgetField<T extends FieldValues>({
 					<FormItem>
 						{label && <FormLabel>{label}</FormLabel>}
 						<FormControl>
-							<Input placeholder={placeholder} type={type} {...field} className={cn(className)} />
+							<Input
+								placeholder={placeholder}
+								type={type}
+								{...field}
+								className={cn(className)}
+							/>
 						</FormControl>
 						{description && <FormDescription>{description}</FormDescription>}
 						<FormMessage />

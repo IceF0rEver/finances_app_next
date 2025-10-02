@@ -30,7 +30,8 @@
     "restorePlan": "Restaurer mon abonnement",
     "choose": "Choisir",
     "discoverBudget": "Découvrir mon budget",
-    "saveChange": "Sauvegarder les changements"
+    "saveChange": "Sauvegarder les changements",
+    "addIncome": "Ajouter une source de revenu"
   },
   "components": {
     "utils": {
@@ -376,16 +377,57 @@
           "title": "Modification de votre budget.",
           "description": "Vous pouvez désormais modifier facilement votre budget."
         }
+      },
+      "budgetManage": {
+        "tabs": {
+          "incomes": "Revenus",
+          "expenses": "Dépenses"
+        },
+        "title": {
+          "income": "Revenus",
+          "expense": "Dépenses"
+        },
+        "description": {
+          "income": "Inscrivez vos différents revenus.",
+          "expense": "Inscrivez vos différentes dépenses."
+        },
+        "form": {
+          "name": {
+            "label": "Nom"
+          },
+          "amount": {
+            "label": "Montant"
+          },
+          "categoryName": {
+            "label": "Nom de la catégorie"
+          }
+        },
+        "button": {
+          "addExpense": "Ajouter une source de dépense"
+        }
       }
     }
   },
   "toast": {
     "success": {
-      "deleteSankey": "Budget supprimer avec succès !"
+      "deleteSankey": "Budget supprimer avec succès !",
+      "updateSankey": "Budget modifier avec succès !",
+      "createSankey": "Budget créer avec succès !"
     },
     "error": "Une erreur s'est produite !",
     "loading": {
       "deleteSankey": "Suppression de votre budget..."
     }
-  }
+  },
+  "action": {
+    "budget": {
+      "form": {
+        "validateField": "Erreur de validation. Veuillez corriger les champs.",
+        "id": "ID invalide !",
+        "name": "Veuillez entrer un nom valide",
+        "amount": "Veuillez entrer un montant valide"
+      }
+    }
+  },
+  "addCategoryExpense": "Ajouter une catégorie de dépense"
 }

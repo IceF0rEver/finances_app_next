@@ -61,7 +61,7 @@ export interface BudgetCardProps<T extends FieldValues> {
 	errors?:
 		| {
 				message?: string;
-				sankeyData?: string[];
+				sankey?: string[];
 		  }
 		| undefined;
 }

@@ -30,7 +30,8 @@
     "restorePlan": "Restore my subscription",
     "choose": "Choose",
     "discoverBudget": "Discover my budget",
-    "saveChange": "Save changes"
+    "saveChange": "Save changes",
+    "addIncome": "Add an income source"
   },
   "components": {
     "utils": {
@@ -376,16 +377,57 @@
           "title": "Modification of your budget.",
           "description": "You can now easily change your budget."
         }
+      },
+      "budgetManage": {
+        "tabs": {
+          "incomes": "Incomes",
+          "expenses": "Expenses"
+        },
+        "title": {
+          "income": "Incomes",
+          "expense": "Expenses"
+        },
+        "description": {
+          "income": "Subscribe your various income.",
+          "expense": "Register your different expenses."
+        },
+        "form": {
+          "name": {
+            "label": "Name"
+          },
+          "amount": {
+            "label": "Amount"
+          },
+          "categoryName": {
+            "label": "Category name"
+          }
+        },
+        "button": {
+          "addExpense": "Add a source of expense"
+        }
       }
     }
   },
   "toast": {
     "success": {
-      "deleteSankey": "Budget successfully delete!"
+      "deleteSankey": "Budget successfully delete!",
+      "updateSankey": "Budget update successfully!",
+      "createSankey": "Budget create successfully!"
     },
     "error": "An error occurred!",
     "loading": {
       "deleteSankey": "Deletion of your budget ..."
     }
-  }
+  },
+  "action": {
+    "budget": {
+      "form": {
+        "validateField": "Validation error. \nPlease correct the fields.",
+        "id": "ID Invalid!",
+        "name": "Please enter a valid name",
+        "amount": "Please enter a valid amount"
+      }
+    }
+  },
+  "addCategoryExpense": "Add a category of expense"
 }

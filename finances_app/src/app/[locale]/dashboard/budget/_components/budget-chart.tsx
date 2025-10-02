@@ -40,6 +40,7 @@ export default function BudgetChart({ datas }: BudgetChartProps) {
 		<>
 			<div className="float-end">
 				<ManageMenu
+					disabled={isPending}
 					onOpenAction={() => {
 						setIsSheetOpen(true);
 					}}

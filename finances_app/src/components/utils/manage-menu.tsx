@@ -25,6 +25,7 @@ import { useI18n } from "@/locales/client";
 interface ManageMenuProps {
 	title?: string;
 	description?: string;
+	disabled?: boolean;
 	onOpenAction?: () => void;
 	onDialogAction?: () => void;
 }
@@ -33,6 +34,7 @@ export default function ManageMenu({
 	title,
 	description,
 	onOpenAction,
+	disabled = false,
 	onDialogAction,
 }: ManageMenuProps) {
 	const t = useI18n();
@@ -73,8 +75,11 @@ export default function ManageMenu({
 					<AlertDialogDescription>{description}</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>{t("button.cancel")}</AlertDialogCancel>
+					<AlertDialogCancel disabled={disabled}>
+						{t("button.cancel")}
+					</AlertDialogCancel>
 					<AlertDialogAction
+						disabled={disabled}
 						onClick={(e) => {
 							e.preventDefault();
 							if (onDialogAction) {
