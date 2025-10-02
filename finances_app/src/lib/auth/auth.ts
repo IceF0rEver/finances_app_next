@@ -7,6 +7,7 @@ import { resend } from "../resend";
 const prisma = new PrismaClient();
 
 export const auth = betterAuth({
+	trustedOrigins: [process.env.NEXT_PUBLIC_APP_URL!],
 	databaseHooks: {
 		user: {
 			create: {
