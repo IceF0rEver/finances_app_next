@@ -46,10 +46,12 @@ export async function getBudgets(userId: User["id"]): Promise<{
 
 		return { sankeyDatas: sankeyDatas ?? [] };
 	} catch (error) {
+		if (error instanceof z.ZodError) {
+			throw new Error("400 - BAD_REQUEST");
+		}
 		if (error instanceof Error && error.message.includes("network")) {
 			throw new Error("503 - SERVICE_UNAVAILABLE");
 		}
-		console.log(error);
 		throw new Error("500 - INTERNAL_SERVER_ERROR");
 	}
 }
@@ -58,9 +60,10 @@ export async function createSankey(
 	_prevState: SankeyState,
 	formData: FormData,
 ): Promise<SankeyState> {
+	const t = await getI18n();
+
 	try {
 		const user = await getUser();
-		const t = await getI18n();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
@@ -112,18 +115,18 @@ export async function updateSankey(
 	_prevState: SankeyState,
 	formData: FormData,
 ): Promise<SankeyState> {
-	const user = await getUser();
 	const t = await getI18n();
 
-	if (!user?.id) {
-		throw new Error("400 - BAD_REQUEST");
-	}
-
-	const sankeySchema = budgetSchemas(t).sankey;
-	const parsedData = JSON.parse(formData.get("sankeyData") as string);
-
 	try {
+		const user = await getUser();
+		if (!user?.id) {
+			throw new Error("400 - BAD_REQUEST");
+		}
+
+		const sankeySchema = budgetSchemas(t).sankey;
+		const parsedData = JSON.parse(formData.get("sankeyData") as string);
 		const validatedData = sankeySchema.safeParse(parsedData);
+
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");
 		}
@@ -177,16 +180,13 @@ export async function updateSankey(
 export async function deleteSankey(
 	_prevState: SankeyState,
 ): Promise<SankeyState> {
+	const t = await getI18n();
+
 	try {
 		const user = await getUser();
 
-		const validatedData = z
-			.object({
-				userId: z.string().min(1),
-			})
-			.safeParse({
-				userId: user?.id,
-			});
+		const sankeySchema = authSchemas(t).getWithUserId.shape.userId;
+		const validatedData = sankeySchema.safeParse(user?.id);
 
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");
