@@ -31,7 +31,8 @@
     "choose": "Choose",
     "discoverBudget": "Discover my budget",
     "saveChange": "Save changes",
-    "addIncome": "Add an income source"
+    "addIncome": "Add an income source",
+    "add": "Add"
   },
   "components": {
     "utils": {
@@ -52,6 +53,11 @@
           "violet": "Purple"
         },
         "placeholder": "Choose a color"
+      },
+      "inputIcon": {
+        "label": "Icon",
+        "placeholder": "Search an icon(s)...",
+        "noResults": "No corresponding icon(s)."
       }
     },
     "auth": {
@@ -412,11 +418,15 @@
     "success": {
       "deleteSankey": "Budget successfully delete!",
       "updateSankey": "Budget update successfully!",
-      "createSankey": "Budget create successfully!"
+      "createSankey": "Budget create successfully!",
+      "updateSubscription": "Subscription to modify successfully!",
+      "createSubscription": "Subscription create successfully!",
+      "deleteSubscription": "Subscription successfully delete!"
     },
     "error": "An error occurred!",
     "loading": {
-      "deleteSankey": "Deletion of your budget ..."
+      "deleteSankey": "Deletion of your budget ...",
+      "deleteSubscription": "Deletion of your subscription ..."
     }
   },
   "action": {
@@ -427,7 +437,78 @@
         "name": "Please enter a valid name",
         "amount": "Please enter a valid amount"
       }
+    },
+    "subscription": {
+      "form": {
+        "name": "Please enter a valid name",
+        "amount": "Please enter a valid amount",
+        "recurrence": "Please enter valid recurrence",
+        "executionDate": "Please enter a valid execution date",
+        "icon": "Please enter a valid icon"
+      }
     }
   },
-  "addCategoryExpense": "Add a category of expense"
+  "addCategoryExpense": "Add a category of expense",
+  "subscription": {
+    "components": {
+      "subscriptionManage": {
+        "add": {
+          "title": "Adding a new subscription.",
+          "description": "You can now easily add a subscription."
+        },
+        "update": {
+          "title": "Modification of your subscription.",
+          "description": "You can now easily change your subscription."
+        },
+        "form": {
+          "name": {
+            "label": "Name"
+          },
+          "amount": {
+            "label": "Amount"
+          },
+          "recurrence": {
+            "label": "Recurrence",
+            "monthly": "Monthly",
+            "annually": "Annually"
+          },
+          "executionDate": {
+            "label": "Execution date"
+          }
+        }
+      },
+      "subscriptionCalendar": {
+        "title": "Calendar",
+        "description": "Visualize your subscriptions by date."
+      },
+      "subscriptionList": {
+        "badge": {
+          "annually": "Annually",
+          "monthly": "Monthly"
+        },
+        "delete": {
+          "title": "Deletion of your subscription",
+          "description": "Are you sure you want to delete your subscription? This action is irreversible and all associated data will be lost."
+        },
+        "empty": {
+          "title": "No subscription",
+          "description": "No subscription provided for this date."
+        },
+        "totalMonthly": "Monthly total:",
+        "totalAnnually": "Annual total:",
+        "tabs": {
+          "day": "Day",
+          "all": "All",
+          "annually": "Annually",
+          "monthly": "Monthly"
+        },
+        "title": "Your subscriptions",
+        "description": "Manage the distribution of your subscriptions."
+      }
+    },
+    "layout": {
+      "title": "Subscription",
+      "description": "Visually manage the distribution of your subscriptions."
+    }
+  }
 }
