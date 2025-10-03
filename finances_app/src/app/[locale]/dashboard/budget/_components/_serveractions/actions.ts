@@ -6,32 +6,29 @@ import type { User } from "@/generated/prisma";
 import { Decimal } from "@/generated/prisma/runtime/library";
 import { getUser } from "@/lib/auth/server";
 import prisma from "@/lib/prisma";
+import { authSchemas } from "@/lib/zod/auth-schemas";
 import { budgetSchemas } from "@/lib/zod/budget-schemas";
 import { getI18n } from "@/locales/server";
 import type { sankeyParams } from "../_types/budget-types";
 
 interface SankeyState {
-	success?: boolean;
 	error?: {
 		code?: string;
 		message?: string;
 		status?: number;
-		sankey?: string[];
 	};
+	success?: boolean;
 	message?: string;
 }
 
 export async function getBudgets(userId: User["id"]): Promise<{
 	sankeyDatas: sankeyParams[];
 }> {
+	const t = await getI18n();
+
 	try {
-		const validatedData = z
-			.object({
-				userId: z.string().min(1),
-			})
-			.safeParse({
-				userId: userId,
-			});
+		const sankeySchema = authSchemas(t).getWithUserId.shape.userId;
+		const validatedData = sankeySchema.safeParse(userId);
 
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");
@@ -62,33 +59,24 @@ export async function createSankey(
 	formData: FormData,
 ): Promise<SankeyState> {
 	try {
-		const currentUser = await getUser();
+		const user = await getUser();
 		const t = await getI18n();
-		if (!currentUser?.id) {
+		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
 
 		const sankeySchema = budgetSchemas(t).sankey;
 		const parsedData = JSON.parse(formData.get("sankeyData") as string);
-
 		const validatedData = sankeySchema.safeParse(parsedData);
+
 		if (!validatedData.success) {
-			return {
-				error: {
-					message: t("action.budget.form.validateField"),
-					sankey: validatedData.error?.errors.map((e) => e.message),
-				},
-			};
+			throw new Error("400 - BAD_REQUEST");
 		}
 
 		const sankeyArray = validatedData.data.map((item) => ({
-			id: item.id,
-			from: item.from,
-			to: item.to,
+			...item,
 			amount: new Decimal(item.amount),
-			type: item.type,
-			parentId: item.parentId,
-			userId: currentUser.id,
+			userId: user.id,
 		}));
 
 		const result = await prisma.sankey.createMany({
@@ -96,7 +84,7 @@ export async function createSankey(
 		});
 		if (result) {
 			revalidatePath("[locale]/dashboard/budget", "page");
-			revalidateTag(`budgets-${currentUser.id}`);
+			revalidateTag(`budgets-${user.id}`);
 			return {
 				success: true,
 			};
@@ -124,10 +112,10 @@ export async function updateSankey(
 	_prevState: SankeyState,
 	formData: FormData,
 ): Promise<SankeyState> {
-	const currentUser = await getUser();
+	const user = await getUser();
 	const t = await getI18n();
 
-	if (!currentUser?.id) {
+	if (!user?.id) {
 		throw new Error("400 - BAD_REQUEST");
 	}
 
@@ -137,17 +125,12 @@ export async function updateSankey(
 	try {
 		const validatedData = sankeySchema.safeParse(parsedData);
 		if (!validatedData.success) {
-			return {
-				error: {
-					message: t("action.budget.form.validateField"),
-					sankey: validatedData.error?.errors.map((e) => e.message),
-				},
-			};
+			throw new Error("400 - BAD_REQUEST");
 		}
 
 		await prisma.sankey.deleteMany({
 			where: {
-				userId: currentUser.id,
+				userId: user.id,
 			},
 		});
 
@@ -158,7 +141,7 @@ export async function updateSankey(
 			amount: new Decimal(item.amount),
 			type: item.type,
 			parentId: item.parentId,
-			userId: currentUser.id,
+			userId: user.id,
 		}));
 
 		const result = await prisma.sankey.createMany({
@@ -167,7 +150,7 @@ export async function updateSankey(
 
 		if (result) {
 			revalidatePath("[locale]/dashboard/budget", "page");
-			revalidateTag(`budgets-${currentUser.id}`);
+			revalidateTag(`budgets-${user.id}`);
 			return {
 				success: true,
 			};
@@ -195,14 +178,14 @@ export async function deleteSankey(
 	_prevState: SankeyState,
 ): Promise<SankeyState> {
 	try {
-		const currentUser = await getUser();
+		const user = await getUser();
 
 		const validatedData = z
 			.object({
 				userId: z.string().min(1),
 			})
 			.safeParse({
-				userId: currentUser?.id,
+				userId: user?.id,
 			});
 
 		if (!validatedData.success) {
@@ -211,13 +194,13 @@ export async function deleteSankey(
 
 		const result = await prisma.sankey.deleteMany({
 			where: {
-				userId: currentUser?.id,
+				userId: user?.id,
 			},
 		});
 
 		if (result) {
 			revalidatePath("[locale]/dashboard/budget", "page");
-			revalidateTag(`budgets-${currentUser?.id}`);
+			revalidateTag(`budgets-${user?.id}`);
 			return {
 				success: true,
 			};
