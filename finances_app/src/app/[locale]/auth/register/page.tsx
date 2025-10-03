@@ -1,18 +1,18 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authSchemas } from "@/lib/zod/auth-schemas";
-import { z, type string } from "zod";
-import { useI18n } from "@/locales/client";
-import { useState } from "react";
-import AuthCard from "@/components/auth/auth-card";
-import AuthField from "@/components/auth/auth-field";
-import AuthForm from "@/components/auth/auth-form";
-import AuthButton from "@/components/auth/auth-button";
-import AuthFooter from "@/components/auth/auth-footer";
 import { useRouter } from "next/navigation";
-import { signUp } from "@/lib/auth-client";
+import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+import { type string, z } from "zod";
+import AuthButton from "@/components/utils/auth/auth-button";
+import AuthCard from "@/components/utils/auth/auth-card";
+import AuthField from "@/components/utils/auth/auth-field";
+import AuthFooter from "@/components/utils/auth/auth-footer";
+import AuthForm from "@/components/utils/auth/auth-form";
+import { signUp } from "@/lib/auth/auth-client";
+import { authSchemas } from "@/lib/zod/auth-schemas";
+import { useI18n } from "@/locales/client";
 
 export default function Page() {
 	const t = useI18n();
@@ -30,90 +30,130 @@ export default function Page() {
 			email: "",
 			password: "",
 			passwordConfirmation: "",
-			name: "",
+			firstName: "",
+			lastName: "",
 			image: "",
 		},
 	});
-	const onSubmit = async (values: SignUpType) => {
-		try {
-			const validatedData = signUpSchema.parse({
-				email: values.email,
-				password: values.password,
-				passwordConfirmation: values.passwordConfirmation,
-				name: values.name,
-				image: values.image ?? "",
-			});
+	const onSubmit = useCallback(
+		async (values: SignUpType) => {
+			try {
+				const validatedData = signUpSchema.parse({
+					email: values.email,
+					password: values.password,
+					passwordConfirmation: values.passwordConfirmation,
+					firstName: values.firstName,
+					lastName: values.lastName,
+					image: values.image ?? "",
+				});
 
-			await signUp.email(validatedData, {
-				onRequest: () => {
-					setLoading(true);
-				},
-				onResponse: () => {
-					setLoading(false);
-				},
-				onError: (ctx) => {
-					setErrorMessage({ betterError: t(`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string) });
-				},
-				onSuccess: async () => {
-					router.push(`/dashboard`);
-				},
-			});
-		} catch (error) {
-			if (error instanceof z.ZodError) {
-				console.error(error);
+				await signUp.email(
+					{
+						email: validatedData.email,
+						name: `${validatedData.firstName} ${validatedData.lastName}`,
+						password: validatedData.password,
+						image: validatedData.image,
+					},
+					{
+						onRequest: () => {
+							setLoading(true);
+						},
+						onResponse: () => {
+							setLoading(false);
+						},
+						onError: (ctx) => {
+							setErrorMessage({
+								betterError: t(
+									`BASE_ERROR_CODES.${ctx.error.code}` as keyof typeof string,
+								),
+							});
+						},
+						onSuccess: async () => {
+							router.push("/dashboard");
+						},
+					},
+				);
+			} catch (error) {
+				if (error instanceof z.ZodError) {
+					console.error(error);
+				}
+				setLoading(false);
 			}
-			setLoading(false);
-		}
-	};
+		},
+		[t, router, signUpSchema],
+	);
 	return (
 		<AuthCard
-			title={t("app.auth.register.page.title")}
-			description={t("app.auth.register.page.description")}
-			className="max-w-md"
-			footer={<AuthFooter href={"/auth/login"} text={t("app.auth.register.page.link.login")} />}
+			title={t("components.auth.register.title")}
+			description={t("components.auth.register.description")}
+			className="w-full sm:w-sm"
+			footer={
+				<AuthFooter
+					href={"/auth/login"}
+					text={t("components.auth.link.haveAccount")}
+					label={t("button.login")}
+				/>
+			}
 		>
 			<AuthForm form={form} onSubmit={onSubmit} className="grid gap-4">
 				{errorMessage.betterError && (
-					<p className="text-sm text-destructive" aria-live="polite" aria-atomic="true">
+					<p
+						className="text-sm text-destructive"
+						aria-live="polite"
+						aria-atomic="true"
+					>
 						{errorMessage.betterError}
 					</p>
 				)}
+				<div className="flex gap-3">
+					<div className="flex-1">
+						<AuthField
+							label={t("components.auth.form.firstName.label")}
+							placeholder={t("components.auth.form.firstName.placeholder")}
+							control={form.control}
+							name="firstName"
+							type="text"
+						/>
+					</div>
+					<div className="flex-1">
+						<AuthField
+							label={t("components.auth.form.lastName.label")}
+							placeholder={t("components.auth.form.lastName.placeholder")}
+							control={form.control}
+							name="lastName"
+							type="text"
+						/>
+					</div>
+				</div>
 				<AuthField
-					label={t("app.auth.register.page.form.firstName.label")}
-					placeholder={t("app.auth.register.page.form.firstName.placeholder")}
-					control={form.control}
-					name="name"
-					type="text"
-				/>
-				<AuthField
-					label={t("app.auth.login.page.form.email.label")}
-					placeholder={t("app.auth.login.page.form.email.placeholder")}
+					label={t("components.auth.form.email.label")}
+					placeholder={t("components.auth.form.email.placeholder")}
 					control={form.control}
 					name="email"
 					type="email"
 				/>
 				<AuthField
-					label={t("app.auth.login.page.form.password.label")}
-					placeholder={t("app.auth.login.page.form.password.placeholder")}
+					label={t("components.auth.form.password.label")}
+					placeholder={t("components.auth.form.password.placeholder")}
 					control={form.control}
 					name="password"
 					type="password"
 				/>
 				<AuthField
-					label={t("app.auth.register.page.form.confirmPassword.label")}
-					placeholder={t("app.auth.register.page.form.confirmPassword.placeholder")}
+					label={t("components.auth.form.confirmPassword.label")}
+					placeholder={t("components.auth.form.confirmPassword.placeholder")}
 					control={form.control}
 					name="passwordConfirmation"
 					type="password"
 				/>
 				<AuthField
-					label={t("app.auth.register.page.form.image.label")}
+					label={t("components.auth.form.image.label")}
 					control={form.control}
 					name="image"
 					type="file"
 					fieldType="image"
 				/>
-				<AuthButton isLoading={loading} label={t("app.auth.register.page.button.submit")} />
+				<AuthButton isLoading={loading} label={t("button.register")} />
 			</AuthForm>
 		</AuthCard>
 	);

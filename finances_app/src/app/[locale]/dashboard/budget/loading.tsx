@@ -1,22 +1,23 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+"use client";
+
+import { Loader2 } from "lucide-react";
+import { useI18n } from "@/locales/client";
 
 export default function Loading() {
+	const t = useI18n();
 	return (
-		<div className="flex flex-col xl:flex-row gap-6">
-			<Card className="w-full">
-				<CardHeader className="space-y-2">
-					<Skeleton className="h-6 w-20 dark:bg-zinc-700 bg-zinc-300" />
-					<Skeleton className="h-4 w-48 dark:bg-zinc-700 bg-zinc-300" />
-				</CardHeader>
-				<CardContent className="grid gap-4">
-					<Card className="p-2 flex flex-row">
-						<Skeleton className="w-1/3 h-96 dark:bg-zinc-700 bg-zinc-300" />
-						<Skeleton className="w-1/3 h-96 dark:bg-zinc-700 bg-zinc-300" />
-						<Skeleton className="w-1/3 h-96 dark:bg-zinc-700 bg-zinc-300" />
-					</Card>
-				</CardContent>
-			</Card>
-		</div>
+		<section className="w-full">
+			<article className="mx-auto py-4 flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10">
+				<Loader2 className="h-6 w-6 animate-spin text-primary" />
+			</article>
+			<article className="text-center py-4">
+				<h2 className="text-2xl font-bold">
+					{t("components.suspense.fallback.title")}
+				</h2>
+				<h3 className="text-sm opacity-60">
+					{t("components.suspense.fallback.description")}
+				</h3>
+			</article>
+		</section>
 	);
 }

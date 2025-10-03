@@ -1,30 +1,43 @@
 "use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { useMemo, useState } from "react";
+import Account from "@/app/[locale]/dashboard/settings/_components/_parts/account";
+import Appearance from "@/app/[locale]/dashboard/settings/_components/_parts/appearance";
 import {
 	SidebarContent,
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarMenu,
-	SidebarMenuItem,
 	SidebarMenuButton,
+	SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useState } from "react";
 import { useI18n } from "@/locales/client";
-import Appearance from "@/components/settings/appearance";
-import Account from "@/components/settings/account";
-import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Page() {
 	const t = useI18n();
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const [settingItemSelected, setSettingItemSelected] = useState<string>(
-		searchParams.get("selected") || "appearance",
+
+	const items = useMemo(
+		() => [
+			{
+				title: t("components.items.appearance.title"),
+				key: "appearance",
+				component: <Appearance />,
+			},
+			{
+				title: t("components.items.account.title"),
+				key: "account",
+				component: <Account />,
+			},
+		],
+		[t],
 	);
 
-	const items = [
-		{ title: t("app.dashboard.settings.page.items.appearance.title"), key: "appearance" },
-		{ title: t("app.dashboard.settings.page.items.account.title"), key: "account" },
-	];
+	const [settingItemSelected, setSettingItemSelected] = useState<string>(
+		searchParams.get("selected") ?? items[0].key,
+	);
 
 	return (
 		<section className="md:grid md:grid-cols-5 md:p-6">
@@ -37,13 +50,15 @@ export default function Page() {
 									<SidebarMenuItem key={item.key}>
 										<SidebarMenuButton
 											asChild
-											variant={"primary"}
+											variant={"default"}
 											isActive={settingItemSelected === item.key}
 											onClick={() => {
 												setSettingItemSelected(item.key);
 												const params = new URLSearchParams(searchParams);
 												params.set("selected", item.key);
-												router.replace(`?${params.toString()}`);
+												router.replace(`?${params.toString()}`, {
+													scroll: false,
+												});
 											}}
 										>
 											<span>{item.title}</span>
@@ -56,8 +71,11 @@ export default function Page() {
 				</SidebarContent>
 			</aside>
 			<section className="md:col-span-4 px-6">
-				{settingItemSelected === "account" && <Account />}
-				{settingItemSelected === "appearance" && <Appearance />}
+				{items?.map((item) => (
+					<div key={item.key}>
+						{settingItemSelected === item.key && item.component}
+					</div>
+				))}
 			</section>
 		</section>
 	);

@@ -1,6 +1,6 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import type { Metadata } from "next";
+import { AppSidebar } from "@/app/[locale]/dashboard/_components/_sidebar/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { getI18n } from "@/locales/server";
 
 export async function generateMetadata(): Promise<Metadata> {

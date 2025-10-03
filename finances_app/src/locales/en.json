@@ -1,0 +1,514 @@
+{
+  "button": {
+    "register": "Create an account",
+    "login": "Log in",
+    "google": "Google",
+    "github": "Github",
+    "send": "Send",
+    "update": "Update",
+    "logOut": "Log Out",
+    "settings": "Parameters",
+    "updatePassword": "Update your password",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "submit": "Submit",
+    "ban": "Banishment",
+    "choice": "Choose",
+    "no": "No",
+    "yes": "Yes",
+    "unban": "Unban",
+    "accueil": "Return to reception",
+    "reset": "Reset",
+    "addRecipe": "Add the recipe",
+    "liked": "Liked",
+    "like": "Like",
+    "premium": "Become Premium",
+    "currentPlan": "Current plan",
+    "plan": "Plan",
+    "cancelPlan": "Cancel my subscription",
+    "restorePlan": "Restore my subscription",
+    "choose": "Choose",
+    "discoverBudget": "Discover my budget",
+    "saveChange": "Save changes",
+    "addIncome": "Add an income source",
+    "add": "Add"
+  },
+  "components": {
+    "utils": {
+      "selectLang": {
+        "fr": "French",
+        "en": "English",
+        "select": "Choose a language"
+      },
+      "themeColor": {
+        "color": {
+          "default": "Default",
+          "red": "Red",
+          "rose": "Pink",
+          "orange": "Orange",
+          "green": "Green",
+          "blue": "Blue",
+          "yellow": "Yellow",
+          "violet": "Purple"
+        },
+        "placeholder": "Choose a color"
+      },
+      "inputIcon": {
+        "label": "Icon",
+        "placeholder": "Search an icon(s)...",
+        "noResults": "No corresponding icon(s)."
+      }
+    },
+    "auth": {
+      "form": {
+        "email": {
+          "label": "E-mail address",
+          "placeholder": "m@example.com"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "password"
+        },
+        "image": {
+          "label": "Profile image (optional)"
+        },
+        "firstName": {
+          "label": "First name",
+          "placeholder": "Max"
+        },
+        "lastName": {
+          "label": "Last name",
+          "placeholder": "Smith"
+        },
+        "confirmPassword": {
+          "label": "Confirm the password",
+          "placeholder": "confirm the password"
+        },
+        "newPassword": {
+          "placeholder": "new password",
+          "label": "New Password"
+        },
+        "confirmNewPassword": {
+          "label": "Confirm the new password",
+          "placeholder": "new Password"
+        },
+        "currentPassword": {
+          "label": "Current password",
+          "placeholder": "current password"
+        },
+        "newPasswordConfirmation": {
+          "label": "Confirm the new password",
+          "placeholder": "new password"
+        }
+      },
+      "login": {
+        "title": "Log in",
+        "description": "Enter your information below to access your account.",
+        "orSocial": "OR CONTINUE WITH"
+      },
+      "link": {
+        "forgotPassword": "Forgot password?",
+        "login": "Have you found your password? ",
+        "noAccount": "Don't have an account? ",
+        "haveAccount": "Already registered? "
+      },
+      "forgetPassword": {
+        "description": "Enter your email address and we will send you a link to reset your password.",
+        "title": "Forgot password?",
+        "toast": {
+          "success": "E-mail successfully send!"
+        }
+      },
+      "register": {
+        "title": "Create an account",
+        "description": "Enter your information to create your account."
+      },
+      "resetPassword": {
+        "title": "Modify your password",
+        "description": "Enter your information to change your password.",
+        "toast": {
+          "success": "Password modify successfully!"
+        }
+      }
+    },
+    "appSideBar": {
+      "budget": "Budget",
+      "subscription": "Subscriptions"
+    },
+    "items": {
+      "appearance": {
+        "title": "Appearance"
+      },
+      "account": {
+        "title": "Account"
+      }
+    },
+    "settings": {
+      "toast": {
+        "emailSuccess": "Email address successfully modify!",
+        "nameOrImageSuccess": "First name last name and/or image modify successfully!"
+      },
+      "form": {
+        "language": {
+          "label": "Language",
+          "description": "Choose the language you want to use in the dashboard."
+        },
+        "darkMode": {
+          "label": "Theme",
+          "description": "Choose the theme you want to use in the dashboard."
+        },
+        "themeColor": {
+          "label": "Color",
+          "description": "Choose the color you want to use in the dashboard."
+        },
+        "changePassword": {
+          "label": "Change your password",
+          "description": "Click on this button to define a new password.",
+          "confirmTitle": "Modify your password",
+          "confirmDescription": "Enter your information to change your password."
+        }
+      },
+      "items": {
+        "appearance": {
+          "title": "Appearance",
+          "description": "Choose your favorite language, color and theme."
+        },
+        "account": {
+          "title": "Account",
+          "description": "Update your account settings."
+        }
+      }
+    },
+    "suspense": {
+      "fallback": {
+        "title": "Loading...",
+        "description": "Loading the requested information!"
+      }
+    },
+    "error": {
+      "fallback": {
+        "title": "Loading error",
+        "description": "Unable to load the requested information!",
+        "reload": "Try again"
+      }
+    }
+  },
+  "seo": {
+    "layout": {
+      "app": {
+        "title": "MyBudget",
+        "description": "A modern application for managing your budget.",
+        "keywords": {
+          "budget": "Budget",
+          "expenses": "Expenses",
+          "incomes": "Incomes",
+          "investment": "Investment",
+          "subscription": "Subscriptions"
+        }
+      },
+      "forgotPassword": {
+        "title": "Forgot Password",
+        "description": "Easily reset your password to securely access your account.",
+        "keywords": {
+          "security": "Security",
+          "password": "Password",
+          "reset": "Reset",
+          "account": "Account",
+          "access": "Login"
+        }
+      },
+      "login": {
+        "title": "Login",
+        "description": "Log in to your account to easily manage your personal finances.",
+        "keywords": {
+          "login": "Login",
+          "account": "Account",
+          "secure": "Security",
+          "authentication": "Authentication",
+          "access": "Access"
+        }
+      },
+      "register": {
+        "title": "Register",
+        "description": "Create a free account to start managing your budget effectively.",
+        "keywords": {
+          "register": "Register",
+          "account": "Account",
+          "create": "Create",
+          "budget": "Budget",
+          "start": "Start"
+        }
+      },
+      "resetPassword": {
+        "title": "Reset Password",
+        "description": "Choose a new password to secure access to your account.",
+        "keywords": {
+          "reset": "Reset",
+          "password": "Password",
+          "security": "Security",
+          "account": "Account",
+          "new": "New password"
+        }
+      },
+      "dashboard": {
+        "title": "Dashboard",
+        "description": "View and analyze your expenses, incomes, and subscriptions all in one place.",
+        "keywords": {
+          "dashboard": "Dashboard",
+          "budget": "Budget",
+          "expenses": "Expenses",
+          "incomes": "Incomes",
+          "subscriptions": "Subscriptions"
+        }
+      },
+      "subscription": {
+        "title": "Subscriptions",
+        "description": "Manage all your subscriptions and track their renewal dates easily.",
+        "keywords": {
+          "subscription": "Subscriptions",
+          "manage": "Manage",
+          "billing": "Billing",
+          "renewal": "Renewal",
+          "services": "Services"
+        }
+      },
+      "settings": {
+        "title": "Settings",
+        "description": "Customize your experience and manage your account preferences.",
+        "keywords": {
+          "settings": "Settings",
+          "preferences": "Preferences",
+          "account": "Account",
+          "customization": "Customization",
+          "security": "Security"
+        }
+      },
+      "budget": {
+        "title": "Budget",
+        "description": "Track and plan your incomes, expenses, and savings for better financial management.",
+        "keywords": {
+          "budget": "Budget",
+          "expenses": "Expenses",
+          "incomes": "Incomes",
+          "savings": "Savings",
+          "planning": "Planning"
+        }
+      }
+    }
+  },
+  "zod": {
+    "min": {
+      "password": "The password must contain at least 6 characters.",
+      "firstName": "Compulsory first name!",
+      "lastName": "Compulsory name!",
+      "banReason": "Reason for compulsory banishment!",
+      "banExpires": "Mandatory ban duration!"
+    },
+    "password": {
+      "mismatch": "Passwords do not match!"
+    },
+    "email": "No valid e-mail!",
+    "space": "No authorized space!"
+  },
+  "BASE_ERROR_CODES": {
+    "VALIDATION_ERROR": "Validation error.",
+    "USER_NOT_FOUND": "User not found.",
+    "FAILED_TO_CREATE_USER": "Failed to create user.",
+    "FAILED_TO_CREATE_SESSION": "Failed to create session.",
+    "FAILED_TO_UPDATE_USER": "Failed to update user.",
+    "FAILED_TO_GET_SESSION": "Failed to retrieve session.",
+    "INVALID_PASSWORD": "Invalid password.",
+    "INVALID_EMAIL": "Invalid email address.",
+    "INVALID_EMAIL_OR_PASSWORD": "Incorrect email or password.",
+    "SOCIAL_ACCOUNT_ALREADY_LINKED": "This social account is already linked to a user.",
+    "PROVIDER_NOT_FOUND": "Provider not found.",
+    "INVALID_TOKEN": "Invalid token.",
+    "ID_TOKEN_NOT_SUPPORTED": "ID token not supported.",
+    "FAILED_TO_GET_USER_INFO": "Failed to retrieve user information.",
+    "USER_EMAIL_NOT_FOUND": "User email address not found.",
+    "EMAIL_NOT_VERIFIED": "Email address not verified.",
+    "PASSWORD_TOO_SHORT": "Password is too short.",
+    "PASSWORD_TOO_LONG": "Password is too long.",
+    "USER_ALREADY_EXISTS": "User already exists.",
+    "EMAIL_CAN_NOT_BE_UPDATED": "Email address cannot be updated.",
+    "CREDENTIAL_ACCOUNT_NOT_FOUND": "Credential account not found.",
+    "SESSION_EXPIRED": "Session expired. Please log in again.",
+    "FAILED_TO_UNLINK_LAST_ACCOUNT": "Cannot unlink the last connected account.",
+    "ACCOUNT_NOT_FOUND": "Account not found.",
+    "EMAIL_IS_THE_SAME": "Same Email address.",
+    "undefined": "An unexpected error has occurred!",
+    "BANNED_USER": "User ban!"
+  },
+  "heroPage": {
+    "title": {
+      "firstPart": "Manage your Finances with ",
+      "secondPart": "MyBudget"
+    },
+    "description": "Your personal app to track, organize, and optimize your finances every day.",
+    "badge": "Private app",
+    "features": {
+      "sankey": "Visualize your budget with interactive charts",
+      "calendar": "Easily track your expenses and income"
+    }
+  },
+  "app": {
+    "dashboard": {
+      "settings": {
+        "layout": {
+          "title": "Parameters",
+          "description": "Manage the parameters and preferences of your account."
+        }
+      }
+    }
+  },
+  "budget": {
+    "layout": {
+      "title": "Budget",
+      "description": "Visually manage the distribution of your expenses."
+    },
+    "components": {
+      "budgetChart": {
+        "delete": {
+          "title": "Deletion of your budget",
+          "description": "Are you sure you want to delete your budget? This action is irreversible and all associated data will be lost."
+        },
+        "remainingAmount": {
+          "positive": "You have {amount} to spend or invest this month.",
+          "negative": "You have exceeded your budget for {amount} this month."
+        }
+      },
+      "budgetSheet": {
+        "update": {
+          "title": "Modification of your budget.",
+          "description": "You can now easily change your budget."
+        }
+      },
+      "budgetManage": {
+        "tabs": {
+          "incomes": "Incomes",
+          "expenses": "Expenses"
+        },
+        "title": {
+          "income": "Incomes",
+          "expense": "Expenses"
+        },
+        "description": {
+          "income": "Subscribe your various income.",
+          "expense": "Register your different expenses."
+        },
+        "form": {
+          "name": {
+            "label": "Name"
+          },
+          "amount": {
+            "label": "Amount"
+          },
+          "categoryName": {
+            "label": "Category name"
+          }
+        },
+        "button": {
+          "addExpense": "Add a source of expense"
+        }
+      }
+    }
+  },
+  "toast": {
+    "success": {
+      "deleteSankey": "Budget successfully delete!",
+      "updateSankey": "Budget update successfully!",
+      "createSankey": "Budget create successfully!",
+      "updateSubscription": "Subscription to modify successfully!",
+      "createSubscription": "Subscription create successfully!",
+      "deleteSubscription": "Subscription successfully delete!"
+    },
+    "error": "An error occurred!",
+    "loading": {
+      "deleteSankey": "Deletion of your budget ...",
+      "deleteSubscription": "Deletion of your subscription ..."
+    }
+  },
+  "action": {
+    "budget": {
+      "form": {
+        "validateField": "Validation error. \nPlease correct the fields.",
+        "id": "ID Invalid!",
+        "name": "Please enter a valid name",
+        "amount": "Please enter a valid amount"
+      }
+    },
+    "subscription": {
+      "form": {
+        "name": "Please enter a valid name",
+        "amount": "Please enter a valid amount",
+        "recurrence": "Please enter valid recurrence",
+        "executionDate": "Please enter a valid execution date",
+        "icon": "Please enter a valid icon"
+      }
+    }
+  },
+  "addCategoryExpense": "Add a category of expense",
+  "subscription": {
+    "components": {
+      "subscriptionManage": {
+        "add": {
+          "title": "Adding a new subscription.",
+          "description": "You can now easily add a subscription."
+        },
+        "update": {
+          "title": "Modification of your subscription.",
+          "description": "You can now easily change your subscription."
+        },
+        "form": {
+          "name": {
+            "label": "Name"
+          },
+          "amount": {
+            "label": "Amount"
+          },
+          "recurrence": {
+            "label": "Recurrence",
+            "monthly": "Monthly",
+            "annually": "Annually"
+          },
+          "executionDate": {
+            "label": "Execution date"
+          }
+        }
+      },
+      "subscriptionCalendar": {
+        "title": "Calendar",
+        "description": "Visualize your subscriptions by date."
+      },
+      "subscriptionList": {
+        "badge": {
+          "annually": "Annually",
+          "monthly": "Monthly"
+        },
+        "delete": {
+          "title": "Deletion of your subscription",
+          "description": "Are you sure you want to delete your subscription? This action is irreversible and all associated data will be lost."
+        },
+        "empty": {
+          "title": "No subscription",
+          "description": "No subscription provided for this date."
+        },
+        "totalMonthly": "Monthly total:",
+        "totalAnnually": "Annual total:",
+        "tabs": {
+          "day": "Day",
+          "all": "All",
+          "annually": "Annually",
+          "monthly": "Monthly"
+        },
+        "title": "Your subscriptions",
+        "description": "Manage the distribution of your subscriptions."
+      }
+    },
+    "layout": {
+      "title": "Subscription",
+      "description": "Visually manage the distribution of your subscriptions."
+    }
+  }
+}

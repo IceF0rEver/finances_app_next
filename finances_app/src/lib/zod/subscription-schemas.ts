@@ -1,16 +1,21 @@
 import { z } from "zod";
-// biome-ignore lint: any
-export const subscriptionSchemas = (t: (...args: Parameters<(key: string, ...params: any[]) => string>) => string) => ({
+import type { useI18n } from "@/locales/client";
+export const subscriptionSchemas = (t: ReturnType<typeof useI18n>) => ({
 	subscription: z.object({
 		id: z.string().optional(),
 		name: z.string().min(1, { message: t("action.subscription.form.name") }),
-		amount: z.coerce.number().min(0, { message: t("action.subscription.form.amount") }),
+		amount: z.coerce
+			.number()
+			.min(0, { message: t("action.subscription.form.amount") }),
 		recurrence: z.string({ message: t("action.subscription.form.recurrence") }),
-		executionDate: z.date({ message: t("action.subscription.form.executionDate") }),
+		executionDate: z.union([
+			z.date({ message: t("action.subscription.form.executionDate") }),
+			z.string({ message: t("action.subscription.form.executionDate") }),
+		]),
 		icon: z.string({ message: t("action.subscription.form.icon") }),
-		userId: z.string({ message: t("action.subscription.form.id") }),
+		userId: z.string(),
 	}),
 	deleteSubscription: z.object({
-		id: z.string({ message: t("action.subscription.form.id") }),
+		id: z.string().min(1),
 	}),
 });

@@ -1,16 +1,26 @@
-import SubscriptionPage from "@/components/subscription/subscription-page";
-import { getUser } from "@/lib/server";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import SubscriptionPage from "@/app/[locale]/dashboard/subscription/_components/subscription-page";
+import { getUser } from "@/lib/auth/server";
 import { getCachedSubscriptions } from "@/lib/caches/subscription-cache";
-import EmptyUser from "@/components/dashboard/page/empty-user";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: error name
+import Error from "./error";
+import Loading from "./loading";
 
 export default async function Page() {
 	const user = await getUser();
 
 	if (!user?.id) {
-		return <EmptyUser />;
+		return <Error />;
 	}
 
-	const subscriptions = await getCachedSubscriptions(user?.id);
+	const subscriptions = getCachedSubscriptions(user.id);
 
-	return <SubscriptionPage datas={subscriptions} />;
+	return (
+		<ErrorBoundary fallback={<Error />}>
+			<Suspense fallback={<Loading />}>
+				<SubscriptionPage subscriptionDatas={subscriptions} />
+			</Suspense>
+		</ErrorBoundary>
+	);
 }

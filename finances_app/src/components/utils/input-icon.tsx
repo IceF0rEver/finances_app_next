@@ -1,14 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useDebounce } from "use-debounce";
-import { Search, X } from "lucide-react";
 import { Icon } from "@iconify/react";
 import { icons as iconsLucide } from "@iconify-json/lucide";
 import { icons as iconsSimple } from "@iconify-json/simple-icons";
-import { Input } from "@/components/ui/input";
+import { Search, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 import { Button } from "@/components/ui/button";
-import { FormControl, FormDescription, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+	FormControl,
+	FormDescription,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useI18n } from "@/locales/client";
 
 interface InputIconProps {
@@ -19,7 +25,13 @@ interface InputIconProps {
 	placeholder?: string;
 }
 
-export default function InputIcon({ value = "", onChange, label, description, placeholder }: InputIconProps) {
+export default function InputIcon({
+	value = "",
+	onChange,
+	label,
+	description,
+	placeholder,
+}: InputIconProps) {
 	const t = useI18n();
 	const simpleIcons = Object.entries(iconsSimple.icons).map(([name, icon]) => ({
 		key: "simple-icons",
@@ -36,8 +48,13 @@ export default function InputIcon({ value = "", onChange, label, description, pl
 	const allIcons = [...simpleIcons, ...LucideIcons];
 
 	const [searchInput, setSearchInput] = useState<string>("");
-	const [allIconsFiltered, setAllIconsFiltered] = useState([...allIcons.slice(0, 24)]);
-	const [selectedIcon, setSelectedIcon] = useState<{ key: string; name: string } | null>(null);
+	const [allIconsFiltered, setAllIconsFiltered] = useState([
+		...allIcons.slice(0, 24),
+	]);
+	const [selectedIcon, setSelectedIcon] = useState<{
+		key: string;
+		name: string;
+	} | null>(null);
 
 	useEffect(() => {
 		if (value?.includes(":")) {
@@ -55,7 +72,11 @@ export default function InputIcon({ value = "", onChange, label, description, pl
 			setAllIconsFiltered([...allIcons.slice(0, 24)]);
 		} else {
 			const query = searchQuery.toLowerCase();
-			setAllIconsFiltered([...allIcons.filter((icon) => icon.name.toLowerCase().includes(query)).slice(0, 24)]);
+			setAllIconsFiltered([
+				...allIcons
+					.filter((icon) => icon.name.toLowerCase().includes(query))
+					.slice(0, 24),
+			]);
 		}
 	};
 
@@ -94,7 +115,10 @@ export default function InputIcon({ value = "", onChange, label, description, pl
 						</div>
 					) : (
 						<div className="flex items-center gap-2 p-1 h-[36px] border rounded-md">
-							<Icon icon={`${selectedIcon.key}:${selectedIcon.name}`} className="size-5 text-primary" />
+							<Icon
+								icon={`${selectedIcon.key}:${selectedIcon.name}`}
+								className="size-5 text-primary"
+							/>
 							<Button
 								variant="ghost"
 								size="icon"
@@ -122,9 +146,14 @@ export default function InputIcon({ value = "", onChange, label, description, pl
 									key={`${item.key}:${item.name}`}
 									type="button"
 									className="flex flex-col items-center justify-center p-2 rounded-md hover:bg-muted transition-colors"
-									onClick={() => handleIconSelect({ key: item.key, name: item.name })}
+									onClick={() =>
+										handleIconSelect({ key: item.key, name: item.name })
+									}
 								>
-									<Icon icon={`${item.key}:${item.name}`} className="size-6 text-primary" />
+									<Icon
+										icon={`${item.key}:${item.name}`}
+										className="size-6 text-primary"
+									/>
 								</button>
 							))}
 						</div>
