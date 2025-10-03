@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import type { ReactElement } from "react";
+import type { ReactNode } from "react";
 import ThemeColorProvider from "@/components/providers/theme-color-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -74,7 +74,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 type RootLayoutProps = {
 	params: Promise<{ locale: string }>;
-	children: ReactElement;
+	children: ReactNode;
 };
 export default async function RootLayout({
 	params,
