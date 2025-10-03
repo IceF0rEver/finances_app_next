@@ -2,14 +2,13 @@
 
 import { revalidatePath, revalidateTag } from "next/cache";
 import z from "zod";
-import { PrismaClient, type User } from "@/generated/prisma";
+import type { User } from "@/generated/prisma";
 import { Decimal } from "@/generated/prisma/runtime/library";
 import { getUser } from "@/lib/auth/server";
+import prisma from "@/lib/prisma";
 import { budgetSchemas } from "@/lib/zod/budget-schemas";
 import { getI18n } from "@/locales/server";
 import type { sankeyParams } from "../_types/budget-types";
-
-const prisma = new PrismaClient();
 
 interface SankeyState {
 	success?: boolean;
