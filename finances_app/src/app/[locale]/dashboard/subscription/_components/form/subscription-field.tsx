@@ -1,19 +1,30 @@
 "use client";
 
-import { FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
+import { enUS, fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import type { FieldValues } from "react-hook-form";
+import type { SubscriptionFieldProps } from "@/app/[locale]/dashboard/subscription/_components/_types/subscription-types";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import InputIcon from "@/components/utils/input-icon";
 import { cn } from "@/lib/utils";
 import { useCurrentLocale } from "@/locales/client";
-import { enUS, fr } from "date-fns/locale";
-import InputIcon from "@/components/utils/input-icon";
-import type { SubscriptionFieldProps } from "@/types/subscription-types";
 
 export default function SubscriptionField<T extends FieldValues>({
 	label,
@@ -43,7 +54,10 @@ export default function SubscriptionField<T extends FieldValues>({
 									className={cn(className)}
 								>
 									{datas?.map((item: { label: string; value: string }) => (
-										<FormItem className="flex items-center gap-1" key={item.value}>
+										<FormItem
+											className="flex items-center gap-1"
+											key={item.value}
+										>
 											<FormControl>
 												<RadioGroupItem value={item.value} />
 											</FormControl>
@@ -68,7 +82,9 @@ export default function SubscriptionField<T extends FieldValues>({
 											type="button"
 											className="w-full text-start font-normal text-muted-foreground"
 										>
-											<span>{field.value ? format(field.value, "yyyy-MM-dd") : ""}</span>
+											<span>
+												{field.value ? format(field.value, "yyyy-MM-dd") : ""}
+											</span>
 											<CalendarIcon className="ms-auto h-4 w-4 opacity-50" />
 										</Button>
 									</FormControl>
@@ -103,7 +119,12 @@ export default function SubscriptionField<T extends FieldValues>({
 						<FormItem>
 							{label && <FormLabel>{label}</FormLabel>}
 							<FormControl>
-								<Input placeholder={placeholder} type={type} {...field} className={cn(className)} />
+								<Input
+									placeholder={placeholder}
+									type={type}
+									{...field}
+									className={cn(className)}
+								/>
 							</FormControl>
 							{description && <FormDescription>{description}</FormDescription>}
 							<FormMessage />

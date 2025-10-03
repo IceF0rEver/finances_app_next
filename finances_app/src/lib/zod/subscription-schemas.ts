@@ -8,13 +8,14 @@ export const subscriptionSchemas = (t: ReturnType<typeof useI18n>) => ({
 			.number()
 			.min(0, { message: t("action.subscription.form.amount") }),
 		recurrence: z.string({ message: t("action.subscription.form.recurrence") }),
-		executionDate: z.date({
-			message: t("action.subscription.form.executionDate"),
-		}),
+		executionDate: z.union([
+			z.date({ message: t("action.subscription.form.executionDate") }),
+			z.string({ message: t("action.subscription.form.executionDate") }),
+		]),
 		icon: z.string({ message: t("action.subscription.form.icon") }),
-		userId: z.string({ message: t("action.subscription.form.id") }),
+		userId: z.string(),
 	}),
 	deleteSubscription: z.object({
-		id: z.string({ message: t("action.subscription.form.id") }),
+		id: z.string().min(1),
 	}),
 });

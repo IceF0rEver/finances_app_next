@@ -82,4 +82,7 @@ export const authSchemas = (t: ReturnType<typeof useI18n>) => ({
 	unBanUser: z.object({
 		userId: z.string().min(1),
 	}),
+	getWithUserId: z.object({
+		userId: z.string().min(1),
+	}),
 });

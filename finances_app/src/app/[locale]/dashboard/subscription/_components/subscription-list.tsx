@@ -1,16 +1,25 @@
 "use client";
 
-import { Card, CardTitle, CardDescription, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
-import { useI18n } from "@/locales/client";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { CalendarX, PlusCircle } from "lucide-react";
-import type { subscriptionParams } from "@/types/subscription-types";
 import { useEffect, useState } from "react";
+import type {
+	SubscriptionListProps,
+	subscriptionParams,
+} from "@/app/[locale]/dashboard/subscription/_components/_types/subscription-types";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { calendarCheckDate } from "@/lib/utils";
+import { useI18n } from "@/locales/client";
 import SubscriptionListItem from "./subscription-list-item";
 import SubscriptionManage from "./subscription-manage";
-import type { SubscriptionListProps } from "@/types/subscription-types";
 
 const TotalAmount = ({ label, amount }: { label: string; amount: string }) => {
 	return (
@@ -21,10 +30,17 @@ const TotalAmount = ({ label, amount }: { label: string; amount: string }) => {
 	);
 };
 
-export default function SubscriptionList({ datas, date }: SubscriptionListProps) {
+export default function SubscriptionList({
+	datas,
+	date,
+}: SubscriptionListProps) {
 	const t = useI18n();
-	const [activeTab, setActiveTab] = useState<"this-day" | "all" | "annually" | "monthly">("this-day");
-	const [filtredDatas, setFiltredDatas] = useState<subscriptionParams[]>([...datas]);
+	const [activeTab, setActiveTab] = useState<
+		"this-day" | "all" | "annually" | "monthly"
+	>("this-day");
+	const [filtredDatas, setFiltredDatas] = useState<subscriptionParams[]>([
+		...datas,
+	]);
 	const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 
@@ -48,10 +64,14 @@ export default function SubscriptionList({ datas, date }: SubscriptionListProps)
 				setFiltredDatas([...datas]);
 				break;
 			case "annually":
-				setFiltredDatas([...datas.filter((item) => item.recurrence === "annually")]);
+				setFiltredDatas([
+					...datas.filter((item) => item.recurrence === "annually"),
+				]);
 				break;
 			case "monthly":
-				setFiltredDatas([...datas.filter((item) => item.recurrence === "monthly")]);
+				setFiltredDatas([
+					...datas.filter((item) => item.recurrence === "monthly"),
+				]);
 				break;
 			default:
 				setFiltredDatas([...datas]);
@@ -60,7 +80,9 @@ export default function SubscriptionList({ datas, date }: SubscriptionListProps)
 	};
 
 	const totalMonthly = () => {
-		return datas.filter((sub) => sub.recurrence === "monthly").reduce((sum, sub) => sum + Number(sub.amount), 0);
+		return datas
+			.filter((sub) => sub.recurrence === "monthly")
+			.reduce((sum, sub) => sum + Number(sub.amount), 0);
 	};
 
 	const totalAnnual = () => {
@@ -72,15 +94,19 @@ export default function SubscriptionList({ datas, date }: SubscriptionListProps)
 	};
 	return (
 		<Card>
-			<SubscriptionManage sheetOpen={isSheetOpen} onSheetOpen={setIsSheetOpen} status={isEdit} />
+			<SubscriptionManage
+				sheetOpen={isSheetOpen}
+				onSheetOpen={setIsSheetOpen}
+				status={isEdit}
+			/>
 			<CardHeader>
 				<div className="flex items-center justify-between">
 					<div>
 						<CardTitle className="text-2xl font-bold">
-							{t("app.dashboard.subscription.components.subscriptionList.title")}
+							{t("subscription.components.subscriptionList.title")}
 						</CardTitle>
 						<CardDescription>
-							{t("app.dashboard.subscription.components.subscriptionList.description")}
+							{t("subscription.components.subscriptionList.description")}
 						</CardDescription>
 					</div>
 					<Button
@@ -91,7 +117,7 @@ export default function SubscriptionList({ datas, date }: SubscriptionListProps)
 						className="flex items-center gap-1.5"
 					>
 						<PlusCircle />
-						<span>{t("app.dashboard.subscription.components.subscriptionList.button.add")}</span>
+						<span>{t("button.add")}</span>
 					</Button>
 				</div>
 				<Tabs
@@ -101,16 +127,16 @@ export default function SubscriptionList({ datas, date }: SubscriptionListProps)
 				>
 					<TabsList className="flex grid-cols-4 w-full">
 						<TabsTrigger value="this-day">
-							{t("app.dashboard.subscription.components.subscriptionList.tabs.thisDay")}
+							{t("subscription.components.subscriptionList.tabs.day")}
 						</TabsTrigger>
 						<TabsTrigger value="all">
-							{t("app.dashboard.subscription.components.subscriptionList.tabs.all")}
+							{t("subscription.components.subscriptionList.tabs.all")}
 						</TabsTrigger>
 						<TabsTrigger value="annually">
-							{t("app.dashboard.subscription.components.subscriptionList.tabs.annually")}
+							{t("subscription.components.subscriptionList.tabs.annually")}
 						</TabsTrigger>
 						<TabsTrigger value="monthly">
-							{t("app.dashboard.subscription.components.subscriptionList.tabs.monthly")}
+							{t("subscription.components.subscriptionList.tabs.monthly")}
 						</TabsTrigger>
 					</TabsList>
 				</Tabs>
@@ -130,10 +156,12 @@ export default function SubscriptionList({ datas, date }: SubscriptionListProps)
 						<div className="mx-auto flex flex-col items-center justify-center">
 							<CalendarX className="size-12 text-muted-foreground" />
 							<h3 className="mt-4 text-lg font-medium">
-								{t("app.dashboard.subscription.components.subscriptionList.empty.title")}
+								{t("subscription.components.subscriptionList.empty.title")}
 							</h3>
 							<p className="mt-2 text-sm text-muted-foreground">
-								{t("app.dashboard.subscription.components.subscriptionList.empty.description")}
+								{t(
+									"subscription.components.subscriptionList.empty.description",
+								)}
 							</p>
 						</div>
 					</div>
@@ -141,11 +169,11 @@ export default function SubscriptionList({ datas, date }: SubscriptionListProps)
 			</CardContent>
 			<CardFooter className="flex-col border-t pt-6 px-6">
 				<TotalAmount
-					label={t("app.dashboard.subscription.components.subscriptionList.totalMonthly")}
+					label={t("subscription.components.subscriptionList.totalMonthly")}
 					amount={totalMonthly().toFixed(2)}
 				/>
 				<TotalAmount
-					label={t("app.dashboard.subscription.components.subscriptionList.totalAnnually")}
+					label={t("subscription.components.subscriptionList.totalAnnually")}
 					amount={totalAnnual().toFixed(2)}
 				/>
 			</CardFooter>

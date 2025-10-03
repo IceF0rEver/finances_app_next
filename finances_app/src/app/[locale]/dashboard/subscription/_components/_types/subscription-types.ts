@@ -1,5 +1,5 @@
 import type { Decimal } from "@prisma/client/runtime/library";
-import type { FieldValues, Control, FieldPath } from "react-hook-form";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 
 export interface subscriptionParams {
 	id?: string;
@@ -13,7 +13,7 @@ export interface subscriptionParams {
 }
 
 export interface SubscriptionPageProps {
-	datas: subscriptionParams[];
+	subscriptionDatas: Promise<{ subscriptions: subscriptionParams[] | [] }>;
 }
 
 export interface SubscriptionManageProps {
