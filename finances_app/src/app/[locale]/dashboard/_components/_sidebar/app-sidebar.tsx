@@ -21,6 +21,13 @@ import { useSession } from "@/lib/auth/auth-client";
 import { useI18n } from "@/locales/client";
 import { NavUser } from "./nav-user";
 
+interface NavItem {
+	title: string;
+	url: string;
+	icon: React.ReactNode;
+	items?: NavItem[];
+}
+
 const NavUserSkeleton = () => {
 	return (
 		<div className="flex flex-row gap-1 w-full h-12 rounded-lg dark:bg-zinc-800 bg-zinc-200 p-2">
@@ -39,7 +46,7 @@ export function AppSidebar() {
 	const pathname = usePathname();
 
 	const dataSideBar = useMemo(
-		() => ({
+		(): { navMain: NavItem[] } => ({
 			navMain: [
 				{
 					title: t("components.appSideBar.budget"),
@@ -80,7 +87,7 @@ export function AppSidebar() {
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarMenu className="p-1">
-					{dataSideBar.navMain.map((item) =>
+					{dataSideBar.navMain.map((item) => (
 						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton
 								asChild
@@ -114,7 +121,7 @@ export function AppSidebar() {
 								</SidebarMenuSub>
 							) : null}
 						</SidebarMenuItem>
-					)}
+					))}
 				</SidebarMenu>
 			</SidebarContent>
 			<SidebarFooter>
