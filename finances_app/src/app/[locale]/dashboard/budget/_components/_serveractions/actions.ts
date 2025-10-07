@@ -4,7 +4,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import z from "zod";
 import type { User } from "@/generated/prisma";
 import { Decimal } from "@/generated/prisma/runtime/library";
-import { getUser } from "@/lib/auth/server";
+import { getCachedUser } from "@/lib/caches/auth-cache";
 import prisma from "@/lib/prisma";
 import { budgetSchemas, sankeyTableSchema } from "@/lib/zod/budget-schemas";
 import { getI18n } from "@/locales/server";
@@ -60,7 +60,7 @@ export async function createSankey(
 	const t = await getI18n();
 
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
@@ -115,7 +115,7 @@ export async function updateSankey(
 	const t = await getI18n();
 
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
@@ -178,7 +178,7 @@ export async function deleteSankey(
 	_prevState: SankeyState,
 ): Promise<SankeyState> {
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 
 		const sankeySchema = sankeyTableSchema.pick({ userId: true });
 		const validatedData = sankeySchema.safeParse({ userId: user?.id });

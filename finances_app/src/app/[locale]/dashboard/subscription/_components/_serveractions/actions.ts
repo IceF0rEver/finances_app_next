@@ -4,7 +4,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import z from "zod";
 import type { subscriptionParams } from "@/app/[locale]/dashboard/subscription/_components/_types/subscription-types";
 import type { Subscription, User } from "@/generated/prisma";
-import { getUser } from "@/lib/auth/server";
+import { getCachedUser } from "@/lib/caches/auth-cache";
 import prisma from "@/lib/prisma";
 import { subscriptionSchemas, subscriptionTableSchema } from "@/lib/zod/subscription-schemas";
 import { getI18n } from "@/locales/server";
@@ -58,7 +58,7 @@ export async function createSubscription(
 	const t = await getI18n();
 
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
@@ -114,7 +114,7 @@ export async function updateSubscription(
 	const t = await getI18n();
 
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
@@ -168,7 +168,7 @@ export async function deleteSubscription(
 	subscriptionId: Subscription["id"],
 ): Promise<SubscriptionState> {
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}

@@ -1,7 +1,7 @@
-import { getUser } from "@/lib/auth/server";
+import { getCachedUser } from "@/lib/caches/auth-cache";
 
 export default async function Page() {
-	const user = await getUser();
+	const user = await getCachedUser();
 
 	return (
 		<section className="flex flex-col justify-center items-center gap-4">
