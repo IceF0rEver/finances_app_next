@@ -42,7 +42,7 @@ export default function BudgetManage({
 		{ success: false },
 	);
 
-	const sankeySchema = budgetSchemas(t).sankey;
+	const sankeySchema = budgetSchemas(t).sankeyArray;
 	const formSchema = z.object({
 		sankey: sankeySchema,
 	});

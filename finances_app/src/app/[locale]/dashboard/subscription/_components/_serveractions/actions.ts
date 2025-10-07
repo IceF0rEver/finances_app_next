@@ -4,9 +4,9 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import z from "zod";
 import type { subscriptionParams } from "@/app/[locale]/dashboard/subscription/_components/_types/subscription-types";
 import type { Subscription, User } from "@/generated/prisma";
-import { getUser } from "@/lib/auth/server";
+import { getCachedUser } from "@/lib/caches/auth-cache";
 import prisma from "@/lib/prisma";
-import { subscriptionSchemas } from "@/lib/zod/subscription-schemas";
+import { subscriptionSchemas, subscriptionTableSchema } from "@/lib/zod/subscription-schemas";
 import { getI18n } from "@/locales/server";
 
 interface SubscriptionState {
@@ -22,11 +22,9 @@ interface SubscriptionState {
 export async function getSubscriptions(userId: User["id"]): Promise<{
 	subscriptions: subscriptionParams[];
 }> {
-	const t = await getI18n();
-
 	try {
-		const subscriptionSchema = subscriptionSchemas(t).subscription.shape.userId;
-		const validatedData = subscriptionSchema.safeParse(userId);
+		const subscriptionSchema = subscriptionTableSchema.pick({ userId: true });
+		const validatedData = subscriptionSchema.safeParse({ userId: userId });
 
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");
@@ -60,7 +58,7 @@ export async function createSubscription(
 	const t = await getI18n();
 
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
@@ -72,8 +70,7 @@ export async function createSubscription(
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");
 		}
-		const { name, amount, recurrence, executionDate, icon, userId } =
-			validatedData.data;
+		const { name, amount, recurrence, executionDate, icon, userId } = validatedData.data;
 		const result = await prisma.subscription.create({
 			data: {
 				name: name,
@@ -86,7 +83,7 @@ export async function createSubscription(
 		});
 		if (result) {
 			revalidatePath(`[locale]/dashboard/subscription`, "page");
-			revalidateTag(`subscriptions-${user.id}`);
+			revalidateTag(`subscriptions-${userId}`);
 			return {
 				success: true,
 			};
@@ -117,7 +114,7 @@ export async function updateSubscription(
 	const t = await getI18n();
 
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
@@ -130,8 +127,7 @@ export async function updateSubscription(
 			throw new Error("400 - BAD_REQUEST");
 		}
 
-		const { id, name, amount, recurrence, executionDate, icon, userId } =
-			validatedData.data;
+		const { id, name, amount, recurrence, executionDate, icon, userId } = validatedData.data;
 		const result = await prisma.subscription.update({
 			where: { id: id, userId: userId },
 			data: {
@@ -144,7 +140,7 @@ export async function updateSubscription(
 		});
 		if (result) {
 			revalidatePath(`[locale]/dashboard/subscription`, "page");
-			revalidateTag(`subscriptions-${user.id}`);
+			revalidateTag(`subscriptions-${userId}`);
 			return {
 				success: true,
 			};
@@ -171,17 +167,14 @@ export async function deleteSubscription(
 	_prevState: SubscriptionState,
 	subscriptionId: Subscription["id"],
 ): Promise<SubscriptionState> {
-	const t = await getI18n();
-
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
 
-		const deleteSubscriptionSchema =
-			subscriptionSchemas(t).deleteSubscription.shape.id;
-		const validatedData = deleteSubscriptionSchema.safeParse(subscriptionId);
+		const deleteSubscriptionSchema = subscriptionTableSchema.pick({ id: true });
+		const validatedData = deleteSubscriptionSchema.safeParse({ id: subscriptionId });
 
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");

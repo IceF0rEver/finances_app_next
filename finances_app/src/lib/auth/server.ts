@@ -8,3 +8,11 @@ export const getUser = async () => {
 	});
 	return session?.user;
 };
+
+export const getSession = async () => {
+	"use server";
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
+	return session?.session;
+};

@@ -40,7 +40,7 @@ export default function SubscriptionManage({
 
 	const getDefaultValues = useCallback(
 		(subscriptionData?: subscriptionParams) => ({
-			id: subscriptionData?.id || "",
+			id: subscriptionData?.id,
 			name: subscriptionData?.name || "",
 			amount: Number(subscriptionData?.amount || ""),
 			recurrence: subscriptionData?.recurrence || "monthly",

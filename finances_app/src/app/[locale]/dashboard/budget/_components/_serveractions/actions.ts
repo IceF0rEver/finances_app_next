@@ -4,10 +4,9 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import z from "zod";
 import type { User } from "@/generated/prisma";
 import { Decimal } from "@/generated/prisma/runtime/library";
-import { getUser } from "@/lib/auth/server";
+import { getCachedUser } from "@/lib/caches/auth-cache";
 import prisma from "@/lib/prisma";
-import { authSchemas } from "@/lib/zod/auth-schemas";
-import { budgetSchemas } from "@/lib/zod/budget-schemas";
+import { budgetSchemas, sankeyTableSchema } from "@/lib/zod/budget-schemas";
 import { getI18n } from "@/locales/server";
 import type { sankeyParams } from "../_types/budget-types";
 
@@ -24,11 +23,9 @@ interface SankeyState {
 export async function getBudgets(userId: User["id"]): Promise<{
 	sankeyDatas: sankeyParams[];
 }> {
-	const t = await getI18n();
-
 	try {
-		const sankeySchema = authSchemas(t).getWithUserId.shape.userId;
-		const validatedData = sankeySchema.safeParse(userId);
+		const sankeySchema = sankeyTableSchema.pick({ userId: true });
+		const validatedData = sankeySchema.safeParse({ userId: userId });
 
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");
@@ -63,12 +60,12 @@ export async function createSankey(
 	const t = await getI18n();
 
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
 
-		const sankeySchema = budgetSchemas(t).sankey;
+		const sankeySchema = budgetSchemas(t).sankeyArray;
 		const parsedData = JSON.parse(formData.get("sankeyData") as string);
 		const validatedData = sankeySchema.safeParse(parsedData);
 
@@ -118,12 +115,12 @@ export async function updateSankey(
 	const t = await getI18n();
 
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
 
-		const sankeySchema = budgetSchemas(t).sankey;
+		const sankeySchema = budgetSchemas(t).sankeyArray;
 		const parsedData = JSON.parse(formData.get("sankeyData") as string);
 		const validatedData = sankeySchema.safeParse(parsedData);
 
@@ -180,27 +177,26 @@ export async function updateSankey(
 export async function deleteSankey(
 	_prevState: SankeyState,
 ): Promise<SankeyState> {
-	const t = await getI18n();
-
 	try {
-		const user = await getUser();
+		const user = await getCachedUser();
 
-		const sankeySchema = authSchemas(t).getWithUserId.shape.userId;
-		const validatedData = sankeySchema.safeParse(user?.id);
+		const sankeySchema = sankeyTableSchema.pick({ userId: true });
+		const validatedData = sankeySchema.safeParse({ userId: user?.id });
 
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");
 		}
 
+		const { userId } = validatedData.data;
 		const result = await prisma.sankey.deleteMany({
 			where: {
-				userId: user?.id,
+				userId: userId,
 			},
 		});
 
 		if (result) {
 			revalidatePath("[locale]/dashboard/budget", "page");
-			revalidateTag(`budgets-${user?.id}`);
+			revalidateTag(`budgets-${userId}`);
 			return {
 				success: true,
 			};
