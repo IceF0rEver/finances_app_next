@@ -1,14 +1,22 @@
 import { z } from "zod";
 import type { useI18n } from "@/locales/client";
+
+export const authTableSchema = z.object({
+	id: z.string().uuid().optional(),
+	name: z.string(),
+	email: z.string().email(),
+	emailVerified: z.boolean(),
+	image: z.string().nullish(),
+});
+
 export const authSchemas = (t: ReturnType<typeof useI18n>) => ({
 	signIn: z.object({
-		email: z.string().email(t("zod.email")),
+		email: authTableSchema.shape.email.email(t("zod.email")),
 		password: z.string().min(6, t("zod.min.password")),
 	}),
-
 	signUp: z
 		.object({
-			email: z.string().email(t("zod.email")),
+			email: authTableSchema.shape.email.email(t("zod.email")),
 			password: z.string().min(6, t("zod.min.password")),
 			passwordConfirmation: z.string(),
 			firstName: z
@@ -27,9 +35,8 @@ export const authSchemas = (t: ReturnType<typeof useI18n>) => ({
 			message: t("zod.password.mismatch"),
 			path: ["passwordConfirmation"],
 		}),
-
 	forgotPassword: z.object({
-		email: z.string().email(t("zod.email")),
+		email: authTableSchema.shape.email.email(t("zod.email")),
 	}),
 
 	resetPassword: z
@@ -46,7 +53,7 @@ export const authSchemas = (t: ReturnType<typeof useI18n>) => ({
 		.object({
 			password: z.string().min(6, t("zod.min.password")),
 			passwordConfirmation: z.string(),
-			currentPassword: z.string(),
+			currentPassword: z.string().min(6, t("zod.min.password")),
 		})
 		.refine((data) => data.password === data.passwordConfirmation, {
 			message: t("zod.password.mismatch"),
@@ -54,7 +61,7 @@ export const authSchemas = (t: ReturnType<typeof useI18n>) => ({
 		}),
 
 	updateUser: z.object({
-		email: z.string().email(t("zod.email")),
+		email: authTableSchema.shape.email.email(t("zod.email")),
 		firstName: z
 			.string()
 			.min(1, t("zod.min.firstName"))
@@ -66,23 +73,5 @@ export const authSchemas = (t: ReturnType<typeof useI18n>) => ({
 			.trim()
 			.regex(/^\S+$/, t("zod.space")),
 		image: z.string(),
-	}),
-	deleteUser: z.object({
-		userId: z.string().min(1),
-	}),
-	roleUser: z.object({
-		userId: z.string().min(1),
-		role: z.enum(["user", "admin"]),
-	}),
-	banUser: z.object({
-		userId: z.string().min(1),
-		banReason: z.string().min(1, t("zod.min.banReason")),
-		banExpires: z.string().min(1, t("zod.min.banExpires")),
-	}),
-	unBanUser: z.object({
-		userId: z.string().min(1),
-	}),
-	getWithUserId: z.object({
-		userId: z.string().min(1),
 	}),
 });
