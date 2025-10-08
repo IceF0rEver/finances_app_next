@@ -4,7 +4,7 @@ import { CalendarX, PlusCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import type {
 	SubscriptionListProps,
-	subscriptionParams,
+	SubscriptionParams,
 } from "@/app/[locale]/dashboard/subscription/_components/_types/subscription-types";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,7 +38,7 @@ export default function SubscriptionList({
 	const [activeTab, setActiveTab] = useState<
 		"this-day" | "all" | "annually" | "monthly"
 	>("this-day");
-	const [filtredDatas, setFiltredDatas] = useState<subscriptionParams[]>([
+	const [filtredDatas, setFiltredDatas] = useState<SubscriptionParams[]>([
 		...datas,
 	]);
 	const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
@@ -144,7 +144,7 @@ export default function SubscriptionList({
 			<CardContent className="p-4 overflow-y-auto max-h-[350px] md:max-h-[calc(100vw-(100vw/4)*3)]">
 				{filtredDatas.length > 0 && (
 					<div className="space-y-3">
-						{filtredDatas.map((item: subscriptionParams) => (
+						{filtredDatas.map((item: SubscriptionParams) => (
 							<div key={item.id} className="w-full">
 								<SubscriptionListItem item={item} />
 							</div>

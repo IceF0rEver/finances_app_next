@@ -1,12 +1,10 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { startTransition, useActionState, useCallback, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { startTransition, useActionState, useEffect, useState } from "react";
 import type { z } from "zod";
 import type {
 	SubscriptionManageProps,
-	subscriptionParams,
+	SubscriptionParams,
 } from "@/app/[locale]/dashboard/subscription/_components/_types/subscription-types";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -19,8 +17,8 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from "@/components/ui/sheet";
+import { useGenericForm } from "@/hooks/use-form";
 import { useToast } from "@/hooks/use-toast";
-import { useSession } from "@/lib/auth/auth-client";
 import { subscriptionSchemas } from "@/lib/zod/subscription-schemas";
 import { useI18n } from "@/locales/client";
 import {
@@ -36,20 +34,16 @@ export default function SubscriptionManage({
 	data,
 }: SubscriptionManageProps) {
 	const t = useI18n();
-	const { data: session } = useSession();
+	const subscriptionSchema = subscriptionSchemas(t).subscription;
 
-	const getDefaultValues = useCallback(
-		(subscriptionData?: subscriptionParams) => ({
-			id: subscriptionData?.id,
-			name: subscriptionData?.name || "",
-			amount: Number(subscriptionData?.amount || ""),
-			recurrence: subscriptionData?.recurrence || "monthly",
-			executionDate: subscriptionData?.executionDate || new Date(),
-			icon: subscriptionData?.icon || "",
-			userId: session?.user.id,
-		}),
-		[session?.user.id],
-	);
+	const [defaultValues, setDefaultValues] = useState<SubscriptionParams>({
+		id: undefined,
+		name: "",
+		amount: 0,
+		recurrence: "monthly",
+		executionDate: new Date(),
+		icon: "",
+	});
 
 	const [state, FormAction, isPending] = useActionState(
 		status ? updateSubscription : createSubscription,
@@ -58,18 +52,33 @@ export default function SubscriptionManage({
 		},
 	);
 
-	const subscriptionSchema = subscriptionSchemas(t).subscription;
-	type SubscriptionType = z.infer<typeof subscriptionSchema>;
-	const form = useForm<SubscriptionType>({
-		resolver: zodResolver(subscriptionSchema),
-		defaultValues: getDefaultValues(),
-	});
+	const { form, onSubmit } = useGenericForm<z.infer<typeof subscriptionSchema>>(
+		{
+			schema: subscriptionSchema,
+			defaultValues: defaultValues,
+			resetTrigger: sheetOpen,
+			onSubmit: async () => {
+				const formData = new FormData();
+				formData.append("subscriptionData", JSON.stringify(form.getValues()));
+				startTransition(() => {
+					FormAction(formData);
+				});
+			},
+		},
+	);
 
 	useEffect(() => {
-		if (sheetOpen) {
-			form.reset(getDefaultValues(data));
+		if (data) {
+			setDefaultValues({
+				id: data?.id,
+				name: data?.name,
+				amount: Number(data?.amount),
+				recurrence: data?.recurrence,
+				executionDate: data?.executionDate,
+				icon: data?.icon,
+			});
 		}
-	}, [sheetOpen, data, getDefaultValues, form]);
+	}, [data]);
 
 	useToast(state, isPending, {
 		errorMessage: t("toast.error"),
@@ -80,14 +89,6 @@ export default function SubscriptionManage({
 			onSheetOpen(false);
 		},
 	});
-
-	const onSubmit = () => {
-		const formData = new FormData();
-		formData.append("subscriptionData", JSON.stringify(form.getValues()));
-		startTransition(() => {
-			FormAction(formData);
-		});
-	};
 
 	return (
 		<Sheet open={sheetOpen} onOpenChange={onSheetOpen}>
@@ -108,10 +109,7 @@ export default function SubscriptionManage({
 					<Separator className="my-2" />
 				</SheetHeader>
 				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit(onSubmit)}
-						className="grid gap-6 px-4"
-					>
+					<form onSubmit={onSubmit} className="grid gap-6 px-4">
 						<SubscriptionField
 							label={t(
 								"subscription.components.subscriptionManage.form.name.label",

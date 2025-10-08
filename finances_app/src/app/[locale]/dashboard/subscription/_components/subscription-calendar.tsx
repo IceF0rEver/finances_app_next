@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { enUS, fr } from "date-fns/locale";
 import type {
 	SubscriptionCalendarProps,
-	subscriptionParams,
+	SubscriptionParams,
 } from "@/app/[locale]/dashboard/subscription/_components/_types/subscription-types";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -47,10 +47,10 @@ export default function SubscriptionCalendar({
 					className="rounded-md border mx-auto"
 					components={{
 						DayContent: ({ date }) => {
-							let items: subscriptionParams[] = [];
+							let items: SubscriptionParams[] = [];
 
 							if (datas) {
-								items = datas.filter((day: subscriptionParams) =>
+								items = datas.filter((day: SubscriptionParams) =>
 									calendarCheckDate(day, date),
 								);
 							}
@@ -68,7 +68,7 @@ export default function SubscriptionCalendar({
 										<div>
 											{items
 												.slice(0, 5)
-												.map((item: subscriptionParams, index: number) => (
+												.map((item: SubscriptionParams, index: number) => (
 													<div
 														key={item.id}
 														style={{ zIndex: 20 - index }}

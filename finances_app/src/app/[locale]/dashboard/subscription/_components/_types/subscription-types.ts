@@ -1,39 +1,39 @@
-import type { Decimal } from "@prisma/client/runtime/library";
 import type { Control, FieldPath, FieldValues } from "react-hook-form";
 
-export interface subscriptionParams {
-	id?: string;
+export interface SubscriptionParams {
+	id?: string | undefined;
 	name: string;
-	amount: number | Decimal;
+	amount: number;
 	recurrence: string;
 	executionDate: Date;
 	icon: string;
-	createdAt?: Date | null;
-	updatedAt?: Date | null;
+	userId?: string | undefined;
+	createdAt?: Date;
+	updatedAt?: Date;
 }
 
 export interface SubscriptionPageProps {
-	subscriptionDatas: Promise<{ subscriptions: subscriptionParams[] | [] }>;
+	subscriptionDatas: Promise<{ subscriptions: SubscriptionParams[] | [] }>;
 }
 
 export interface SubscriptionManageProps {
 	sheetOpen: boolean;
 	onSheetOpen: (sheetOpen: boolean) => void;
 	status: boolean;
-	data?: subscriptionParams;
+	data?: SubscriptionParams;
 }
 
 export interface SubscriptionListProps {
-	datas: subscriptionParams[];
+	datas: SubscriptionParams[];
 	date: Date | undefined;
 }
 
 export interface SubscriptionListItemProps {
-	item: subscriptionParams;
+	item: SubscriptionParams;
 }
 
 export interface SubscriptionCalendarProps {
-	datas: subscriptionParams[];
+	datas: SubscriptionParams[];
 	date: Date | undefined;
 	setDate?: (date: Date | undefined) => void;
 }
