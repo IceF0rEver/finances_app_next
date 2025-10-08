@@ -13,7 +13,7 @@ export default function AuthForm<T extends FieldValues>({
 }: AuthFormProps<T>) {
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className={cn(className)}>
+			<form onSubmit={onSubmit} className={cn(className)}>
 				{children}
 			</form>
 		</Form>

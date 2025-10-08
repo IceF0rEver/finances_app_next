@@ -1,9 +1,8 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { startTransition, useActionState, useCallback, useEffect } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { startTransition, useActionState, useEffect, useState } from "react";
+import { useFieldArray } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import type {
@@ -12,6 +11,7 @@ import type {
 } from "@/app/[locale]/dashboard/budget/_components/_types/budget-types";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { useGenericForm } from "@/hooks/use-form";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { budgetSchemas } from "@/lib/zod/budget-schemas";
@@ -26,32 +26,57 @@ export default function BudgetManage({
 	onOpen,
 }: BudgetManageProps) {
 	const t = useI18n();
+	const sankeySchema = budgetSchemas(t).sankeyArray;
+	const formSchema = z.object({
+		sankey: sankeySchema,
+	});
 
-	const getDefaultValues = useCallback(
-		(budgetData?: sankeyParams[]) => ({
-			sankey: (budgetData || []).map((item) => ({
-				...item,
-				amount: Number(item.amount),
-			})),
-		}),
-		[],
-	);
+	const [defaultValues, setDefaultValues] = useState<{
+		sankey: sankeyParams[];
+	}>({ sankey: [] });
 
 	const [state, FormAction, isPending] = useActionState(
 		status ? updateSankey : createSankey,
 		{ success: false },
 	);
 
-	const sankeySchema = budgetSchemas(t).sankeyArray;
-	const formSchema = z.object({
-		sankey: sankeySchema,
-	});
+	const { form, onSubmit } = useGenericForm<z.infer<typeof formSchema>>({
+		schema: formSchema,
+		defaultValues: defaultValues,
+		resetTrigger: datas,
+		onSubmit: (data: z.infer<typeof formSchema>) => {
+			const processedData = data.sankey.map((item) => {
+				const updatedItem = { ...item };
 
-	type BudgetFormType = z.infer<typeof formSchema>;
+				if (
+					updatedItem.from === updatedItem.id &&
+					updatedItem.parentId !== undefined
+				) {
+					updatedItem.from =
+						data.sankey.find((p) => p.id === updatedItem.parentId)?.to || "";
+				}
 
-	const form = useForm<BudgetFormType>({
-		resolver: zodResolver(formSchema),
-		defaultValues: getDefaultValues(),
+				if (
+					(updatedItem.parentId === null ||
+						updatedItem.parentId === undefined) &&
+					updatedItem.type === "expense" &&
+					updatedItem.from === "budget"
+				) {
+					const total = data.sankey
+						.filter((e) => e.parentId === updatedItem.id)
+						.reduce((sum, e) => sum + e.amount, 0);
+					updatedItem.amount = total;
+				}
+
+				return updatedItem;
+			});
+
+			const formData = new FormData();
+			formData.append("sankeyData", JSON.stringify(processedData));
+			startTransition(() => {
+				FormAction(formData);
+			});
+		},
 	});
 
 	const { append, remove } = useFieldArray({
@@ -60,8 +85,13 @@ export default function BudgetManage({
 	});
 
 	useEffect(() => {
-		form.reset(getDefaultValues(datas));
-	}, [datas, getDefaultValues, form]);
+		setDefaultValues({
+			sankey: datas.map((data) => ({
+				...data,
+				amount: Number(data.amount),
+			})),
+		});
+	}, [datas]);
 
 	useToast(state, isPending, {
 		successMessage: status
@@ -146,44 +176,11 @@ export default function BudgetManage({
 		}
 	};
 
-	const onSubmit = (data: BudgetFormType) => {
-		const processedData = data.sankey.map((item) => {
-			const updatedItem = { ...item };
-
-			if (
-				updatedItem.from === updatedItem.id &&
-				updatedItem.parentId !== undefined
-			) {
-				updatedItem.from =
-					data.sankey.find((p) => p.id === updatedItem.parentId)?.to || "";
-			}
-
-			if (
-				(updatedItem.parentId === null || updatedItem.parentId === undefined) &&
-				updatedItem.type === "expense" &&
-				updatedItem.from === "budget"
-			) {
-				const total = data.sankey
-					.filter((e) => e.parentId === updatedItem.id)
-					.reduce((sum, e) => sum + e.amount, 0);
-				updatedItem.amount = total;
-			}
-
-			return updatedItem;
-		});
-
-		const formData = new FormData();
-		formData.append("sankeyData", JSON.stringify(processedData));
-		startTransition(() => {
-			FormAction(formData);
-		});
-	};
-
 	const currentData = form.watch("sankey") as sankeyParams[];
 	return (
 		<Form {...form}>
 			<form
-				onSubmit={form.handleSubmit(onSubmit)}
+				onSubmit={onSubmit}
 				className={cn(
 					status
 						? "overflow-y-auto max-h-screen"

@@ -1,4 +1,3 @@
-import type { Decimal } from "@prisma/client/runtime/library";
 import type {
 	Control,
 	FieldPath,
@@ -10,7 +9,7 @@ export interface sankeyParams {
 	id?: string;
 	from: string;
 	to: string;
-	amount: number | Decimal;
+	amount: number;
 	type: string;
 	parentId?: string | null;
 }

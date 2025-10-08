@@ -3,7 +3,7 @@
 import { use, useEffect, useState } from "react";
 import type {
 	SubscriptionPageProps,
-	subscriptionParams,
+	SubscriptionParams,
 } from "@/app/[locale]/dashboard/subscription/_components/_types/subscription-types";
 import SubscriptionCalendar from "@/app/[locale]/dashboard/subscription/_components/subscription-calendar";
 import SubscriptionList from "@/app/[locale]/dashboard/subscription/_components/subscription-list";
@@ -12,9 +12,8 @@ export default function SubscriptionPage({
 	subscriptionDatas,
 }: SubscriptionPageProps) {
 	const { subscriptions } = use(subscriptionDatas);
-
 	const [date, setDate] = useState<Date | undefined>(new Date());
-	const [data, setData] = useState<subscriptionParams[]>([...subscriptions]);
+	const [data, setData] = useState<SubscriptionParams[]>([...subscriptions]);
 
 	useEffect(() => {
 		setData([...subscriptions]);

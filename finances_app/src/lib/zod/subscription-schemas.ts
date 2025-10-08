@@ -13,7 +13,7 @@ export const subscriptionTableSchema = z.object({
 
 export const subscriptionSchemas = (t: ReturnType<typeof useI18n>) => ({
 	subscription: z.object({
-		id: z.string().optional(),
+		id: subscriptionTableSchema.shape.id,
 		name: subscriptionTableSchema.shape.name.min(1, {
 			message: t("action.subscription.form.name"),
 		}),
@@ -24,7 +24,9 @@ export const subscriptionSchemas = (t: ReturnType<typeof useI18n>) => ({
 			message: t("action.subscription.form.recurrence"),
 		}),
 		executionDate: subscriptionTableSchema.shape.executionDate,
-		icon: z.string({ message: t("action.subscription.form.icon") }),
-		userId: subscriptionTableSchema.shape.userId,
+		icon: subscriptionTableSchema.shape.icon.min(1, {
+			message: t("action.subscription.form.icon"),
+		}),
+		userId: subscriptionTableSchema.shape.userId.optional(),
 	}),
 });
