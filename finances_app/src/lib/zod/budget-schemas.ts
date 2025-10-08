@@ -11,6 +11,8 @@ export const sankeyTableSchema = z.object({
 	userId: z.string().uuid(),
 });
 
+export const sankeyTableArraySchema = z.array(sankeyTableSchema);
+
 export const budgetSchemas = (t: ReturnType<typeof useI18n>) => ({
 	sankeyArray: z.array(
 		z.object({
