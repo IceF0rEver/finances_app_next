@@ -21,7 +21,7 @@ export default function Account() {
 		email: session?.user.email ?? "",
 		firstName: session?.user.name.split(" ")[0] ?? "",
 		lastName: session?.user.name.split(" ")[1] ?? "",
-		image: session?.user.image ?? "",
+		image: session?.user.image ?? undefined,
 	});
 
 	const updateUserSchema = authSchemas(t).updateUser;
