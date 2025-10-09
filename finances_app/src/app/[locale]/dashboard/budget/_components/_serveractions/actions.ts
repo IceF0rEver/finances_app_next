@@ -2,12 +2,14 @@
 
 import { revalidatePath, revalidateTag } from "next/cache";
 import z from "zod";
-import type { User } from "@/generated/prisma";
+import type { Sankey, User } from "@/generated/prisma";
 import { Decimal } from "@/generated/prisma/runtime/library";
 import { getCachedUser } from "@/lib/caches/auth-cache";
 import prisma from "@/lib/prisma";
-import { budgetSchemas, sankeyTableSchema } from "@/lib/zod/budget-schemas";
-import { getI18n } from "@/locales/server";
+import {
+	sankeyTableArraySchema,
+	sankeyTableSchema,
+} from "@/lib/zod/budget-schemas";
 import type { sankeyParams } from "../_types/budget-types";
 
 interface SankeyState {
@@ -57,30 +59,26 @@ export async function createSankey(
 	_prevState: SankeyState,
 	formData: FormData,
 ): Promise<SankeyState> {
-	const t = await getI18n();
-
 	try {
 		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
 
-		const sankeySchema = budgetSchemas(t).sankeyArray;
 		const parsedData = JSON.parse(formData.get("sankeyData") as string);
-		const validatedData = sankeySchema.safeParse(parsedData);
+		const budgetData = parsedData.map((item: Sankey) => ({
+			...item,
+			amount: new Decimal(item.amount),
+			userId: user.id,
+		}));
+		const validatedData = sankeyTableArraySchema.safeParse(budgetData);
 
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");
 		}
 
-		const sankeyArray = validatedData.data.map((item) => ({
-			...item,
-			amount: new Decimal(item.amount),
-			userId: user.id,
-		}));
-
 		const result = await prisma.sankey.createMany({
-			data: sankeyArray,
+			data: validatedData.data,
 		});
 		if (result) {
 			revalidatePath("[locale]/dashboard/budget", "page");
@@ -112,17 +110,19 @@ export async function updateSankey(
 	_prevState: SankeyState,
 	formData: FormData,
 ): Promise<SankeyState> {
-	const t = await getI18n();
-
 	try {
 		const user = await getCachedUser();
 		if (!user?.id) {
 			throw new Error("400 - BAD_REQUEST");
 		}
 
-		const sankeySchema = budgetSchemas(t).sankeyArray;
 		const parsedData = JSON.parse(formData.get("sankeyData") as string);
-		const validatedData = sankeySchema.safeParse(parsedData);
+		const budgetData = parsedData.map((item: Sankey) => ({
+			...item,
+			amount: new Decimal(item.amount),
+			userId: user.id,
+		}));
+		const validatedData = sankeyTableArraySchema.safeParse(budgetData);
 
 		if (!validatedData.success) {
 			throw new Error("400 - BAD_REQUEST");

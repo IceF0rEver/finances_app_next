@@ -30,7 +30,7 @@ export default function Page() {
 			passwordConfirmation: "",
 			firstName: "",
 			lastName: "",
-			image: "",
+			image: undefined,
 		},
 		onSubmit: useCallback(
 			async (values: z.infer<typeof signUpSchema>) => {
@@ -41,7 +41,7 @@ export default function Page() {
 						passwordConfirmation: values.passwordConfirmation,
 						firstName: values.firstName,
 						lastName: values.lastName,
-						image: values.image ?? "",
+						image: values.image,
 					});
 
 					await signUp.email(
