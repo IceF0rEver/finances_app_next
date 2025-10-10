@@ -1,15 +1,8 @@
-import { randomUUID } from "node:crypto";
-import fs from "node:fs";
-import { unlink, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { PrismaClient } from "@/generated/prisma";
-import prisma from "../prisma";
 import { resend } from "../resend";
-import { authTableSchema } from "../zod/auth-schemas";
-import { getUser } from "./server";
 
 const prismaClient = new PrismaClient();
 
@@ -20,111 +13,117 @@ export const auth = betterAuth({
 			create: {
 				before: async (user) => {
 					"use server";
-
-					if (!user.image) {
-						return {
-							data: {
-								...user,
-								firstName: user.name.split(" ")[0],
-								lastName: user.name.split(" ")[1],
-							},
-						};
-					} else {
-						const [meta, base64Data] = user.image.split(";base64,");
-						const mime = meta.split(":")[1];
-						const extension = mime.split("/")[1];
-
-						const buffer = Buffer.from(base64Data, "base64");
-						const fileName = `${randomUUID()}.${extension}`;
-						const uploadPath = path.join(
-							process.cwd(),
-							"public",
-							"upload",
-							fileName,
-						);
-
-						await writeFile(uploadPath, buffer);
-
-						const publicPath = `${process.env.IMAGE_PUBLIC_PATH!}${fileName}`;
-						return {
-							data: {
-								...user,
-								image: publicPath,
-								firstName: user.name.split(" ")[0],
-								lastName: user.name.split(" ")[1],
-							},
-						};
-					}
-				},
-			},
-			update: {
-				before: async (update) => {
-					"use server";
-
-					if (!update.image) {
-						return {
-							data: {
-								...update,
-								firstName: update.name?.split(" ")[0],
-								lastName: update.name?.split(" ")[1],
-							},
-						};
-					}
-
-					const [meta, base64Data] = update.image.split(";base64,");
-					const mime = meta.split(":")[1];
-					const extension = mime.split("/")[1];
-					const buffer = Buffer.from(base64Data, "base64");
-					const fileName = `${randomUUID()}.${extension}`;
-					const uploadPath = path.join(
-						process.cwd(),
-						"public",
-						"upload",
-						fileName,
-					);
-
-					await writeFile(uploadPath, buffer);
-
-					const publicPath = `${process.env.IMAGE_PUBLIC_PATH!}${fileName}`;
-
-					const user = await getUser();
-					if (user?.id) {
-						console.log(user.id);
-						try {
-							const authSchema = authTableSchema.pick({ id: true });
-							const validatedData = authSchema.safeParse({ id: user.id });
-
-							if (validatedData.data?.id) {
-								const existingUser = await prisma.user.findFirst({
-									where: { id: validatedData.data?.id },
-								});
-
-								if (existingUser?.image) {
-									const oldImagePath = path.join(
-										process.cwd(),
-										"public",
-										"upload",
-										existingUser.image.split("/")[2],
-									);
-									if (fs.existsSync(oldImagePath)) {
-										await unlink(oldImagePath);
-									}
-								}
-							}
-						} catch (err) {
-							console.warn(err);
-						}
-					}
 					return {
 						data: {
-							...update,
-							image: publicPath,
-							firstName: update.name?.split(" ")[0],
-							lastName: update.name?.split(" ")[1],
+							...user,
+							firstName: user.name.split(" ")[0],
+							lastName: user.name.split(" ")[1],
 						},
 					};
+					// if (!user.image) {
+					// 	return {
+					// 		data: {
+					// 			...user,
+					// 			firstName: user.name.split(" ")[0],
+					// 			lastName: user.name.split(" ")[1],
+					// 		},
+					// 	};
+					// } else {
+					// 	const [meta, base64Data] = user.image.split(";base64,");
+					// 	const mime = meta.split(":")[1];
+					// 	const extension = mime.split("/")[1];
+
+					// 	const buffer = Buffer.from(base64Data, "base64");
+					// 	const fileName = `${randomUUID()}.${extension}`;
+					// 	const uploadPath = path.join(
+					// 		process.cwd(),
+					// 		"public",
+					// 		"upload",
+					// 		fileName,
+					// 	);
+
+					// 	await writeFile(uploadPath, buffer);
+
+					// 	const publicPath = `${process.env.IMAGE_PUBLIC_PATH!}${fileName}`;
+					// 	return {
+					// 		data: {
+					// 			...user,
+					// 			image: publicPath,
+					// 			firstName: user.name.split(" ")[0],
+					// 			lastName: user.name.split(" ")[1],
+					// 		},
+					// 	};
+					// }
 				},
 			},
+			// update: {
+			// 	before: async (update) => {
+			// 		"use server";
+
+			// 		if (!update.image) {
+			// 			return {
+			// 				data: {
+			// 					...update,
+			// 					firstName: update.name?.split(" ")[0],
+			// 					lastName: update.name?.split(" ")[1],
+			// 				},
+			// 			};
+			// 		}
+
+			// 		const [meta, base64Data] = update.image.split(";base64,");
+			// 		const mime = meta.split(":")[1];
+			// 		const extension = mime.split("/")[1];
+			// 		const buffer = Buffer.from(base64Data, "base64");
+			// 		const fileName = `${randomUUID()}.${extension}`;
+			// 		const uploadPath = path.join(
+			// 			process.cwd(),
+			// 			"public",
+			// 			"upload",
+			// 			fileName,
+			// 		);
+
+			// 		await writeFile(uploadPath, buffer);
+
+			// 		const publicPath = `${process.env.IMAGE_PUBLIC_PATH!}${fileName}`;
+
+			// 		const user = await getUser();
+			// 		if (user?.id) {
+			// 			console.log(user.id);
+			// 			try {
+			// 				const authSchema = authTableSchema.pick({ id: true });
+			// 				const validatedData = authSchema.safeParse({ id: user.id });
+
+			// 				if (validatedData.data?.id) {
+			// 					const existingUser = await prisma.user.findFirst({
+			// 						where: { id: validatedData.data?.id },
+			// 					});
+
+			// 					if (existingUser?.image) {
+			// 						const oldImagePath = path.join(
+			// 							process.cwd(),
+			// 							"public",
+			// 							"upload",
+			// 							existingUser.image.split("/")[2],
+			// 						);
+			// 						if (fs.existsSync(oldImagePath)) {
+			// 							await unlink(oldImagePath);
+			// 						}
+			// 					}
+			// 				}
+			// 			} catch (err) {
+			// 				console.warn(err);
+			// 			}
+			// 		}
+			// 		return {
+			// 			data: {
+			// 				...update,
+			// 				image: publicPath,
+			// 				firstName: update.name?.split(" ")[0],
+			// 				lastName: update.name?.split(" ")[1],
+			// 			},
+			// 		};
+			// 	},
+			// },
 		},
 	},
 	database: prismaAdapter(prismaClient, {
